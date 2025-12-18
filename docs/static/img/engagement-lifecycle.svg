@@ -1,0 +1,70 @@
+<svg width="600" height="700" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#10b981"/>
+    </marker>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="600" height="700" fill="#f8f9fa"/>
+  
+  <!-- Step 1 -->
+  <rect x="150" y="30" width="300" height="70" rx="8" fill="#e0f2fe" stroke="#10b981" stroke-width="2"/>
+  <text x="300" y="55" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1E293B" text-anchor="middle">1. Engagement Fetched from Backend</text>
+  <text x="300" y="80" font-family="Arial, sans-serif" font-size="12" fill="#475569" text-anchor="middle">Configuration received</text>
+  
+  <!-- Arrow 1 -->
+  <path d="M 300 100 L 300 120" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 2 -->
+  <rect x="150" y="120" width="300" height="70" rx="8" fill="#fef3c7" stroke="#10b981" stroke-width="2"/>
+  <text x="300" y="145" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1E293B" text-anchor="middle">2. Engagement Validated</text>
+  <text x="300" y="170" font-family="Arial, sans-serif" font-size="12" fill="#475569" text-anchor="middle">Expiration, frequency checks</text>
+  
+  <!-- Arrow 2 -->
+  <path d="M 300 190 L 300 210" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 3 -->
+  <rect x="150" y="210" width="300" height="70" rx="8" fill="#fce7f3" stroke="#10b981" stroke-width="2"/>
+  <text x="300" y="235" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1E293B" text-anchor="middle">3. State Machine Created</text>
+  <text x="300" y="260" font-family="Arial, sans-serif" font-size="12" fill="#475569" text-anchor="middle">On first event</text>
+  
+  <!-- Arrow 3 -->
+  <path d="M 300 280 L 300 300" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 4 -->
+  <rect x="150" y="300" width="300" height="70" rx="8" fill="#dbeafe" stroke="#10b981" stroke-width="2"/>
+  <text x="300" y="325" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1E293B" text-anchor="middle">4. Events Processed</text>
+  <text x="300" y="350" font-family="Arial, sans-serif" font-size="12" fill="#475569" text-anchor="middle">App events evaluated</text>
+  
+  <!-- Arrow 4 -->
+  <path d="M 300 370 L 300 390" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 5 -->
+  <rect x="150" y="390" width="300" height="70" rx="8" fill="#e0e7ff" stroke="#10b981" stroke-width="2"/>
+  <text x="300" y="415" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1E293B" text-anchor="middle">5. State Transitions Occur</text>
+  <text x="300" y="440" font-family="Arial, sans-serif" font-size="12" fill="#475569" text-anchor="middle">State machine updates</text>
+  
+  <!-- Arrow 5 -->
+  <path d="M 300 460 L 300 480" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 6 -->
+  <rect x="150" y="480" width="300" height="70" rx="8" fill="#dcfce7" stroke="#10b981" stroke-width="2"/>
+  <text x="300" y="505" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1E293B" text-anchor="middle">6. Actions Executed</text>
+  <text x="300" y="530" font-family="Arial, sans-serif" font-size="12" fill="#475569" text-anchor="middle">Nudges, tooltips shown</text>
+  
+  <!-- Arrow 6 -->
+  <path d="M 300 550 L 300 570" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 7 -->
+  <rect x="150" y="570" width="300" height="60" rx="8" fill="#fef3c7" stroke="#10b981" stroke-width="2"/>
+  <text x="300" y="595" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1E293B" text-anchor="middle">7. State Machine Reset</text>
+  <text x="300" y="615" font-family="Arial, sans-serif" font-size="12" fill="#475569" text-anchor="middle">When reset state reached</text>
+  
+  <!-- Arrow 7 -->
+  <path d="M 300 630 L 300 650" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 8 -->
+  <rect x="150" y="650" width="300" height="50" rx="8" fill="#e0f2fe" stroke="#10b981" stroke-width="2"/>
+  <text x="300" y="675" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1E293B" text-anchor="middle">8. Frequency Updated</text>
+</svg>

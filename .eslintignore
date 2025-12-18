@@ -1,0 +1,17 @@
+android/
+ios/
+**/node_modules/
+node_modules/
+lib/
+registry/scripts/__tests__/
+example/android/
+example/ios/
+*.config.js
+babel.config.js
+metro.config.js
+jest.config.js
+react-native.config.js
+**/__mocks__/*
+**/jest/*
+registry/scripts/ProcessComponentJson.js
+src/generated/

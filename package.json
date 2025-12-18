@@ -1,0 +1,208 @@
+{
+  "name": "@dreamhorizonorg/raven-client",
+  "version": "0.0.4",
+  "description": "sdk raven",
+  "source": "./src/index.tsx",
+  "main": "./lib/commonjs/index.js",
+  "module": "./lib/module/index.js",
+  "types": "./lib/typescript/commonjs/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/typescript/module/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./app.plugin.js": "./app.plugin.js",
+    "./app.plugin": "./app.plugin.js",
+    "./plugins/dist/withPlugin": "./plugins/dist/withPlugin.js",
+    "./plugins/dist/withAndroidPlugin": "./plugins/dist/withAndroidPlugin.js",
+    "./plugins/dist/withIosPlugins": "./plugins/dist/withIosPlugins.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "app.plugin.js",
+    "plugins",
+    "react-native.config.js",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "yarn workspace raven-client-example",
+    "test": "jest",
+    "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "lint:fix": "eslint \"**/*.{js,ts,tsx}\" --fix",
+    "format": "prettier --write \"**/*.{js,ts,tsx,json,md}\"",
+    "format:check": "prettier --check \"**/*.{js,ts,tsx,json,md}\"",
+    "prepare": "bob build",
+    "plugins:build": "tsc -p plugins/tsconfig.json",
+    "release": "release-it --only-version",
+    "example clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "example android": "yarn prepare && cd example && yarn android",
+    "example android:build": "yarn prepare && cd example && yarn android:build",
+    "example android:run": "cd example && yarn android",
+    "example ios": "yarn prepare && cd example && yarn ios",
+    "example start": "cd example && yarn start"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "expo"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dream-horizon-org/raven-client.git"
+  },
+  "author": "Devanshj11 <devansh.j@dream11.com> (https://github.com/Devanshj11)",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/dream-horizon-org/raven-client/issues"
+  },
+  "homepage": "https://github.com/dream-horizon-org/raven-client#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^19.8.1",
+    "@eslint/compat": "^1.3.2",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.35.0",
+    "@evilmartians/lefthook": "^1.12.3",
+    "@expo/config-plugins": "^7.0.0",
+    "@react-native-community/cli": "15.1.3",
+    "@react-native/babel-preset": "0.81.1",
+    "@react-native/eslint-config": "^0.81.1",
+    "@release-it/conventional-changelog": "^10.0.1",
+    "@types/jest": "^29.5.14",
+    "@types/react": "^19.0.0",
+    "commitlint": "^19.8.1",
+    "del-cli": "^6.0.0",
+    "eslint": "^9.35.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "jest": "^29.7.0",
+    "prettier": "^3.6.2",
+    "react": "19.1.0",
+    "react-native": "0.81.1",
+    "react-native-builder-bob": "^0.40.13",
+    "react-native-dotenv": "^3.4.11",
+    "release-it": "^19.0.4",
+    "turbo": "^2.5.6",
+    "typescript": "^5.9.2"
+  },
+  "peerDependencies": {
+    "@expo/config-plugins": ">=7.0.0",
+    "@gorhom/bottom-sheet": "^4.6.0",
+    "react": "*",
+    "react-native": "*",
+    "react-native-gesture-handler": "^2.20.0"
+  },
+  "workspaces": [
+    "example",
+    "docs"
+  ],
+  "resolutions": {
+    "react-native-gesture-handler": "2.28.0",
+    "react-native-reanimated": "3.19.4",
+    "@gorhom/bottom-sheet": "4.6.4",
+    "lottie-react-native": "7.3.4"
+  },
+  "packageManager": "yarn@3.6.1",
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "angular"
+        }
+      }
+    }
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "commonjs",
+        {
+          "esm": false
+        }
+      ],
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.bob.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "RavenSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.ravenclient"
+    }
+  },
+  "create-react-native-library": {
+    "languages": "kotlin-objc",
+    "type": "turbo-module",
+    "version": "0.54.3"
+  },
+  "dependencies": {
+    "@gorhom/bottom-sheet": "^4.6.0",
+    "@react-navigation/native": "7.1.18",
+    "axios": "^1.13.1",
+    "lottie-react-native": "^7.3.4",
+    "react-native-reanimated": "^3.19.0"
+  },
+  "expo": {
+    "install": {
+      "exclude": [
+        "ios",
+        "android"
+      ]
+    }
+  }
+}

@@ -1,0 +1,46 @@
+package com.ravenclient
+
+import com.facebook.react.BaseReactPackage
+import com.facebook.react.bridge.NativeModule
+import com.facebook.react.bridge.ReactApplicationContext
+import com.facebook.react.module.model.ReactModuleInfo
+import com.facebook.react.module.model.ReactModuleInfoProvider
+import java.util.HashMap
+
+import com.ravenstorage.StorageModule
+import com.ravenclient.nudgeCta.tooltip.TooltipModule
+import com.ravenclient.screeninspector.ScreenInspectorModule
+
+class RavenPackage : BaseReactPackage() {
+  override fun getModule(name: String, reactContext: ReactApplicationContext): NativeModule? {
+    return when (name) {
+      RavenModule.NAME -> RavenModule(reactContext)
+      TooltipModule.NAME -> TooltipModule(reactContext)
+      ScreenInspectorModule.NAME -> ScreenInspectorModule(reactContext)
+      StorageModule.NAME -> StorageModule(reactContext)
+      else -> null
+    }
+  }
+
+  override fun getReactModuleInfoProvider(): ReactModuleInfoProvider {
+    return ReactModuleInfoProvider {
+      val moduleInfos: MutableMap<String, ReactModuleInfo> = HashMap()
+      listOf(
+        RavenModule.NAME,
+        TooltipModule.NAME,
+        ScreenInspectorModule.NAME,
+        StorageModule.NAME,
+      ).forEach { moduleName ->
+        moduleInfos[moduleName] = ReactModuleInfo(
+          moduleName,
+          moduleName,
+          false,  // canOverrideExistingModule
+          false,  // needsEagerInit
+          false,  // isCxxModule
+          false   // isTurboModule
+        )
+      }
+      moduleInfos
+    }
+  }
+}

@@ -1,0 +1,60 @@
+name: ❓ Question
+description: Ask a question about the SDK
+labels: [question]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # Question
+
+        👋 Hi! Thanks for your question!
+
+        **Please fill the following to help us answer your question ❗**
+  - type: checkboxes
+    attributes:
+      label: Before submitting
+      description: Please check the following.
+      options:
+        - label: I have searched existing issues and discussions
+          required: true
+        - label: I have checked the documentation and README
+          required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: What is your question?
+      placeholder: How do I...?
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: |
+        Provide any relevant context about your question.
+        What are you trying to achieve? What have you tried so far?
+      placeholder: |
+        I'm trying to...
+        I've tried...
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: |
+        Provide information about your environment (optional but helpful)
+      placeholder: |
+        - SDK Version: x.x.x
+        - React Native Version: x.x.x
+        - Platform: iOS/Android/Both
+        - OS Version: ...
+  - type: textarea
+    id: code-example
+    attributes:
+      label: Code Example (if applicable)
+      description: |
+        If your question involves code, please provide a minimal example.
+      render: shell
+

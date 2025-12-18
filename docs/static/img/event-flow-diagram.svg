@@ -1,0 +1,60 @@
+<svg width="700" height="500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="700" height="500" fill="#f8f9fa"/>
+  
+  <!-- Title -->
+  <text x="350" y="30" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#1E293B" text-anchor="middle">Event Flow</text>
+  
+  <!-- Step 1: App Event Occurs -->
+  <rect x="250" y="60" width="200" height="60" rx="8" fill="#1E293B" stroke="#10b981" stroke-width="2"/>
+  <text x="350" y="85" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">App Event Occurs</text>
+  <text x="350" y="105" font-family="Arial, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">User action or app state change</text>
+  
+  <!-- Arrow 1 -->
+  <path d="M 350 120 L 350 150" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 2: processEventForCTAs -->
+  <rect x="200" y="150" width="300" height="60" rx="8" fill="#e0f2fe" stroke="#10b981" stroke-width="2"/>
+  <text x="350" y="175" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1E293B" text-anchor="middle">processEventForCTAs()</text>
+  <text x="350" y="195" font-family="Arial, sans-serif" font-size="11" fill="#475569" text-anchor="middle">SDK receives and processes the event</text>
+  
+  <!-- Arrow 2 -->
+  <path d="M 350 210 L 350 240" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 3: SDK Evaluates -->
+  <rect x="150" y="240" width="400" height="60" rx="8" fill="#fef3c7" stroke="#10b981" stroke-width="2"/>
+  <text x="350" y="265" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1E293B" text-anchor="middle">SDK Evaluates State Machines</text>
+  <text x="350" y="285" font-family="Arial, sans-serif" font-size="11" fill="#475569" text-anchor="middle">Finds relevant CTAs and evaluates transitions</text>
+  
+  <!-- Arrow 3 -->
+  <path d="M 350 300 L 350 330" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 4: Check Filters -->
+  <rect x="200" y="330" width="300" height="60" rx="8" fill="#fce7f3" stroke="#10b981" stroke-width="2"/>
+  <text x="350" y="355" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1E293B" text-anchor="middle">Check Filters &amp; Conditions</text>
+  <text x="350" y="375" font-family="Arial, sans-serif" font-size="11" fill="#475569" text-anchor="middle">Validates frequency, context, and rules</text>
+  
+  <!-- Arrow 4 -->
+  <path d="M 350 390 L 350 420" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 5: Execute Action -->
+  <rect x="200" y="420" width="300" height="60" rx="8" fill="#dbeafe" stroke="#10b981" stroke-width="2"/>
+  <text x="350" y="445" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1E293B" text-anchor="middle">Execute Action</text>
+  <text x="350" y="465" font-family="Arial, sans-serif" font-size="11" fill="#475569" text-anchor="middle">Show nudge, tooltip, or perform action</text>
+  
+  <!-- Side note for State Transition -->
+  <rect x="520" y="300" width="150" height="80" rx="6" fill="white" stroke="#64748B" stroke-width="1" stroke-dasharray="3,3" opacity="0.7"/>
+  <text x="595" y="320" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#1E293B" text-anchor="middle">If conditions</text>
+  <text x="595" y="335" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#1E293B" text-anchor="middle">are met:</text>
+  <text x="595" y="355" font-family="Arial, sans-serif" font-size="10" fill="#475569" text-anchor="middle">State Transition</text>
+  <text x="595" y="370" font-family="Arial, sans-serif" font-size="10" fill="#475569" text-anchor="middle">occurs</text>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#10b981"/>
+    </marker>
+  </defs>
+</svg>
+
+

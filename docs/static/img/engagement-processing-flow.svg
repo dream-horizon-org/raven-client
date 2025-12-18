@@ -1,0 +1,49 @@
+<svg width="600" height="600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#10b981"/>
+    </marker>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="600" height="600" fill="#f8f9fa"/>
+  
+  <rect x="150" y="30" width="300" height="70" rx="8" fill="#1E293B" stroke="#10b981" stroke-width="2"/>
+  <text x="300" y="55" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">Event Occurs</text>
+  <text x="300" y="80" font-family="Arial, sans-serif" font-size="12" fill="#94a3b8" text-anchor="middle">User action or app event</text>
+  
+  <path d="M 300 100 L 300 120" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <rect x="150" y="120" width="300" height="70" rx="8" fill="#e0f2fe" stroke="#10b981" stroke-width="2"/>
+  <text x="300" y="145" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1E293B" text-anchor="middle">Find Engagement Listening to Event</text>
+  <text x="300" y="170" font-family="Arial, sans-serif" font-size="12" fill="#475569" text-anchor="middle">Match event name</text>
+  
+  <path d="M 300 190 L 300 210" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <rect x="150" y="210" width="300" height="70" rx="8" fill="#fef3c7" stroke="#10b981" stroke-width="2"/>
+  <text x="300" y="235" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1E293B" text-anchor="middle">Sort by Priority</text>
+  <text x="300" y="260" font-family="Arial, sans-serif" font-size="12" fill="#475569" text-anchor="middle">Lower number = higher priority</text>
+  
+  <path d="M 300 280 L 300 300" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <rect x="150" y="300" width="300" height="70" rx="8" fill="#fce7f3" stroke="#10b981" stroke-width="2"/>
+  <text x="300" y="325" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1E293B" text-anchor="middle">For Each Engagement</text>
+  <text x="300" y="350" font-family="Arial, sans-serif" font-size="12" fill="#475569" text-anchor="middle">Process in priority order</text>
+  
+  <path d="M 300 370 L 300 390" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <rect x="150" y="390" width="300" height="70" rx="8" fill="#dbeafe" stroke="#10b981" stroke-width="2"/>
+  <text x="300" y="415" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1E293B" text-anchor="middle">Validate Engagement</text>
+  <text x="300" y="440" font-family="Arial, sans-serif" font-size="12" fill="#475569" text-anchor="middle">Expiration, frequency, etc.</text>
+  
+  <path d="M 300 460 L 300 480" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <rect x="150" y="480" width="300" height="70" rx="8" fill="#e0e7ff" stroke="#10b981" stroke-width="2"/>
+  <text x="300" y="505" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1E293B" text-anchor="middle">Get/Create State Machine</text>
+  <text x="300" y="530" font-family="Arial, sans-serif" font-size="12" fill="#475569" text-anchor="middle">Process state transitions</text>
+  
+  <path d="M 300 550 L 300 570" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <rect x="150" y="570" width="300" height="30" rx="8" fill="#dcfce7" stroke="#10b981" stroke-width="2"/>
+  <text x="300" y="590" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1E293B" text-anchor="middle">Sync to Backend</text>
+</svg>

@@ -1,0 +1,11 @@
+pre-commit:
+  parallel: true
+  commands:
+    types:
+      glob: '{src,registry,example}/**/*.{ts,tsx}'
+      run: yarn tsc --noEmit --skipLibCheck
+commit-msg:
+  parallel: true
+  commands:
+    commitlint:
+      run: npx commitlint --edit

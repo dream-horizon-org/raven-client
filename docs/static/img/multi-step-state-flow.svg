@@ -1,0 +1,71 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#10b981"/>
+    </marker>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f8f9fa"/>
+  
+  <!-- State 0 -->
+  <rect x="250" y="30" width="300" height="70" rx="8" fill="#1E293B" stroke="#10b981" stroke-width="2"/>
+  <text x="400" y="55" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">State 0 (Initial)</text>
+  <text x="400" y="80" font-family="Arial, sans-serif" font-size="12" fill="#94a3b8" text-anchor="middle">Starting point</text>
+  
+  <!-- Arrow 1 -->
+  <path d="M 400 100 L 400 120" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  <!-- Event label positioned below arrow -->
+  <text x="400" y="140" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#059669" text-anchor="middle">APP_LAUNCH</text>
+  
+  <!-- State 1 -->
+  <rect x="250" y="155" width="300" height="70" rx="8" fill="#e0f2fe" stroke="#10b981" stroke-width="2"/>
+  <text x="400" y="180" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1E293B" text-anchor="middle">State 1</text>
+  <text x="400" y="205" font-family="Arial, sans-serif" font-size="12" fill="#475569" text-anchor="middle">First step</text>
+  
+  <!-- Action box 1 -->
+  <rect x="50" y="240" width="160" height="50" rx="6" fill="#10b981" stroke="#059669" stroke-width="2"/>
+  <text x="130" y="260" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="white" text-anchor="middle">Show Step 1</text>
+  <text x="130" y="280" font-family="Arial, sans-serif" font-size="11" fill="white" text-anchor="middle">Welcome nudge</text>
+  
+  <!-- Arrow 2 -->
+  <path d="M 400 225 L 400 245" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  <!-- Event labels positioned below arrow -->
+  <text x="400" y="265" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#059669" text-anchor="middle">BUTTON_CLICKED</text>
+  <text x="400" y="280" font-family="Arial, sans-serif" font-size="10" fill="#059669" text-anchor="middle">(next-step-1)</text>
+  
+  <!-- State 2 -->
+  <rect x="250" y="295" width="300" height="70" rx="8" fill="#fef3c7" stroke="#10b981" stroke-width="2"/>
+  <text x="400" y="320" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1E293B" text-anchor="middle">State 2</text>
+  <text x="400" y="345" font-family="Arial, sans-serif" font-size="12" fill="#475569" text-anchor="middle">Second step</text>
+  
+  <!-- Action box 2 -->
+  <rect x="50" y="380" width="160" height="50" rx="6" fill="#10b981" stroke="#059669" stroke-width="2"/>
+  <text x="130" y="400" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="white" text-anchor="middle">Show Step 2</text>
+  <text x="130" y="420" font-family="Arial, sans-serif" font-size="11" fill="white" text-anchor="middle">Features nudge</text>
+  
+  <!-- Arrow 3 -->
+  <path d="M 400 365 L 400 385" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  <!-- Event labels positioned below arrow -->
+  <text x="400" y="405" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#059669" text-anchor="middle">BUTTON_CLICKED</text>
+  <text x="400" y="420" font-family="Arial, sans-serif" font-size="10" fill="#059669" text-anchor="middle">(next-step-2)</text>
+  
+  <!-- State 3 -->
+  <rect x="250" y="435" width="300" height="70" rx="8" fill="#fce7f3" stroke="#10b981" stroke-width="2"/>
+  <text x="400" y="460" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1E293B" text-anchor="middle">State 3</text>
+  <text x="400" y="485" font-family="Arial, sans-serif" font-size="12" fill="#475569" text-anchor="middle">Final step</text>
+  
+  <!-- Action box 3 -->
+  <rect x="50" y="520" width="160" height="50" rx="6" fill="#10b981" stroke="#059669" stroke-width="2"/>
+  <text x="130" y="540" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="white" text-anchor="middle">Show Step 3</text>
+  <text x="130" y="560" font-family="Arial, sans-serif" font-size="11" fill="white" text-anchor="middle">Completion nudge</text>
+  
+  <!-- Arrow 4 -->
+  <path d="M 400 505 L 400 525" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  <!-- Event label positioned below arrow -->
+  <text x="400" y="545" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#059669" text-anchor="middle">NUDGE_DISMISSED</text>
+  
+  <!-- State 0 Reset -->
+  <rect x="250" y="560" width="300" height="40" rx="8" fill="#dcfce7" stroke="#10b981" stroke-width="2"/>
+  <text x="400" y="585" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1E293B" text-anchor="middle">State 0 (Reset)</text>
+</svg>

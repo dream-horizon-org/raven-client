@@ -1,0 +1,16 @@
+android/
+ios/
+**/node_modules/
+node_modules/
+lib/
+example/android/
+example/ios/
+*.config.js
+babel.config.js
+metro.config.js
+jest.config.jslder
+react-native.config.js
+**/__mocks__/*
+**/jest/*
+src/generated/
+

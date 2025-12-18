@@ -1,0 +1,38 @@
+<svg width="800" height="200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#10b981"/>
+    </marker>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="200" fill="#f8f9fa"/>
+  
+  <rect x="50" y="70" width="120" height="60" rx="8" fill="#1E293B" stroke="#10b981" stroke-width="2"/>
+  <text x="110" y="95" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">App Launches</text>
+  <text x="110" y="115" font-family="Arial, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">Initial event</text>
+  
+  <path d="M 170 100 L 190 100" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <rect x="190" y="70" width="120" height="60" rx="8" fill="#e0f2fe" stroke="#10b981" stroke-width="2"/>
+  <text x="250" y="95" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1E293B" text-anchor="middle">State "0"</text>
+  <text x="250" y="115" font-family="Arial, sans-serif" font-size="11" fill="#475569" text-anchor="middle">Initial state</text>
+  
+  <path d="M 310 100 L 330 100" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <rect x="330" y="70" width="120" height="60" rx="8" fill="#fef3c7" stroke="#10b981" stroke-width="2"/>
+  <text x="390" y="95" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1E293B" text-anchor="middle">State "1"</text>
+  <text x="390" y="115" font-family="Arial, sans-serif" font-size="11" fill="#475569" text-anchor="middle">Action state</text>
+  
+  <path d="M 450 100 L 470 100" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <rect x="470" y="70" width="140" height="60" rx="8" fill="#fce7f3" stroke="#10b981" stroke-width="2"/>
+  <text x="540" y="95" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1E293B" text-anchor="middle">Show Nudge</text>
+  <text x="540" y="115" font-family="Arial, sans-serif" font-size="11" fill="#475569" text-anchor="middle">Display UI</text>
+  
+  <path d="M 610 100 L 630 100" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <rect x="630" y="70" width="120" height="60" rx="8" fill="#dcfce7" stroke="#10b981" stroke-width="2"/>
+  <text x="690" y="95" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1E293B" text-anchor="middle">Reset</text>
+  <text x="690" y="115" font-family="Arial, sans-serif" font-size="11" fill="#475569" text-anchor="middle">Back to start</text>
+</svg>

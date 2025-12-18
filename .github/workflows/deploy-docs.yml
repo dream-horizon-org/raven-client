@@ -1,0 +1,71 @@
+name: Deploy Docusaurus to GitHub Pages
+
+on:
+  # Run ONLY when code is pushed to main/master (including after merge)
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'docs/**'
+      - '.github/workflows/deploy-docs.yml'
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      DREAM11_NPM_AUTH_TOKEN: ${{ secrets.DREAM11_NPM_AUTH_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'yarn'
+          cache-dependency-path: yarn.lock
+
+      - name: Install dependencies
+        env:
+          DREAM11_NPM_AUTH_TOKEN: ${{ secrets.DREAM11_NPM_AUTH_TOKEN }}
+        run: yarn install --frozen-lockfile
+
+      - name: Build website
+        working-directory: ./docs
+        run: yarn build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/build
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+    needs: build
+
+    # Deploy ONLY on push (i.e., after PR merge)
+    if: github.event_name == 'push'
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
