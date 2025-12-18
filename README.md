@@ -107,7 +107,3 @@ Please read our [Code of Conduct](./CODE_OF_CONDUCT.md) before contributing.
 ## License
 
 This project is licensed under the Apache License 2.0 - see the LICENSE file for details.
-
----
-
-Made with ❤️ by Horizon Engineering
