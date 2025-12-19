@@ -72,7 +72,7 @@ This example demonstrates:
         "actionId": "step-1",
         "type": "NUDGE_UI",
         "template": {
-          "type": "BOTTOMSHEET",
+          "type": "Bottomsheet",
           "props": {
             "title": "Welcome!",
             "message": "Let's get you started",
@@ -93,7 +93,7 @@ This example demonstrates:
         "actionId": "step-2",
         "type": "NUDGE_UI",
         "template": {
-          "type": "BOTTOMSHEET",
+          "type": "Bottomsheet",
           "props": {
             "title": "Discover Features",
             "message": "Explore what our app offers",
@@ -114,7 +114,7 @@ This example demonstrates:
         "actionId": "step-3",
         "type": "NUDGE_UI",
         "template": {
-          "type": "BOTTOMSHEET",
+          "type": "Bottomsheet",
           "props": {
             "title": "You're All Set!",
             "message": "Start using the app now",

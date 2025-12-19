@@ -6,7 +6,7 @@ Nudges are in-app messages displayed as bottom sheets or popups to guide users a
 
 Raven Client supports multiple nudge types:
 - **Bottom Sheets**: Slide up from bottom (NUDGE_UI)
-- **Popups**: Modal dialogs (NUDGE_POPUP)
+- **Popups**: Modal dialogs (POPUP)
 
 ## Bottom Sheet Nudges
 
@@ -17,7 +17,7 @@ Bottom sheets slide up from the bottom of the screen:
   "actionId": "welcome-nudge",
   "type": "NUDGE_UI",
   "template": {
-    "type": "BOTTOMSHEET",
+    "type": "Bottomsheet",
     "props": {
       "title": "Welcome!",
       "message": "Thanks for using our app",
@@ -40,9 +40,9 @@ Popup nudges appear as modal dialogs:
 ```json
 {
   "actionId": "update-popup",
-  "type": "NUDGE_POPUP",
+  "type": "POPUP",
   "template": {
-    "type": "POPUP",
+    "type": "Popup",
     "props": {
       "title": "Update Available",
       "message": "A new version is available",
@@ -199,7 +199,7 @@ nudgeClient.init({
 
 Nudges are triggered automatically when:
 1. State machine reaches a state with a nudge action
-2. Action type is `NUDGE_UI` or `NUDGE_POPUP`
+2. Action type is `NUDGE_UI` or `POPUP`
 3. CTA validation passes (frequency, expiration, etc.)
 
 ## Examples
@@ -218,7 +218,7 @@ Customize nudge appearance through template props:
 ```json
 {
   "template": {
-    "type": "BOTTOMSHEET",
+    "type": "Bottomsheet",
     "props": {
       "title": "Custom Nudge",
       "backgroundColor": "#FFFFFF",

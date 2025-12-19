@@ -108,7 +108,7 @@ type CtaActionType =
 enum ActionType {
   NUDGE = 'NUDGE_UI',
   ACTION = 'NUDGE_ACTION',
-  NUDGE_POPUP = 'POPUP',
+  POPUP = 'POPUP',
   TOOLTIP = 'TOOLTIP',
 }
 ```
