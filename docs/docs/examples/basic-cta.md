@@ -33,7 +33,7 @@ This example demonstrates:
         "actionId": "show-welcome",
         "type": "NUDGE_UI",
         "template": {
-          "type": "BOTTOMSHEET",
+          "type": "Bottomsheet",
           "props": {
             "title": "Welcome!",
             "message": "Thanks for downloading our app",
