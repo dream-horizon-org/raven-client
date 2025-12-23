@@ -234,15 +234,4 @@
   }
 }
 
-/* Hide entire navbar on Raven promotional page */
-body.raven-page .navbar,
-body.raven-page nav.navbar,
-.navbar[style*="display: none"] {
-  display: none !important;
-  visibility: hidden !important;
-  height: 0 !important;
-  overflow: hidden !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
 
