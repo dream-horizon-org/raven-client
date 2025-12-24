@@ -13,8 +13,8 @@ function HomepageHeader() {
         <div className={styles.heroContent}>
           <h1 className="hero__title">{siteConfig.title}</h1>
           <p className="hero__subtitle">
-            Raven's React Native SDK powers messaging, nudges, tooltips, and CTAs as
-            its in-app delivery layer.
+            Raven's React Native SDK powers messaging, nudges, tooltips, and CTAs
+            as its in-app delivery layer.
           </p>
           <div className={styles.buttons}>
             <Link
