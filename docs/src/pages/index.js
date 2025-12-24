@@ -13,11 +13,8 @@ function HomepageHeader() {
         <div className={styles.heroContent}>
           <h1 className="hero__title">{siteConfig.title}</h1>
           <p className="hero__subtitle">
-            <Link to="/raven" className={styles.ravenLink}>
-              Raven
-            </Link>{' '}
-            's React Native SDK powers messaging, nudges, tooltips, and CTAs as
-            its in-app delivery layer.
+            Raven's React Native SDK powers messaging, nudges, tooltips, and
+            CTAs as its in-app delivery layer.
           </p>
           <div className={styles.buttons}>
             <Link
@@ -141,7 +138,7 @@ function PlatformComponents() {
         <h2 className={styles.sectionTitle}>Platform Components</h2>
         <div className={styles.linkGrid}>
           <a
-            href="https://dream-horizon-org.github.io/raven-panel/"
+            href="https://raven.dreamhorizon.org/docs/raven-panel/intro"
             target="_blank"
             rel="noopener noreferrer"
             className={styles.linkCard}>

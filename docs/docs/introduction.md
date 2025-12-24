@@ -62,9 +62,9 @@ Ready to get started? Check out our [Installation Guide](/getting-started/instal
 ## Support
 
 - 📖 Read the [full documentation](/getting-started/installation)
-- 🐛 Report bugs on [GitHub Issues](https://github.com/Devanshj11/RTN-SDK/issues)
-- 💬 Ask questions in [GitHub Discussions](https://github.com/Devanshj11/RTN-SDK/discussions)
-- 📝 Check out [Contributing Guidelines](https://github.com/Devanshj11/RTN-SDK/blob/main/CONTRIBUTING.md)
+- 🐛 Report bugs on [GitHub Issues](https://github.com/dream-horizon-org/raven-client/issues)
+- 💬 Ask questions in [GitHub Discussions](https://github.com/dream-horizon-org/raven-client/discussions)
+- 📝 Check out [Contributing Guidelines](https://github.com/dream-horizon-org/raven-client/blob/main/CONTRIBUTING.md)
 
 ---
 
