@@ -138,7 +138,7 @@ function PlatformComponents() {
         <h2 className={styles.sectionTitle}>Platform Components</h2>
         <div className={styles.linkGrid}>
           <a
-            href="https://dream-horizon-org.github.io/raven-panel/"
+            href="https://raven.dreamhorizon.org/docs/raven-panel/intro"
             target="_blank"
             rel="noopener noreferrer"
             className={styles.linkCard}>
