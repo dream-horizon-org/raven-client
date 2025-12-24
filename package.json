@@ -1,6 +1,6 @@
 {
   "name": "@dreamhorizonorg/raven-client",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "sdk raven",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
