@@ -6,6 +6,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import {SafeAreaProvider} from 'react-native-safe-area-context'
 import {GestureHandlerRootView} from 'react-native-gesture-handler'
 import {useEffect, useRef} from 'react'
+import {Platform} from 'react-native'
 import type {RouteProp} from '@react-navigation/native'
 import HomeScreen, {type RootStackParamList} from './Screens/HomeScreen'
 import VariantsPreviewScreen from './Screens/VariantsPreviewScreen'
@@ -57,10 +58,13 @@ export default function App() {
         }),
       },
       config: {
-        baseUrl: 'http://10.0.2.2:4000',
+        baseUrl:
+          Platform.OS === 'ios'
+            ? 'http://localhost:4000'
+            : 'http://10.0.2.2:4000',
         userId: 'mock_user_id',
         appVersion: '1.0.0-mock',
-        platform: 'android',
+        platform: Platform.OS,
         nudgeRouteName: 'Nudge',
         packageName: 'raven-client-example',
         tenantId: 'mock_tenant_id',
