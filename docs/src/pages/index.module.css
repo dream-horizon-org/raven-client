@@ -176,18 +176,4 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-.ravenLink {
-  color: rgba(255, 255, 255, 0.9);
-  text-decoration: underline;
-  text-decoration-color: rgba(255, 255, 255, 0.5);
-  text-underline-offset: 2px;
-  font-weight: 500;
-  transition: all 0.2s ease;
-}
-
-.ravenLink:hover {
-  color: rgba(255, 255, 255, 1);
-  text-decoration-color: rgba(255, 255, 255, 0.7);
-  text-decoration: underline;
-}
 

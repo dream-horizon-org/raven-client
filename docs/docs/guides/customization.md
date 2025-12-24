@@ -11,7 +11,7 @@ Customize nudge appearance through template props:
 ```json
 {
   "template": {
-    "type": "BOTTOMSHEET",
+    "type": "Bottomsheet",
     "props": {
       "title": "Custom Nudge",
       "message": "Custom message",
@@ -60,7 +60,7 @@ Add images to nudges:
 ```json
 {
   "template": {
-    "type": "BOTTOMSHEET",
+    "type": "Bottomsheet",
     "props": {
       "title": "New Feature",
       "image": "https://example.com/feature.png",
@@ -80,7 +80,7 @@ Add Lottie animations:
 ```json
 {
   "template": {
-    "type": "BOTTOMSHEET",
+    "type": "Bottomsheet",
     "props": {
       "title": "Welcome!",
       "lottie": {

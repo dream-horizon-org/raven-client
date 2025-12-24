@@ -198,7 +198,7 @@ Tooltips can be triggered from CTAs:
   "actionId": "show-tooltip",
   "type": "TOOLTIP",
   "template": {
-    "type": "TOOLTIP",
+    "type": "Tooltip",
     "props": {
       "title": "Sign up now",
       "subTitle": "Create your account",

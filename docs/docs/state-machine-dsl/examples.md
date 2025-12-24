@@ -29,7 +29,7 @@ Show a welcome nudge on first app launch:
         "actionId": "show-welcome",
         "type": "NUDGE_UI",
         "template": {
-          "type": "BOTTOMSHEET",
+          "type": "Bottomsheet",
           "props": {
             "title": "Welcome!",
             "message": "Thanks for downloading our app",
@@ -115,7 +115,7 @@ Guide users through multiple onboarding steps:
         "actionId": "step-1",
         "type": "NUDGE_UI",
         "template": {
-          "type": "BOTTOMSHEET",
+          "type": "Bottomsheet",
           "props": {
             "title": "Welcome!",
             "message": "Let's get you started",
@@ -134,7 +134,7 @@ Guide users through multiple onboarding steps:
         "actionId": "step-2",
         "type": "NUDGE_UI",
         "template": {
-          "type": "BOTTOMSHEET",
+          "type": "Bottomsheet",
           "props": {
             "title": "Discover Features",
             "message": "Explore what our app offers",
@@ -153,7 +153,7 @@ Guide users through multiple onboarding steps:
         "actionId": "step-3",
         "type": "NUDGE_UI",
         "template": {
-          "type": "BOTTOMSHEET",
+          "type": "Bottomsheet",
           "props": {
             "title": "You're All Set!",
             "message": "Start using the app now",
@@ -220,7 +220,7 @@ Show premium upsell only to free users after certain conditions:
         "actionId": "show-upsell",
         "type": "NUDGE_UI",
         "template": {
-          "type": "BOTTOMSHEET",
+          "type": "Bottomsheet",
           "props": {
             "title": "Unlock Premium",
             "message": "Get unlimited access to all features",
@@ -287,7 +287,7 @@ Show a tooltip on a specific button:
         "actionId": "show-tooltip",
         "type": "TOOLTIP",
         "template": {
-          "type": "TOOLTIP",
+          "type": "Tooltip",
           "props": {
             "title": "Sign up now",
             "subTitle": "Create your account",
@@ -335,7 +335,7 @@ Create separate state machines for different users:
         "actionId": "personalized-welcome",
         "type": "NUDGE_UI",
         "template": {
-          "type": "BOTTOMSHEET",
+          "type": "Bottomsheet",
           "props": {
             "title": "Welcome back, {{userName}}!",
             "message": "We've missed you"
@@ -391,7 +391,7 @@ Show reminder after a time period:
         "actionId": "show-reminder",
         "type": "NUDGE_UI",
         "template": {
-          "type": "BOTTOMSHEET",
+          "type": "Bottomsheet",
           "props": {
             "title": "We Miss You!",
             "message": "Come back and continue where you left off"

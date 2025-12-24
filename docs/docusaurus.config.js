@@ -73,11 +73,6 @@ const config = {
         hideOnScroll: true,
         items: [
           {
-            to: '/raven',
-            position: 'left',
-            label: 'Raven',
-          },
-          {
             type: 'docSidebar',
             sidebarId: 'tutorialSidebar',
             position: 'left',

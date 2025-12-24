@@ -307,10 +307,10 @@ If you're still experiencing issues:
    - [Multi-Step Nudge](/examples/multi-step-nudge)
 
 3. **Report Issues:**
-   - [GitHub Issues](https://github.com/Devanshj11/RTN-SDK/issues)
+   - [GitHub Issues](https://github.com/dream-horizon-org/raven-client/issues)
    - Include error messages and logs
    - Provide code examples
 
 4. **Ask Questions:**
-   - [GitHub Discussions](https://github.com/Devanshj11/RTN-SDK/discussions)
+   - [GitHub Discussions](https://github.com/dream-horizon-org/raven-client/discussions)
 

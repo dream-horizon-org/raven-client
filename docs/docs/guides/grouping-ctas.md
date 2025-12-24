@@ -77,7 +77,7 @@ Store group by keys in state machine context. See [State Machine DSL Overview](/
         "actionId": "welcome-nudge",
         "type": "NUDGE_UI",
         "template": {
-          "type": "BOTTOMSHEET",
+          "type": "Bottomsheet",
           "props": {
             "title": "Welcome back, {{userName}}!"
           }

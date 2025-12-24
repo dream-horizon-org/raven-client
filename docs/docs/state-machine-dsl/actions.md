@@ -13,7 +13,7 @@ Display a bottom sheet nudge:
   "actionId": "show-welcome",
   "type": "NUDGE_UI",
   "template": {
-    "type": "BOTTOMSHEET",
+    "type": "Bottomsheet",
     "props": {
       "title": "Welcome!",
       "message": "Thanks for using our app"
@@ -22,16 +22,16 @@ Display a bottom sheet nudge:
 }
 ```
 
-### 2. NUDGE_POPUP
+### 2. POPUP
 
 Display a popup/modal nudge:
 
 ```json
 {
   "actionId": "show-popup",
-  "type": "NUDGE_POPUP",
+  "type": "POPUP",
   "template": {
-    "type": "POPUP",
+    "type": "Popup",
     "props": {
       "title": "Important Update",
       "message": "Please update your app"
@@ -49,7 +49,7 @@ Show a tooltip on a specific element:
   "actionId": "show-tooltip",
   "type": "TOOLTIP",
   "template": {
-    "type": "TOOLTIP",
+    "type": "Tooltip",
     "props": {
       "title": "Tap here",
       "subTitle": "To get started",
@@ -135,7 +135,7 @@ Actions can have configuration options:
   "actionId": "bottomsheet-nudge",
   "type": "NUDGE_UI",
   "template": {
-    "type": "BOTTOMSHEET",
+    "type": "Bottomsheet",
     "props": {
       "title": "Welcome!",
       "message": "Get started with our app",
@@ -152,14 +152,14 @@ Actions can have configuration options:
 }
 ```
 
-### Popup (NUDGE_POPUP)
+### Popup (POPUP)
 
 ```json
 {
   "actionId": "popup-nudge",
-  "type": "NUDGE_POPUP",
+  "type": "POPUP",
   "template": {
-    "type": "POPUP",
+    "type": "Popup",
     "props": {
       "title": "Update Available",
       "message": "A new version is available",
@@ -182,7 +182,7 @@ Actions can have configuration options:
   "actionId": "button-tooltip",
   "type": "TOOLTIP",
   "template": {
-    "type": "TOOLTIP",
+    "type": "Tooltip",
     "props": {
       "title": "Tap here to sign up",
       "subTitle": "Create your account in seconds",
