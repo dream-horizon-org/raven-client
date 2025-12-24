@@ -21,7 +21,7 @@ export function getCtaApiHeaders(): Record<string, string | number> {
     headers.codepush_version = codepushVersion
   }
   if (tenantId) {
-    headers.tenant_id = tenantId
+    headers['x-tenant-id'] = tenantId
   }
   return headers
 }
