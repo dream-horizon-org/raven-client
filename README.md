@@ -13,6 +13,12 @@ The complete documentation includes:
 - [State Machine DSL](https://dream-horizon-org.github.io/raven-client/state-machine-dsl/overview)
 - [Troubleshooting](https://dream-horizon-org.github.io/raven-client/troubleshooting)
 
+## 💬 Community
+
+Join our Discord community for support, discussions, and updates:
+
+**👉 [Join Discord](https://discord.gg/NryqGzJU)**
+
 ## Capabilities
 
 - 🎯 **In-App Engagement**: Display contextual nudges and bottom sheets
