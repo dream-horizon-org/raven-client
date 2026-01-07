@@ -3288,7 +3288,7 @@ __metadata:
     typescript: ^5.9.2
   peerDependencies:
     "@expo/config-plugins": ">=7.0.0"
-    "@gorhom/bottom-sheet": ^4.6.0
+    "@gorhom/bottom-sheet": ^5.2.0
     react: "*"
     react-native: "*"
     react-native-gesture-handler: ^2.20.0
