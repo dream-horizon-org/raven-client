@@ -13,10 +13,11 @@
   },
   "resolutions": {
     "react-native-gesture-handler": "2.28.0",
-    "react-native-reanimated": "3.19.4"
+    "react-native-reanimated": "3.19.4",
+    "@gorhom/bottom-sheet": "5.2.6"
   },
   "dependencies": {
-    "@gorhom/bottom-sheet": "4.6.4",
+    "@gorhom/bottom-sheet": "5.2.6",
     "@react-navigation/bottom-tabs": "^7.2.5",
     "@react-navigation/native": "7.1.18",
     "@react-navigation/native-stack": "^7.3.28",
