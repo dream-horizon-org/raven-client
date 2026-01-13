@@ -1,13 +1,13 @@
 import axios, {Method} from 'axios'
 
-import {nudgeClient} from './nudgeclient'
+import {ravenClient} from './ravenclient'
 import {getCtaApiHeaders} from './ctaApiHeaders'
 
 export async function makeCtaApiPostRequest<TVariables, TData>(
   path: string,
   body?: TVariables,
 ): Promise<TData> {
-  const baseUrl = nudgeClient.getBaseUrl()
+  const baseUrl = ravenClient.getBaseUrl()
   const fullUrl = `${baseUrl}/${path}`
   const headers = getCtaApiHeaders()
 

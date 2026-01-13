@@ -1,5 +1,5 @@
 import type {EventParamType} from '../../../cta/cta.type'
-import {sendNudgeAppEvent} from '../../../cta/ctaEvent'
+import {sendRavenAppEvent} from '../../../cta/ctaEvent'
 import {resolveProp} from '../../screens/NudgeScreen/utils/StringUtils'
 
 import type {
@@ -15,7 +15,7 @@ export function triggerAnalyticsEventAction(
     props.params.eventParams,
     context,
   )
-  sendNudgeAppEvent(props.params.eventName, resolvedProps)
+  sendRavenAppEvent(props.params.eventName, resolvedProps)
 }
 
 export function resolveDynamicEventProperties(

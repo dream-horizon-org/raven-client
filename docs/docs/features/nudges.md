@@ -5,6 +5,7 @@ Nudges are in-app messages displayed as bottom sheets or popups to guide users a
 ## Overview
 
 Raven Client supports multiple nudge types:
+
 - **Bottom Sheets**: Slide up from bottom (NUDGE_UI)
 - **Popups**: Modal dialogs (POPUP)
 
@@ -142,9 +143,7 @@ Trigger an analytics event:
 {
   "type": "EVENT",
   "eventName": "BUTTON_CLICKED",
-  "eventParams": [
-    {"key": "buttonId", "value": "signup"}
-  ]
+  "eventParams": [{"key": "buttonId", "value": "signup"}]
 }
 ```
 
@@ -169,9 +168,9 @@ Dismiss the nudge:
 You must add the `Nudge` screen to your navigation stack:
 
 ```tsx
-import { Nudge } from '@dreamhorizonorg/raven-client';
+import {Nudge} from '@dreamhorizonorg/raven-client'
 
-<Stack.Screen
+;<Stack.Screen
   name="Nudge"
   component={Nudge}
   options={{
@@ -187,17 +186,18 @@ import { Nudge } from '@dreamhorizonorg/raven-client';
 Set `nudgeRouteName` in SDK configuration:
 
 ```tsx
-nudgeClient.init({
+ravenClient.init({
   config: {
-    nudgeRouteName: 'Nudge',  // Must match route name
+    nudgeRouteName: 'Nudge', // Must match route name
     // ... other config
   },
-});
+})
 ```
 
 ## Triggering Nudges
 
 Nudges are triggered automatically when:
+
 1. State machine reaches a state with a nudge action
 2. Action type is `NUDGE_UI` or `POPUP`
 3. CTA validation passes (frequency, expiration, etc.)
@@ -205,6 +205,7 @@ Nudges are triggered automatically when:
 ## Examples
 
 For complete nudge examples with app integration, see:
+
 - [Basic CTA Example](/examples/basic-cta) - Simple welcome nudge
 - [Multi-Step Nudge](/examples/multi-step-nudge) - Multi-step onboarding flow
 - [State Machine DSL Examples](/state-machine-dsl/examples) - Various state machine examples
@@ -238,9 +239,11 @@ Add delay before showing nudge:
   "actionId": "delayed-nudge",
   "type": "NUDGE_UI",
   "config": {
-    "triggerDelay": 2000  // Show after 2 seconds
+    "triggerDelay": 2000 // Show after 2 seconds
   },
-  "template": { /* ... */ }
+  "template": {
+    /* ... */
+  }
 }
 ```
 
@@ -278,4 +281,3 @@ Add delay before showing nudge:
 - [State Machine DSL](/state-machine-dsl/overview) - Learn how nudges are triggered
 - [Quick Start](/getting-started/quick-start) - Set up navigation and initialize
 - [Examples](/examples/basic-cta) - See nudge examples
-

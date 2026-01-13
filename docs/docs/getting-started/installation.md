@@ -13,13 +13,13 @@ Before installing Raven Client, ensure your project meets the following requirem
 
 ### Required Dependencies
 
-| Package | Version | Purpose |
-|---------|---------|---------|
-| `react` | >= 18.0 | React library |
-| `react-native` | >= 0.70 | React Native framework |
-| `@react-navigation/native` | >= 7.0.0 | Navigation container (required for tooltips) |
-| `react-native-gesture-handler` | >= 2.20.0 | Gesture handling for bottom sheets |
-| `@gorhom/bottom-sheet` | >= 4.6.0 | Bottom sheet component for nudges |
+| Package                        | Version   | Purpose                                      |
+| ------------------------------ | --------- | -------------------------------------------- |
+| `react`                        | >= 18.0   | React library                                |
+| `react-native`                 | >= 0.70   | React Native framework                       |
+| `@react-navigation/native`     | >= 7.0.0  | Navigation container (required for tooltips) |
+| `react-native-gesture-handler` | >= 2.20.0 | Gesture handling for bottom sheets           |
+| `@gorhom/bottom-sheet`         | >= 4.6.0  | Bottom sheet component for nudges            |
 
 ### Platform Requirements
 
@@ -35,6 +35,7 @@ Before installing Raven Client, ensure your project meets the following requirem
 ### Optional Dependencies
 
 These are not required but may be useful:
+
 - `react-native-safe-area-context` - For safe area handling
 - `lottie-react-native` - For Lottie animations in nudges
 
@@ -85,9 +86,7 @@ If you're using Expo, add the plugin to your `app.json`:
 ```json
 {
   "expo": {
-    "plugins": [
-      "@dreamhorizonorg/raven-client/app.plugin"
-    ]
+    "plugins": ["@dreamhorizonorg/raven-client/app.plugin"]
   }
 }
 ```
@@ -97,12 +96,11 @@ If you're using Expo, add the plugin to your `app.json`:
 After installation, you can verify the SDK is properly installed by importing it:
 
 ```typescript
-import { nudgeClient } from '@dreamhorizonorg/raven-client';
+import {ravenClient} from '@dreamhorizonorg/raven-client'
 
-console.log('Raven Client installed successfully!');
+console.log('Raven Client installed successfully!')
 ```
 
 ## Next Steps
 
 Now that you've installed the SDK, proceed to the [Quick Start Guide](/getting-started/quick-start) to initialize and use it in your app.
-

@@ -5,6 +5,7 @@ Raven Client includes built-in analytics tracking for CTAs and user interactions
 ## Overview
 
 The SDK automatically tracks:
+
 - CTA processing events
 - State machine transitions
 - Action executions
@@ -33,15 +34,15 @@ The SDK automatically tracks:
 The SDK automatically sends analytics events. Configure the `appEvent` listener:
 
 ```tsx
-nudgeClient.init({
+ravenClient.init({
   listeners: {
     appEvent: (eventName, props) => {
       // Send to your analytics service
-      yourAnalyticsService.track(eventName, props);
+      yourAnalyticsService.track(eventName, props)
     },
     // ...
   },
-});
+})
 ```
 
 ### Manual Events
@@ -49,12 +50,12 @@ nudgeClient.init({
 Send custom analytics events:
 
 ```tsx
-import { sendNudgeAppEvent } from '@dreamhorizonorg/raven-client';
+import {sendNudgeAppEvent} from '@dreamhorizonorg/raven-client'
 
 sendNudgeAppEvent('BUTTON_CLICKED', {
   buttonId: 'signup',
   timestamp: Date.now(),
-});
+})
 ```
 
 ## Event Properties
@@ -80,37 +81,37 @@ Events include contextual information:
 ### Firebase Analytics
 
 ```tsx
-import analytics from '@react-native-firebase/analytics';
+import analytics from '@react-native-firebase/analytics'
 
-nudgeClient.init({
+ravenClient.init({
   listeners: {
     appEvent: (eventName, props) => {
-      analytics().logEvent(eventName, props);
+      analytics().logEvent(eventName, props)
     },
     // ...
   },
-});
+})
 ```
 
 ### Mixpanel
 
 ```tsx
-import Mixpanel from 'react-native-mixpanel';
+import Mixpanel from 'react-native-mixpanel'
 
-nudgeClient.init({
+ravenClient.init({
   listeners: {
     appEvent: (eventName, props) => {
-      Mixpanel.track(eventName, props);
+      Mixpanel.track(eventName, props)
     },
     // ...
   },
-});
+})
 ```
 
 ### Custom Analytics
 
 ```tsx
-nudgeClient.init({
+ravenClient.init({
   listeners: {
     appEvent: (eventName, props) => {
       fetch('https://api.example.com/analytics', {
@@ -120,11 +121,11 @@ nudgeClient.init({
           properties: props,
           timestamp: Date.now(),
         }),
-      });
+      })
     },
     // ...
   },
-});
+})
 ```
 
 ## Event Batching
@@ -151,4 +152,3 @@ The SDK batches events for efficient sending:
 
 - [Quick Start](/getting-started/quick-start) - Set up analytics
 - [API Reference](/api-reference/nudge-client) - See API details
-

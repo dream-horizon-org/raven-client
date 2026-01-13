@@ -1,13 +1,13 @@
 import {RAVEN_API_VERSION} from '../utils/AppUtils.constant'
-import {nudgeClient} from './nudgeclient'
+import {ravenClient} from './ravenclient'
 
 export function getCtaApiHeaders(): Record<string, string | number> {
-  const accessToken = nudgeClient.getAccessToken()
-  const appVersion = nudgeClient.getAppVersion()
-  const codepushVersion = nudgeClient.getCodepushVersion()
-  const userId = nudgeClient.getUserId()
-  const packageName = nudgeClient.getPackageNameValue()
-  const tenantId = nudgeClient.getTenantId()
+  const accessToken = ravenClient.getAccessToken()
+  const appVersion = ravenClient.getAppVersion()
+  const codepushVersion = ravenClient.getCodepushVersion()
+  const userId = ravenClient.getUserId()
+  const packageName = ravenClient.getPackageNameValue()
+  const tenantId = ravenClient.getTenantId()
 
   const headers: Record<string, string | number> = {
     'content-type': 'application/json',

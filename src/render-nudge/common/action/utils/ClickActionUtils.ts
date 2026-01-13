@@ -1,5 +1,5 @@
 import {NudgeAnalyticsEvents} from '../../../../cta/eventsFile'
-import {nudgeClient} from '../../../../cta/nudgeclient'
+import {ravenClient} from '../../../../cta/ravenclient'
 
 import type {TouchableViewType} from '../../../screens/NudgeScreen/ViewTypes.interface'
 import {resolveProp} from '../../../screens/NudgeScreen/utils/StringUtils'
@@ -80,7 +80,7 @@ function sendNudgeCTAClickEvent(
   actions?: ActionProps[],
   context?: Record<string, unknown>,
 ) {
-  nudgeClient.onAppEvent(NudgeAnalyticsEvents.NudgeCtaClickEvent, {
+  ravenClient.onAppEvent(NudgeAnalyticsEvents.NudgeCtaClickEvent, {
     actionType:
       actions?.map((actionProps) => actionProps.type).join(',') ??
       DEFAULT_STRING_VALUE,
@@ -97,7 +97,7 @@ function sendCTAClickPerformActionEvent(
   viewTestId: string,
   context?: Record<string, unknown>,
 ) {
-  nudgeClient.onAppEvent(NudgeAnalyticsEvents.NudgeCtaClickFailedEvent, {
+  ravenClient.onAppEvent(NudgeAnalyticsEvents.NudgeCtaClickFailedEvent, {
     actionType: ActionTypeInterface.NONE,
     clickTestId: viewTestId,
     errorMessage: 'Nudge Click Action Type is None',
@@ -117,7 +117,7 @@ function sendNudgeCTAClickFailedEvent(
   const viewTestId =
     resolveProp<string>(data.props.testId, context ?? {}, 'string') ??
     DEFAULT_STRING_VALUE
-  nudgeClient.onAppEvent(NudgeAnalyticsEvents.NudgeCtaClickFailedEvent, {
+  ravenClient.onAppEvent(NudgeAnalyticsEvents.NudgeCtaClickFailedEvent, {
     actionType: ActionTypeInterface.NONE,
     clickTestId: viewTestId,
     errorMessage:
@@ -138,7 +138,7 @@ function sendCTAPerformActionFailedEvent(
   error: unknown,
   context?: Record<string, unknown>,
 ) {
-  nudgeClient.onAppEvent(NudgeAnalyticsEvents.NudgeCtaClickFailedEvent, {
+  ravenClient.onAppEvent(NudgeAnalyticsEvents.NudgeCtaClickFailedEvent, {
     actionType: action.type,
     clickTestId: viewTestId,
     errorMessage:

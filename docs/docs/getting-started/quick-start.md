@@ -9,37 +9,36 @@ Get up and running with Raven Client in 5 minutes!
 The SDK requires React Navigation. Set up your navigation container:
 
 ```tsx
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import {NavigationContainer} from '@react-navigation/native'
+import {createNativeStackNavigator} from '@react-navigation/native-stack'
+import {SafeAreaProvider} from 'react-native-safe-area-context'
+import {GestureHandlerRootView} from 'react-native-gesture-handler'
 import {
   Nudge,
   setNavigationRef,
   useNavigationTracker,
-  type NudgeClientOptions,
-} from '@dreamhorizonorg/raven-client';
+  type RavenClientOptions,
+} from '@dreamhorizonorg/raven-client'
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator()
 
 function App() {
-  const navigationRef = useRef<NavigationContainerRef>(null);
-  
+  const navigationRef = useRef<NavigationContainerRef>(null)
+
   // Connect navigation tracker for tooltip system
-  useNavigationTracker(navigationRef);
+  useNavigationTracker(navigationRef)
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{flex: 1}}>
       <SafeAreaProvider>
         <NavigationContainer
           ref={(ref) => {
-            navigationRef.current = ref;
-            setNavigationRef(ref);
-          }}
-        >
+            navigationRef.current = ref
+            setNavigationRef(ref)
+          }}>
           <Stack.Navigator>
             <Stack.Screen name="Home" component={HomeScreen} />
-            
+
             {/* Required: Add Nudge screen for bottom sheets */}
             <Stack.Screen
               name="Nudge"
@@ -54,7 +53,7 @@ function App() {
         </NavigationContainer>
       </SafeAreaProvider>
     </GestureHandlerRootView>
-  );
+  )
 }
 ```
 
@@ -63,22 +62,26 @@ function App() {
 Initialize the SDK in your root component:
 
 ```tsx
-import { useEffect } from 'react';
-import { nudgeClient, fetchCTA, type NudgeClientOptions } from '@dreamhorizonorg/raven-client';
-import { Platform } from 'react-native';
+import {useEffect} from 'react'
+import {
+  ravenClient,
+  fetchCTA,
+  type RavenClientOptions,
+} from '@dreamhorizonorg/raven-client'
+import {Platform} from 'react-native'
 
 function App() {
   useEffect(() => {
     // Initialize the SDK
-    nudgeClient.init({
+    ravenClient.init({
       listeners: {
         appEvent: (eventName, props) => {
           // Handle analytics events
-          console.log('Analytics event:', eventName, props);
+          console.log('Analytics event:', eventName, props)
         },
         fetchCtaApi: async (url, method, variables) => {
           // This callback is typically not used
-          throw new Error('Use makeCtaApiCall directly');
+          throw new Error('Use makeCtaApiCall directly')
         },
         getAccessToken: () => ({
           token: 'your-access-token',
@@ -93,11 +96,11 @@ function App() {
         nudgeRouteName: 'Nudge',
         packageName: 'com.yourcompany.yourapp',
       },
-    } as NudgeClientOptions);
+    } as RavenClientOptions)
 
     // Fetch Engagement after initialization
-    fetchCTA().catch(console.error);
-  }, []);
+    fetchCTA().catch(console.error)
+  }, [])
 
   // ... rest of your app
 }
@@ -108,16 +111,16 @@ function App() {
 Process app events to trigger Engagement:
 
 ```tsx
-import { processEventForCTAs } from '@dreamhorizonorg/raven-client';
+import {trackAppEvent} from '@dreamhorizonorg/raven-client'
 
 // When a user logs in
-processEventForCTAs({
+trackAppEvent({
   eventName: 'USER_LOGIN',
   routeName: 'Home',
   is_from_rn: true,
   actionDone: false,
   userId: '123',
-});
+})
 ```
 
 ## Step 4: Send Analytics Events (Optional)
@@ -125,12 +128,12 @@ processEventForCTAs({
 Send analytics events to track user behavior:
 
 ```tsx
-import { sendNudgeAppEvent } from '@dreamhorizonorg/raven-client';
+import {sendNudgeAppEvent} from '@dreamhorizonorg/raven-client'
 
 sendNudgeAppEvent('BUTTON_CLICKED', {
   buttonId: 'signup-button',
   timestamp: Date.now(),
-});
+})
 ```
 
 ## Complete Example
@@ -138,54 +141,57 @@ sendNudgeAppEvent('BUTTON_CLICKED', {
 Here's a complete example combining all the steps:
 
 ```tsx
-import React, { useEffect, useRef } from 'react';
-import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { Platform } from 'react-native';
+import React, {useEffect, useRef} from 'react'
+import {
+  NavigationContainer,
+  NavigationContainerRef,
+} from '@react-navigation/native'
+import {createNativeStackNavigator} from '@react-navigation/native-stack'
+import {SafeAreaProvider} from 'react-native-safe-area-context'
+import {GestureHandlerRootView} from 'react-native-gesture-handler'
+import {Platform} from 'react-native'
 import {
   Nudge,
   setNavigationRef,
-  nudgeClient,
+  ravenClient,
   useNavigationTracker,
   fetchCTA,
-  processEventForCTAs,
-  type NudgeClientOptions,
-} from '@dreamhorizonorg/raven-client';
+  trackAppEvent,
+  type RavenClientOptions,
+} from '@dreamhorizonorg/raven-client'
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator()
 
 function HomeScreen() {
   const handleLogin = () => {
     // Process event to trigger CTAs
-    processEventForCTAs({
+    trackAppEvent({
       eventName: 'USER_LOGIN',
       routeName: 'Home',
       is_from_rn: true,
       actionDone: false,
-    });
-  };
+    })
+  }
 
   return (
     // Your screen content
     <Button onPress={handleLogin} title="Login" />
-  );
+  )
 }
 
 export default function App() {
-  const navigationRef = useRef<NavigationContainerRef>(null);
+  const navigationRef = useRef<NavigationContainerRef>(null)
 
-  useNavigationTracker(navigationRef);
+  useNavigationTracker(navigationRef)
 
   useEffect(() => {
-    nudgeClient.init({
+    ravenClient.init({
       listeners: {
         appEvent: (eventName, props) => {
-          console.log('Analytics:', eventName, props);
+          console.log('Analytics:', eventName, props)
         },
         fetchCtaApi: async () => {
-          throw new Error('Not used');
+          throw new Error('Not used')
         },
         getAccessToken: () => ({
           token: 'your-token',
@@ -200,20 +206,19 @@ export default function App() {
         nudgeRouteName: 'Nudge',
         packageName: 'com.example.app',
       },
-    } as NudgeClientOptions);
+    } as RavenClientOptions)
 
-    fetchCTA().catch(console.error);
-  }, []);
+    fetchCTA().catch(console.error)
+  }, [])
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{flex: 1}}>
       <SafeAreaProvider>
         <NavigationContainer
           ref={(ref) => {
-            navigationRef.current = ref;
-            setNavigationRef(ref);
-          }}
-        >
+            navigationRef.current = ref
+            setNavigationRef(ref)
+          }}>
           <Stack.Navigator>
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen
@@ -229,7 +234,7 @@ export default function App() {
         </NavigationContainer>
       </SafeAreaProvider>
     </GestureHandlerRootView>
-  );
+  )
 }
 ```
 
@@ -239,4 +244,3 @@ export default function App() {
 - Explore [Engagement System](/core-concepts/cta-system)
 - Check out [Tooltip System](/features/tooltips)
 - Read the [API Reference](/api-reference/nudge-client)
-

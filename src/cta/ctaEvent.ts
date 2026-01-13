@@ -1,11 +1,11 @@
-import {nudgeClient} from './nudgeclient'
+import {ravenClient} from './ravenclient'
 
 const nudgeAppEvent = () => {
   return (
     eventName: string,
     eventObj: Record<string, string | boolean | number | null>,
   ) => {
-    nudgeClient.onAppEvent(eventName, eventObj)
+    ravenClient.onAppEvent(eventName, eventObj)
   }
 }
 
@@ -26,7 +26,7 @@ const nudgeEvent = () => {
     sendEvents: () => {
       if (arr.length > 0) {
         arr.forEach((event) => {
-          nudgeClient.onAppEvent(event.eventName, event.props)
+          ravenClient.onAppEvent(event.eventName, event.props)
         })
         arr.length = 0
       }
@@ -35,4 +35,4 @@ const nudgeEvent = () => {
 }
 
 export const nudgeOptimizedSendEvent = nudgeEvent()
-export const sendNudgeAppEvent = nudgeAppEvent()
+export const sendRavenAppEvent = nudgeAppEvent()

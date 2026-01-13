@@ -4,40 +4,40 @@ Complete TypeScript type definitions for Raven Client.
 
 ## Core Types
 
-### `NudgeClientOptions`
+### `RavenClientOptions`
 
 ```typescript
-interface NudgeClientOptions {
-  listeners: NudgeClientListeners;
-  config: NudgeClientConfig;
+interface RavenClientOptions {
+  listeners: RavenClientListeners
+  config: RavenClientConfig
 }
 ```
 
-### `NudgeClientConfig`
+### `RavenClientConfig`
 
 ```typescript
-interface NudgeClientConfig {
-  baseUrl: string;
-  userId: string | number;
-  appVersion: string;
-  codepushVersion?: string;
-  platform: string;
-  nudgeRouteName: string;
-  packageName: string;
+interface RavenClientConfig {
+  baseUrl: string
+  userId: string | number
+  appVersion: string
+  codepushVersion?: string
+  platform: string
+  nudgeRouteName: string
+  packageName: string
 }
 ```
 
-### `NudgeClientListeners`
+### `RavenClientListeners`
 
 ```typescript
-interface NudgeClientListeners {
-  appEvent: (eventName: string, props?: unknown) => void;
+interface RavenClientListeners {
+  appEvent: (eventName: string, props?: unknown) => void
   fetchCtaApi: <TVariables, TData>(
     url: string,
     method: string,
     variables?: TVariables,
-  ) => Promise<TData>;
-  getAccessToken: () => AccessToken;
+  ) => Promise<TData>
+  getAccessToken: () => AccessToken
 }
 ```
 
@@ -45,8 +45,8 @@ interface NudgeClientListeners {
 
 ```typescript
 interface AccessToken {
-  token: string;
-  tokenType: string;
+  token: string
+  tokenType: string
 }
 ```
 
@@ -56,12 +56,12 @@ interface AccessToken {
 
 ```typescript
 interface CTAEvent {
-  eventName: string;
-  actionDone: boolean;
-  ActiveScreenName?: string;
-  routeName: string;
-  is_from_rn: boolean;
-  [key: string]: boolean | string | number;
+  eventName: string
+  actionDone: boolean
+  ActiveScreenName?: string
+  routeName: string
+  is_from_rn: boolean
+  [key: string]: boolean | string | number
 }
 ```
 
@@ -71,24 +71,24 @@ interface CTAEvent {
 
 ```typescript
 interface Cta {
-  ctaId: string;
+  ctaId: string
   rule: {
-    actions: CtaActionType[];
-    contextParams: string[];
-    priority: number;
-    frequency: FrequencyRules;
-    groupByConfig?: GroupByConfig;
-    stateToAction: Record<string, string>;
-    resetStates: string[];
-    resetCTAonFirstLaunch: boolean;
-    stateTransition: StateTransition;
-    stateMachineTTL: number | null;
-    ctaValidTill: number | null;
-  };
-  resetAt: number[];
-  actionDoneAt: number[];
-  activeStateMachines: ActiveStateMachines;
-  behaviourTagName?: string;
+    actions: CtaActionType[]
+    contextParams: string[]
+    priority: number
+    frequency: FrequencyRules
+    groupByConfig?: GroupByConfig
+    stateToAction: Record<string, string>
+    resetStates: string[]
+    resetCTAonFirstLaunch: boolean
+    stateTransition: StateTransition
+    stateMachineTTL: number | null
+    ctaValidTill: number | null
+  }
+  resetAt: number[]
+  actionDoneAt: number[]
+  activeStateMachines: ActiveStateMachines
+  behaviourTagName?: string
 }
 ```
 
@@ -99,7 +99,7 @@ type CtaActionType =
   | CtaUIAction
   | CtaEventAction
   | CtaPopupAction
-  | CtaTooltipAction;
+  | CtaTooltipAction
 ```
 
 ### `ActionType`
@@ -119,26 +119,26 @@ enum ActionType {
 
 ```typescript
 interface StateMachineObject {
-  currentState: string;
-  lastTransitionAt: number;
-  context: Context;
-  createdAt: number;
-  reset: boolean;
+  currentState: string
+  lastTransitionAt: number
+  context: Context
+  createdAt: number
+  reset: boolean
 }
 ```
 
 ### `StateTransition`
 
 ```typescript
-type StateTransition = Record<string, Record<string, Transition[]>>;
+type StateTransition = Record<string, Record<string, Transition[]>>
 ```
 
 ### `Transition`
 
 ```typescript
 interface Transition {
-  transitionTo: string;
-  filters?: Filters;
+  transitionTo: string
+  filters?: Filters
 }
 ```
 
@@ -148,8 +148,8 @@ interface Transition {
 
 ```typescript
 interface Filters {
-  operator: OperatorType;
-  filter: (Filter | FilterGroup)[];
+  operator: OperatorType
+  filter: (Filter | FilterGroup)[]
 }
 ```
 
@@ -157,24 +157,24 @@ interface Filters {
 
 ```typescript
 interface Filter {
-  propertyName: string;
-  propertyType: string;
-  comparisonType: ComparisonType;
-  comparisonValue: string | boolean | number;
-  functions?: FilterFunctions;
+  propertyName: string
+  propertyType: string
+  comparisonType: ComparisonType
+  comparisonValue: string | boolean | number
+  functions?: FilterFunctions
 }
 ```
 
 ### `ComparisonType`
 
 ```typescript
-type ComparisonType = '=' | '>' | '<' | '>=' | '<=' | '!=';
+type ComparisonType = '=' | '>' | '<' | '>=' | '<=' | '!='
 ```
 
 ### `OperatorType`
 
 ```typescript
-type OperatorType = 'AND' | 'OR';
+type OperatorType = 'AND' | 'OR'
 ```
 
 ## Tooltip Types
@@ -183,36 +183,36 @@ type OperatorType = 'AND' | 'OR';
 
 ```typescript
 interface TooltipOptions {
-  title: string;
-  subTitle?: string;
-  targetId: string;
-  position?: 'top' | 'bottom' | 'left' | 'right';
-  backgroundColor?: string;
-  titleColor?: string;
-  subTitleColor?: string;
-  titleFontSize?: number;
-  subTitleFontSize?: number;
-  titleFontFamily?: string;
-  subTitleFontFamily?: string;
-  titleFontWeight?: 'Bold' | 'Medium' | 'Regular';
-  subTitleFontWeight?: 'Bold' | 'Medium' | 'Regular';
-  targetScreen?: string;
-  triggerType?: 'mount' | 'click' | 'event';
-  triggerDelay?: number;
-  autoDismissMs?: number;
-  dismissOnOutsideTouch?: boolean;
-  titleAlignment?: 'left' | 'center' | 'right';
-  subTitleAlignment?: 'left' | 'center' | 'right';
-  arrowSize?: number;
-  borderRadius?: number;
-  paddingLeft?: number;
-  paddingRight?: number;
-  paddingTop?: number;
-  paddingBottom?: number;
-  marginTop?: number;
-  marginBottom?: number;
-  marginLeft?: number;
-  marginRight?: number;
+  title: string
+  subTitle?: string
+  targetId: string
+  position?: 'top' | 'bottom' | 'left' | 'right'
+  backgroundColor?: string
+  titleColor?: string
+  subTitleColor?: string
+  titleFontSize?: number
+  subTitleFontSize?: number
+  titleFontFamily?: string
+  subTitleFontFamily?: string
+  titleFontWeight?: 'Bold' | 'Medium' | 'Regular'
+  subTitleFontWeight?: 'Bold' | 'Medium' | 'Regular'
+  targetScreen?: string
+  triggerType?: 'mount' | 'click' | 'event'
+  triggerDelay?: number
+  autoDismissMs?: number
+  dismissOnOutsideTouch?: boolean
+  titleAlignment?: 'left' | 'center' | 'right'
+  subTitleAlignment?: 'left' | 'center' | 'right'
+  arrowSize?: number
+  borderRadius?: number
+  paddingLeft?: number
+  paddingRight?: number
+  paddingTop?: number
+  paddingBottom?: number
+  marginTop?: number
+  marginBottom?: number
+  marginLeft?: number
+  marginRight?: number
 }
 ```
 
@@ -222,10 +222,10 @@ interface TooltipOptions {
 
 ```typescript
 interface IStorage {
-  get(key: string): Promise<string | null>;
-  set(key: string, value: string): Promise<void>;
-  remove(key: string): Promise<void>;
-  clear(): Promise<void>;
+  get(key: string): Promise<string | null>
+  set(key: string, value: string): Promise<void>
+  remove(key: string): Promise<void>
+  clear(): Promise<void>
 }
 ```
 
@@ -239,10 +239,10 @@ interface StorageConfig {
 
 ## Nudge Types
 
-### `NudgeParams`
+### `RavenParams`
 
 ```typescript
-interface NudgeParams {
+interface RavenParams {
   // Nudge parameters
 }
 ```
@@ -253,16 +253,15 @@ Import types as needed:
 
 ```tsx
 import type {
-  NudgeClientOptions,
-  NudgeClientConfig,
+  RavenClientOptions,
+  RavenClientConfig,
   CTAEvent,
   TooltipOptions,
   IStorage,
-} from '@dreamhorizonorg/raven-client';
+} from '@dreamhorizonorg/raven-client'
 ```
 
 ## Next Steps
 
 - [API Reference](/api-reference/nudge-client) - See API documentation
 - [Quick Start](/getting-started/quick-start) - Use types in your app
-

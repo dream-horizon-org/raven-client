@@ -43,7 +43,7 @@ export function openDeeplink(
       Linking.openURL(deeplinkUrl ?? '')
       break
     // case DeeplinkRedirectionType.INTERNAL_BROWSER:
-    //   nudgeClient.openWebView(deeplinkUrl, '')
+    //   ravenClient.openWebView(deeplinkUrl, '')
     //   break
     case DeeplinkRedirectionType.INTERNAL_APP:
       nativeEventEmitter.emit('url', {url: deeplinkUrl})

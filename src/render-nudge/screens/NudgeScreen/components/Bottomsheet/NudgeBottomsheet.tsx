@@ -8,7 +8,7 @@ import BottomSheet, {
 } from '@gorhom/bottom-sheet'
 import {NudgeAnalyticsEvents} from '../../../../../cta/eventsFile'
 import type {NudgeAnalyticsEventTypes} from '../../../../../cta/eventsFile'
-import {nudgeClient} from '../../../../../cta/nudgeclient'
+import {ravenClient} from '../../../../../cta/ravenclient'
 
 import {
   DEFAULT_NUMBER_VALUE,
@@ -87,7 +87,7 @@ function sendNudgeBottomSheetEvent(
   const clickTestId =
     resolveProp<string>(content?.props?.testId, context, 'string') ||
     DEFAULT_STRING_VALUE
-  nudgeClient.onAppEvent(eventName as string, {
+  ravenClient.onAppEvent(eventName as string, {
     actionType: bottomSheetState,
     clickTestId: clickTestId,
     ctaId: (context?.ctaId as string) || DEFAULT_STRING_VALUE,

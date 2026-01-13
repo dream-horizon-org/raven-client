@@ -5,6 +5,7 @@ An example showing a multi-step onboarding flow using state machines.
 ## Overview
 
 This example demonstrates:
+
 - Multi-step state machine
 - Conditional transitions
 - Sequential nudge display
@@ -81,9 +82,7 @@ This example demonstrates:
               "action": {
                 "type": "EVENT",
                 "eventName": "BUTTON_CLICKED",
-                "eventParams": [
-                  {"key": "buttonId", "value": "next-step-1"}
-                ]
+                "eventParams": [{"key": "buttonId", "value": "next-step-1"}]
               }
             }
           }
@@ -102,9 +101,7 @@ This example demonstrates:
               "action": {
                 "type": "EVENT",
                 "eventName": "BUTTON_CLICKED",
-                "eventParams": [
-                  {"key": "buttonId", "value": "next-step-2"}
-                ]
+                "eventParams": [{"key": "buttonId", "value": "next-step-2"}]
               }
             }
           }
@@ -141,29 +138,29 @@ This example demonstrates:
 ## App Integration
 
 ```tsx
-import { processEventForCTAs } from '@dreamhorizonorg/raven-client';
+import {trackAppEvent} from '@dreamhorizonorg/raven-client'
 
 function App() {
   useEffect(() => {
     // Process app launch
-    processEventForCTAs({
+    trackAppEvent({
       eventName: 'APP_LAUNCH',
       routeName: 'Home',
       is_from_rn: true,
       actionDone: false,
-    });
-  }, []);
+    })
+  }, [])
 
   // When nudge button is clicked, process event
   const handleNudgeButtonClick = (buttonId: string) => {
-    processEventForCTAs({
+    trackAppEvent({
       eventName: 'BUTTON_CLICKED',
       routeName: 'Home',
       is_from_rn: true,
       actionDone: false,
       buttonId: buttonId,
-    });
-  };
+    })
+  }
 }
 ```
 
@@ -171,4 +168,3 @@ function App() {
 
 - [State Machine DSL Examples](/state-machine-dsl/examples) - More configuration examples
 - [Tooltips Guide](/features/tooltips) - Learn about tooltips
-
