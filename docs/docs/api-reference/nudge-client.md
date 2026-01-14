@@ -1,23 +1,23 @@
 # Nudge Client API
 
-The `nudgeClient` is the main entry point for initializing and configuring Raven Client.
+The `ravenClient` is the main entry point for initializing and configuring Raven Client.
 
 ## Initialization
 
-### `init(options: NudgeClientOptions)`
+### `init(options: RavenClientOptions)`
 
 Initialize the SDK with configuration and listeners.
 
 ```tsx
-import { nudgeClient } from '@dreamhorizonorg/raven-client';
+import {ravenClient} from '@dreamhorizonorg/raven-client'
 
-nudgeClient.init({
+ravenClient.init({
   listeners: {
     appEvent: (eventName, props) => {
       // Handle analytics events
     },
     fetchCtaApi: async (url, method, variables) => {
-      throw new Error('Not used');
+      throw new Error('Not used')
     },
     getAccessToken: () => ({
       token: 'your-token',
@@ -33,7 +33,7 @@ nudgeClient.init({
     packageName: 'com.example.app',
     tenantId: 'your-tenant-id', // Optional
   },
-});
+})
 ```
 
 ## Configuration Methods
@@ -43,7 +43,7 @@ nudgeClient.init({
 Get the current access token.
 
 ```tsx
-const token = nudgeClient.getAccessToken();
+const token = ravenClient.getAccessToken()
 // Returns: { token: string, tokenType: string }
 ```
 
@@ -52,7 +52,7 @@ const token = nudgeClient.getAccessToken();
 Get the app version.
 
 ```tsx
-const version = nudgeClient.getAppVersion();
+const version = ravenClient.getAppVersion()
 // Returns: string
 ```
 
@@ -61,7 +61,7 @@ const version = nudgeClient.getAppVersion();
 Get the current user ID.
 
 ```tsx
-const userId = nudgeClient.getUserId();
+const userId = ravenClient.getUserId()
 // Returns: string | number
 ```
 
@@ -70,7 +70,7 @@ const userId = nudgeClient.getUserId();
 Get the package name.
 
 ```tsx
-const packageName = nudgeClient.getPackageNameValue();
+const packageName = ravenClient.getPackageNameValue()
 // Returns: string
 ```
 
@@ -79,7 +79,7 @@ const packageName = nudgeClient.getPackageNameValue();
 Get the tenant ID (if configured).
 
 ```tsx
-const tenantId = nudgeClient.getTenantId();
+const tenantId = ravenClient.getTenantId()
 // Returns: string | undefined
 ```
 
@@ -91,10 +91,10 @@ Access and modify configuration:
 
 ```tsx
 // Read
-const baseUrl = nudgeClient.config?.baseUrl;
+const baseUrl = ravenClient.config?.baseUrl
 
 // Modify
-nudgeClient.config.userId = 'new-user-id';
+ravenClient.config.userId = 'new-user-id'
 ```
 
 ### `platform`
@@ -102,47 +102,47 @@ nudgeClient.config.userId = 'new-user-id';
 Current platform:
 
 ```tsx
-const platform = nudgeClient.platform;
+const platform = ravenClient.platform
 // Returns: 'ios' | 'android'
 ```
 
 ## Types
 
-### `NudgeClientOptions`
+### `RavenClientOptions`
 
 ```typescript
-interface NudgeClientOptions {
-  listeners: NudgeClientListeners;
-  config: NudgeClientConfig;
+interface RavenClientOptions {
+  listeners: RavenClientListeners
+  config: RavenClientConfig
 }
 ```
 
-### `NudgeClientConfig`
+### `RavenClientConfig`
 
 ```typescript
-interface NudgeClientConfig {
-  baseUrl: string;              // API base URL
-  userId: string | number;       // Current user ID
-  appVersion: string;            // App version
-  codepushVersion?: string;      // CodePush version (optional)
-  platform: string;             // 'ios' or 'android'
-  nudgeRouteName: string;        // Route name for Nudge screen
-  packageName: string;          // App package/bundle ID
-  tenantId?: string;            // Tenant ID for multi-tenant apps
+interface RavenClientConfig {
+  baseUrl: string // API base URL
+  userId: string | number // Current user ID
+  appVersion: string // App version
+  codepushVersion?: string // CodePush version (optional)
+  platform: string // 'ios' or 'android'
+  nudgeRouteName: string // Route name for Nudge screen
+  packageName: string // App package/bundle ID
+  tenantId?: string // Tenant ID for multi-tenant apps
 }
 ```
 
-### `NudgeClientListeners`
+### `RavenClientListeners`
 
 ```typescript
-interface NudgeClientListeners {
-  appEvent: (eventName: string, props?: unknown) => void;
+interface RavenClientListeners {
+  appEvent: (eventName: string, props?: unknown) => void
   fetchCtaApi: <TVariables, TData>(
     url: string,
     method: string,
     variables?: TVariables,
-  ) => Promise<TData>;
-  getAccessToken: () => AccessToken;
+  ) => Promise<TData>
+  getAccessToken: () => AccessToken
 }
 ```
 
@@ -150,35 +150,35 @@ interface NudgeClientListeners {
 
 ```typescript
 interface AccessToken {
-  token: string;
-  tokenType: string;
+  token: string
+  tokenType: string
 }
 ```
 
 ## Example
 
 ```tsx
-import { useEffect } from 'react';
-import { nudgeClient, fetchCTA } from '@dreamhorizonorg/raven-client';
-import { Platform } from 'react-native';
+import {useEffect} from 'react'
+import {ravenClient, fetchCTA} from '@dreamhorizonorg/raven-client'
+import {Platform} from 'react-native'
 
 function App() {
   useEffect(() => {
-    nudgeClient.init({
+    ravenClient.init({
       listeners: {
         appEvent: (eventName, props) => {
-          console.log('Analytics:', eventName, props);
+          console.log('Analytics:', eventName, props)
           // Send to your analytics service
         },
         fetchCtaApi: async () => {
-          throw new Error('Not used');
+          throw new Error('Not used')
         },
         getAccessToken: () => {
           // Get from your auth system
           return {
             token: 'your-token',
             tokenType: 'Bearer',
-          };
+          }
         },
       },
       config: {
@@ -190,12 +190,12 @@ function App() {
         packageName: 'com.example.app',
         tenantId: 'your-tenant-id', // Optional
       },
-    });
+    })
 
-    fetchCTA();
-  }, []);
+    fetchCTA()
+  }, [])
 
-  return <YourApp />;
+  return <YourApp />
 }
 ```
 
@@ -203,4 +203,3 @@ function App() {
 
 - [Quick Start](/getting-started/quick-start) - Learn how to initialize
 - [CTA Handler](/api-reference/cta-handler) - Process events
-

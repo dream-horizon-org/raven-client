@@ -5,6 +5,7 @@ The State Machine DSL is the core of Raven Client. It allows you to define compl
 ## What is a State Machine?
 
 A state machine is a computational model that consists of:
+
 - **States**: Different stages in a user flow
 - **Transitions**: Movement between states based on events
 - **Actions**: What happens when reaching a state
@@ -15,6 +16,7 @@ A state machine is a computational model that consists of:
 ### States
 
 States are represented as strings (typically numbers like "0", "1", "2"). Each state can have:
+
 - An associated action
 - Transition rules to other states
 - Context data
@@ -30,7 +32,9 @@ Transitions define how the state machine moves from one state to another:
       "0": [
         {
           "transitionTo": "1",
-          "filters": { /* optional filters */ }
+          "filters": {
+            /* optional filters */
+          }
         }
       ]
     }
@@ -53,7 +57,9 @@ Actions are executed when a state is reached:
     {
       "actionId": "action-1",
       "type": "NUDGE_UI",
-      "template": { /* nudge template */ }
+      "template": {
+        /* nudge template */
+      }
     }
   ]
 }
@@ -83,7 +89,7 @@ A basic example showing state transitions:
       {
         "actionId": "show-welcome",
         "type": "NUDGE_UI",
-        "template": { "title": "Welcome!" }
+        "template": {"title": "Welcome!"}
       }
     ],
     "resetStates": ["1"]
@@ -112,12 +118,12 @@ State machines can store context data:
 When events occur, context parameters are extracted and stored:
 
 ```tsx
-processEventForCTAs({
+trackAppEvent({
   eventName: 'USER_LOGIN',
   userId: '123',
   screenName: 'Home',
   // ... other props
-});
+})
 ```
 
 The state machine stores `userId` and `screenName` in its context for later use.
@@ -128,7 +134,7 @@ State machines can expire after a certain time:
 
 ```json
 {
-  "stateMachineTTL": 3600000  // 1 hour in milliseconds
+  "stateMachineTTL": 3600000 // 1 hour in milliseconds
 }
 ```
 
@@ -154,4 +160,3 @@ You can create multiple state machines for the same Engagement using `groupByCon
 - [Filters](/state-machine-dsl/filters) - Add conditional logic to transitions
 - [Actions](/state-machine-dsl/actions) - Understand different action types
 - [Examples](/state-machine-dsl/examples) - See real-world examples
-

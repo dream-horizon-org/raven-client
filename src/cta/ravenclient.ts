@@ -5,36 +5,36 @@ import {
 } from './ctaHandler'
 import {
   AccessToken,
-  NudgeClientOptions,
-  NudgeClientConfig,
-} from './nudgeclient.interface'
+  RavenClientOptions,
+  RavenClientConfig,
+} from './ravenclient.interface'
 
-class NudgeClient {
-  private static instance: NudgeClient | null = null
-  private options: NudgeClientOptions | undefined
+class RavenClient {
+  private static instance: RavenClient | null = null
+  private options: RavenClientOptions | undefined
   private nudgeRouteName: string = 'Nudge'
   public batchSize: number = 10
   public batchTimeInterval: number = 1000
   public platform: string = 'ios'
-  public config?: NudgeClientConfig
+  public config?: RavenClientConfig
 
   // Private constructor to prevent direct instantiation
   private constructor() {
     // Initialize any properties here
   }
   // Static method to get the singleton instance
-  public static getInstance(): NudgeClient {
-    if (NudgeClient.instance === null) {
-      NudgeClient.instance = new NudgeClient()
+  public static getInstance(): RavenClient {
+    if (RavenClient.instance === null) {
+      RavenClient.instance = new RavenClient()
     }
-    return NudgeClient.instance
+    return RavenClient.instance
   }
 
   /**
-   * Initialize the NudgeClient with options object
-   * @param options - NudgeClientOptions containing all configuration
+   * Initialize the RavenClient with options object
+   * @param options - RavenClientOptions containing all configuration
    */
-  init(options: NudgeClientOptions) {
+  init(options: RavenClientOptions) {
     this.options = options
 
     // Set platform and route name (optional values)
@@ -44,10 +44,10 @@ class NudgeClient {
     getCtaFromStorageToMemory()
   }
 
-  getOptions(): NudgeClientOptions {
+  getOptions(): RavenClientOptions {
     if (!this.options) {
       throw new Error(
-        'NudgeClient not initialized. Call nudgeClient.init() first.',
+        'RavenClient not initialized. Call ravenClient.init() first.',
       )
     }
     return this.options
@@ -99,7 +99,7 @@ class NudgeClient {
   }
 
   public static resetInstance(): void {
-    NudgeClient.instance = null
+    RavenClient.instance = null
   }
   logout() {
     NudgeStorage.removeAll()
@@ -107,4 +107,4 @@ class NudgeClient {
   }
 }
 
-export const nudgeClient = NudgeClient.getInstance()
+export const ravenClient = RavenClient.getInstance()

@@ -4,7 +4,7 @@ import {StyleSheet, Modal, TouchableNativeFeedback, View} from 'react-native'
 
 import {NudgeAnalyticsEvents} from '../../../../../cta/eventsFile'
 import type {NudgeAnalyticsEventTypes} from '../../../../../cta/eventsFile'
-import {nudgeClient} from '../../../../../cta/nudgeclient'
+import {ravenClient} from '../../../../../cta/ravenclient'
 
 import {
   DEFAULT_NUMBER_VALUE,
@@ -74,7 +74,7 @@ function sendNudgePopupEvent(
   const clickTestId =
     resolveProp<string>(content?.props?.testId, context, 'string') ||
     DEFAULT_STRING_VALUE
-  nudgeClient.onAppEvent(eventName, {
+  ravenClient.onAppEvent(eventName, {
     actionType: popupState,
     clickTestId: clickTestId,
     ctaId: (context?.ctaId as string) || DEFAULT_STRING_VALUE,

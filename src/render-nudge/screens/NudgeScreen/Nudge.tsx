@@ -3,7 +3,7 @@ import React, {ReactNode} from 'react'
 
 import {nativeEventEmitter} from '../../common/action/DeeplinkAction'
 import {ActionType} from '../../../cta/cta.interface'
-import type {NudgeParams} from './Nudge.interface'
+import type {RavenParams} from './raven.interface'
 import {RenderView} from './RenderView'
 import {NudgePopup} from './components/Popup/NudgePopup'
 import {useNudgeEvents} from './hooks/useNudgeEvents'
@@ -50,7 +50,7 @@ export type LazyComponentProps<
   children?: ReactNode
 }
 
-export const Nudge = (props: LazyComponentProps<NudgeParams>) => {
+export const Nudge = (props: LazyComponentProps<RavenParams>) => {
   const param = props.route?.params || props
   const {context, data, isNudgeStreamingPreviewMode = false, actionType} = param
 
@@ -75,7 +75,7 @@ export const Nudge = (props: LazyComponentProps<NudgeParams>) => {
   useEffect(() => {
     const listener = nativeEventEmitter.addListener(
       EmitterConstants.NUDGE_UI_LIVE_UPDATE_PREVIEW,
-      (params: NudgeParams) => {
+      (params: RavenParams) => {
         setState(params)
       },
     )

@@ -15,17 +15,17 @@ import AddToCartFlowDemo from './Screens/AddToCartFlowDemo'
 import {
   Nudge,
   setNavigationRef,
-  nudgeClient,
+  ravenClient,
   useNavigationTracker,
   fetchCTA,
-  type NudgeClientOptions,
-  type NudgeParams,
+  type RavenClientOptions,
+  type RavenParams,
 } from '@dreamhorizonorg/raven-client'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
 function NudgeScreen({route}: {route: RouteProp<RootStackParamList, 'Nudge'>}) {
-  const params = route.params as NudgeParams | undefined
+  const params = route.params as RavenParams | undefined
   if (!params) return null
   return <Nudge route={{params} as any} />
 }
@@ -38,7 +38,7 @@ export default function App() {
   useNavigationTracker(navigationRef)
 
   useEffect(() => {
-    nudgeClient.init({
+    ravenClient.init({
       listeners: {
         appEvent: (eventName, props) =>
           console.log('📊 Analytics:', eventName, props),
@@ -69,7 +69,7 @@ export default function App() {
         packageName: 'raven-client-example',
         tenantId: 'mock_tenant_id',
       },
-    } as NudgeClientOptions)
+    } as RavenClientOptions)
     fetchCTA().catch((error) => {
       console.log('Error auto-fetching CTAs after init:', error)
     })

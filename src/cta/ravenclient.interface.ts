@@ -3,7 +3,7 @@ export interface AccessToken {
   tokenType: string
 }
 
-export interface NudgeClientListeners {
+export interface RavenClientListeners {
   appEvent: (eventName: string, props?: unknown) => void
   fetchCtaApi: <TVariables, TData>(
     url: string,
@@ -13,7 +13,7 @@ export interface NudgeClientListeners {
   getAccessToken: () => AccessToken
 }
 
-export interface NudgeClientConfig {
+export interface RavenClientConfig {
   baseUrl: string
   userId: string | number
   appVersion: string
@@ -24,7 +24,7 @@ export interface NudgeClientConfig {
   tenantId?: string
 }
 
-export interface NudgeClientOptions {
-  listeners: NudgeClientListeners
-  config: NudgeClientConfig
+export interface RavenClientOptions {
+  listeners: RavenClientListeners
+  config: RavenClientConfig
 }

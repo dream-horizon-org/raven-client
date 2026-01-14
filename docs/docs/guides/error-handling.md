@@ -12,11 +12,11 @@ Handle initialization errors:
 
 ```tsx
 try {
-  nudgeClient.init({
+  ravenClient.init({
     // ... configuration
-  });
+  })
 } catch (error) {
-  console.error('Failed to initialize SDK:', error);
+  console.error('Failed to initialize SDK:', error)
   // Fallback behavior
 }
 ```
@@ -28,13 +28,13 @@ Handle CTA fetch errors:
 ```tsx
 fetchCTA()
   .then(() => {
-    console.log('CTAs fetched successfully');
+    console.log('CTAs fetched successfully')
   })
   .catch((error) => {
-    console.error('Failed to fetch CTAs:', error);
+    console.error('Failed to fetch CTAs:', error)
     // Fallback: Load from storage
-    getCtaFromStorageToMemory();
-  });
+    getCtaFromStorageToMemory()
+  })
 ```
 
 ## Event Processing Errors
@@ -43,12 +43,12 @@ Event processing errors are handled internally. The SDK logs errors but doesn't 
 
 ```tsx
 // Safe to call - won't throw
-processEventForCTAs({
+trackAppEvent({
   eventName: 'USER_LOGIN',
   routeName: 'Home',
   is_from_rn: true,
   actionDone: false,
-});
+})
 ```
 
 ## API Errors
@@ -78,16 +78,15 @@ listeners: {
 Handle network failures:
 
 ```tsx
-fetchCTA()
-  .catch((error) => {
-    if (error.message.includes('network')) {
-      // Network error - load from storage
-      getCtaFromStorageToMemory();
-    } else {
-      // Other error - log and continue
-      console.error('CTA fetch error:', error);
-    }
-  });
+fetchCTA().catch((error) => {
+  if (error.message.includes('network')) {
+    // Network error - load from storage
+    getCtaFromStorageToMemory()
+  } else {
+    // Other error - log and continue
+    console.error('CTA fetch error:', error)
+  }
+})
 ```
 
 ## Validation Errors
@@ -137,4 +136,3 @@ listeners: {
 
 - [Troubleshooting](/troubleshooting) - Common issues and solutions
 - [Analytics](/features/analytics) - Track error events
-

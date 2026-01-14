@@ -2,7 +2,7 @@ import {resolveDynamicEventProperties} from '../../render-nudge/common/action/An
 import {triggerNativeEventViaEmitterAction} from '../../render-nudge/common/action/NativeEventEmitterAction'
 import type {CTAEvent, CtaEventAction} from '../cta.interface'
 import type {EventParamType} from '../cta.type'
-import {sendNudgeAppEvent} from '../ctaEvent'
+import {sendRavenAppEvent} from '../ctaEvent'
 import {timerMap} from '../ctaUtils'
 import {NudgeAnalyticsEvents} from '../eventsFile'
 import {StateMachine} from '../StateMachine'
@@ -61,7 +61,7 @@ function sendNudgeCTAActionEvent(
   nativeEmittedEventParams: Record<string, EventParamType>,
   stateMachineId: string,
 ) {
-  sendNudgeAppEvent(NudgeAnalyticsEvents.NudgeCtaEventAction, {
+  sendRavenAppEvent(NudgeAnalyticsEvents.NudgeCtaEventAction, {
     appEventName: eventName,
     ctaId: ctaId,
     stateMachineId: stateMachineId,

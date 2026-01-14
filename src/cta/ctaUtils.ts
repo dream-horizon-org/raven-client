@@ -17,10 +17,10 @@ import type {
   DeltaSnapShot,
   StateMachineObject,
 } from './cta.interface'
-import {sendNudgeAppEvent} from './ctaEvent'
+import {sendRavenAppEvent} from './ctaEvent'
 import {addRequestToQueue} from './requestQueue'
 import {navigate} from '../utils/NavigationContainerRef'
-import {nudgeClient} from './nudgeclient'
+import {ravenClient} from './ravenclient'
 import {NudgeAnalyticsEvents} from './eventsFile'
 export const NUDGE_ROUTE_NAME = 'Nudge'
 
@@ -263,7 +263,7 @@ export const showNudgeFromPrefetchedTemplate = (
     actionType,
     nudgeConfig,
   )
-  sendNudgeAppEvent(NudgeAnalyticsEvents.NudgeCtaTemplateFetch, {
+  sendRavenAppEvent(NudgeAnalyticsEvents.NudgeCtaTemplateFetch, {
     props: JSON.stringify(eventObj),
     responseFetched: true,
   })
@@ -275,7 +275,7 @@ export const emitNudgeRoute = (
   eventObj: Record<string, unknown>,
   actionType: ActionType,
 ) => {
-  navigate(nudgeClient.getNudgeRouteName(), {
+  navigate(ravenClient.getNudgeRouteName(), {
     data: JSON.stringify(nudgeTemplateData),
     context: JSON.stringify({
       ...context,

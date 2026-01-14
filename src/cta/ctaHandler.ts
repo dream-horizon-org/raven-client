@@ -15,7 +15,7 @@ import type {
   NudgeModel,
   Transition,
 } from './cta.interface'
-import {nudgeOptimizedSendEvent, sendNudgeAppEvent} from './ctaEvent'
+import {nudgeOptimizedSendEvent, sendRavenAppEvent} from './ctaEvent'
 import {processFilters} from './ctaFilters'
 import {
   createCTAObjectsForNonAccessCTAs,
@@ -33,7 +33,7 @@ import {addRequestToQueue} from './requestQueue'
 import {NudgeStorage} from '../storage/Storage'
 import {NudgeAnalyticsEvents} from './eventsFile'
 import {CTA} from './Cta'
-import {nudgeClient} from './nudgeclient'
+import {ravenClient} from './ravenclient'
 
 export let eventToCTAMap: Record<string, CTA[]> | null = null
 export let activeCtas: Array<CTA> | null = null
@@ -111,19 +111,19 @@ const fetchAndStoreAnalyticsEventGlobalProps = () => {
   )
   eventGlobalProps = {
     ...eventGlobalProps,
-    app_name: nudgeClient.getPackageNameValue(),
+    app_name: ravenClient.getPackageNameValue(),
   }
   isGlobalPropsInit = true
 }
 
-export const processEventForCTAs = (ctaEvent: CTAEvent) => {
+export const trackAppEvent = (ctaEvent: CTAEvent) => {
   try {
     if (!isGlobalPropsInit) {
       fetchAndStoreAnalyticsEventGlobalProps()
     }
     const globalProps = {
-      platform: (nudgeClient.platform as string) ?? '',
-      app_version: nudgeClient.config?.appVersion ?? '',
+      platform: (ravenClient.platform as string) ?? '',
+      app_version: ravenClient.config?.appVersion ?? '',
     }
 
     const appEvent: CTAEvent = {
@@ -217,7 +217,7 @@ export const processEventForCTAs = (ctaEvent: CTAEvent) => {
     }
     nudgeOptimizedSendEvent.sendEvents()
   } catch (e) {
-    sendNudgeAppEvent(NudgeAnalyticsEvents.NudgeCtaTemplateFetch, {
+    sendRavenAppEvent(NudgeAnalyticsEvents.NudgeCtaTemplateFetch, {
       appEventName: ctaEvent.eventName,
       ctaid: null,
       stateMachineID: null,
