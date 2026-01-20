@@ -16,9 +16,6 @@ import {trackAppEvent} from '@dreamhorizonorg/raven-client'
 // Process an event
 trackAppEvent({
   eventName: 'USER_LOGIN',
-  routeName: 'Home',
-  is_from_rn: true,
-  actionDone: false,
   userId: '123',
   timestamp: Date.now(),
 })
@@ -29,33 +26,23 @@ trackAppEvent({
 ### CTAEvent
 
 ```typescript
-interface CTAEvent {
+type CTAEvent = {
   eventName: string // Required: Event name
-  routeName: string // Required: Current route name
-  is_from_rn: boolean // Required: Always true for React Native
-  actionDone: boolean // Required: Whether action was completed
-  ActiveScreenName?: string // Optional: Active screen name
-  [key: string]: boolean | string | number // Additional event properties
-}
+  // Users can add custom properties via the index signature below
+} & {[key: string]: boolean | string | number}
 ```
 
 ### Required Fields
 
 - `eventName`: The name of the event (must match events in your Engagement configuration)
-- `routeName`: Current navigation route name
-- `is_from_rn`: Always set to `true` for React Native
-- `actionDone`: Whether the action associated with this event was completed
 
-### Optional Fields
+### Custom Properties
 
 You can add any additional properties that might be used in filters:
 
 ```tsx
 trackAppEvent({
   eventName: 'BUTTON_CLICKED',
-  routeName: 'Home',
-  is_from_rn: true,
-  actionDone: false,
   buttonId: 'signup-button',
   userId: '123',
   userType: 'premium',
@@ -71,27 +58,18 @@ trackAppEvent({
 // User login
 trackAppEvent({
   eventName: 'USER_LOGIN',
-  routeName: 'Home',
-  is_from_rn: true,
-  actionDone: false,
   userId: currentUser.id,
 })
 
 // Button click
 trackAppEvent({
   eventName: 'BUTTON_CLICKED',
-  routeName: 'Home',
-  is_from_rn: true,
-  actionDone: false,
   buttonId: 'signup-button',
 })
 
 // Screen view
 trackAppEvent({
   eventName: 'SCREEN_VIEW',
-  routeName: 'Profile',
-  is_from_rn: true,
-  actionDone: false,
   screenName: 'Profile',
 })
 ```
@@ -102,18 +80,12 @@ trackAppEvent({
 // App state change
 trackAppEvent({
   eventName: 'APP_STATE_CHANGE',
-  routeName: 'Home',
-  is_from_rn: true,
-  actionDone: false,
   state: 'active',
 })
 
 // User property change
 trackAppEvent({
   eventName: 'USER_PROPERTY_CHANGED',
-  routeName: 'Settings',
-  is_from_rn: true,
-  actionDone: false,
   property: 'subscription',
   value: 'premium',
 })
@@ -147,9 +119,6 @@ function LoginScreen() {
       // Process login event
       trackAppEvent({
         eventName: 'USER_LOGIN',
-        routeName: 'Home',
-        is_from_rn: true,
-        actionDone: true,
         userId: user.id,
       })
     } catch (error) {
@@ -177,9 +146,6 @@ function useScreenTracking() {
 
       trackAppEvent({
         eventName: 'SCREEN_VIEW',
-        routeName: routeName,
-        is_from_rn: true,
-        actionDone: false,
         screenName: routeName,
       })
     })
@@ -201,9 +167,6 @@ const ravenMiddleware = (store) => (next) => (action) => {
   if (action.type === 'USER_LOGIN') {
     trackAppEvent({
       eventName: 'USER_LOGIN',
-      routeName: store.getState().navigation.currentRoute,
-      is_from_rn: true,
-      actionDone: true,
       userId: action.payload.userId,
     })
   }
@@ -217,8 +180,8 @@ const ravenMiddleware = (store) => (next) => (action) => {
 1. **Process Events Immediately**: Process events as soon as they occur
 2. **Include Context**: Add relevant context properties to events
 3. **Consistent Naming**: Use consistent event names across your app
-4. **Route Tracking**: Always include the current route name
-5. **Error Handling**: Handle errors gracefully (SDK won't throw)
+4. **Error Handling**: Handle errors gracefully (SDK won't throw)
+5. **Custom Properties**: Use meaningful property names for filters
 
 ## Event Flow
 

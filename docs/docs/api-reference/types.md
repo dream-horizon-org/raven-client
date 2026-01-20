@@ -22,8 +22,8 @@ interface RavenClientConfig {
   appVersion: string
   codepushVersion?: string
   platform: string
-  nudgeRouteName: string
   packageName: string
+  tenantId?: string
 }
 ```
 
@@ -32,11 +32,6 @@ interface RavenClientConfig {
 ```typescript
 interface RavenClientListeners {
   appEvent: (eventName: string, props?: unknown) => void
-  fetchCtaApi: <TVariables, TData>(
-    url: string,
-    method: string,
-    variables?: TVariables,
-  ) => Promise<TData>
   getAccessToken: () => AccessToken
 }
 ```
@@ -50,20 +45,36 @@ interface AccessToken {
 }
 ```
 
+## Constants
+
+### `RAVEN_ROUTE_NAME`
+
+The route name constant for the Nudge screen. Use this when registering the Nudge screen in your navigation stack.
+
+```typescript
+const RAVEN_ROUTE_NAME: string = 'Nudge'
+```
+
+**Usage:**
+
+```tsx
+import { RAVEN_ROUTE_NAME, Nudge } from '@dreamhorizonorg/raven-client'
+
+<Stack.Screen name={RAVEN_ROUTE_NAME} component={Nudge} />
+```
+
 ## Event Types
 
 ### `CTAEvent`
 
 ```typescript
-interface CTAEvent {
+type CTAEvent = {
   eventName: string
-  actionDone: boolean
-  ActiveScreenName?: string
-  routeName: string
-  is_from_rn: boolean
-  [key: string]: boolean | string | number
-}
+  // Users can add custom properties via the index signature below
+} & {[key: string]: boolean | string | number}
 ```
+
+**Note:** `actionDone` is managed internally by the SDK and is not part of the public `CTAEvent` type.
 
 ## CTA Types
 
@@ -259,6 +270,9 @@ import type {
   TooltipOptions,
   IStorage,
 } from '@dreamhorizonorg/raven-client'
+
+// Import constants
+import { RAVEN_ROUTE_NAME } from '@dreamhorizonorg/raven-client'
 ```
 
 ## Next Steps

@@ -61,7 +61,7 @@ function App() {
 You **must** add the `Nudge` screen to your navigation stack for bottom sheets to work:
 
 ```tsx
-import { Nudge } from '@dreamhorizonorg/raven-client';
+import { Nudge, RAVEN_ROUTE_NAME } from '@dreamhorizonorg/raven-client';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
@@ -74,7 +74,7 @@ function App() {
       
       {/* Required: Nudge screen for bottom sheets */}
       <Stack.Screen
-        name="Nudge"
+        name={RAVEN_ROUTE_NAME} // 'Nudge'
         component={Nudge}
         options={{
           headerShown: false,
@@ -89,7 +89,7 @@ function App() {
 
 ### Important Notes
 
-- The `Nudge` screen name must match the `nudgeRouteName` in your SDK configuration
+- Use the exported `RAVEN_ROUTE_NAME` constant or the string `'Nudge'` for the screen name
 - Use `transparentModal` presentation for proper bottom sheet display
 - Set `headerShown: false` to avoid header conflicts
 
@@ -121,9 +121,11 @@ For TypeScript projects, define your navigation types:
 ```tsx
 import { NavigationContainerRef } from '@react-navigation/native';
 
+import { RAVEN_ROUTE_NAME } from '@dreamhorizonorg/raven-client';
+
 type RootStackParamList = {
   Home: undefined;
-  Nudge: undefined;
+  [RAVEN_ROUTE_NAME]: undefined; // 'Nudge'
   // ... other screens
 };
 
@@ -140,9 +142,9 @@ const navigationRef = useRef<NavigationContainerRef<RootStackParamList>>(null);
 
 ### Bottom sheets not showing
 
-- Verify the `Nudge` screen is added to your navigation stack
-- Ensure `nudgeRouteName` in config matches your route name
+- Verify the `Nudge` screen is added to your navigation stack with name `RAVEN_ROUTE_NAME` or `'Nudge'`
 - Check that `fetchCTA()` is called after initialization
+- Ensure your navigation stack is properly configured
 
 ## Next Steps
 

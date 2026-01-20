@@ -9,17 +9,18 @@ Common issues and solutions when using Raven Client.
 **Possible Causes:**
 
 1. Nudge screen not added to navigation stack
-2. `nudgeRouteName` doesn't match route name
-3. `fetchCTA()` not called after initialization
-4. CTA validation failing (frequency, expiration)
+2. `fetchCTA()` not called after initialization
+3. CTA validation failing (frequency, expiration)
 
 **Solutions:**
 
 1. **Verify Nudge Screen is Added:**
 
 ```tsx
+import { Nudge, RAVEN_ROUTE_NAME } from '@dreamhorizonorg/raven-client'
+
 <Stack.Screen
-  name="Nudge"
+  name={RAVEN_ROUTE_NAME} // 'Nudge'
   component={Nudge}
   options={{
     headerShown: false,
@@ -29,18 +30,7 @@ Common issues and solutions when using Raven Client.
 />
 ```
 
-2. **Check Route Name:**
-
-```tsx
-ravenClient.init({
-  config: {
-    nudgeRouteName: 'Nudge', // Must match route name
-    // ...
-  },
-})
-```
-
-3. **Ensure fetchCTA is Called:**
+2. **Ensure fetchCTA is Called:**
 
 ```tsx
 useEffect(() => {
@@ -51,7 +41,7 @@ useEffect(() => {
 }, [])
 ```
 
-4. **Check CTA Validation:**
+3. **Check CTA Validation:**
 
 - Verify frequency limits haven't been reached
 - Check CTA expiration (`ctaValidTill`)
@@ -243,9 +233,6 @@ useEffect(() => {
 // Process events when they occur
 trackAppEvent({
   eventName: 'USER_LOGIN',
-  routeName: 'Home',
-  is_from_rn: true,
-  actionDone: false,
 })
 ```
 

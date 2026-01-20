@@ -82,11 +82,7 @@ export type ActiveStateMachines = Record<string, StateMachineObject>
 
 export type CTAEvent = {
   eventName: string
-  actionDone: boolean
-  ActiveScreenName?: string
-  routeName: string
-  is_from_rn: boolean
-  // extraParams?: Record<string, boolean | string | number>
+  // Users can add custom properties via the index signature below
 } & {[key: string]: boolean | string | number}
 
 export type CtaUIAction = {

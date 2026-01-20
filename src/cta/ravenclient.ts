@@ -12,9 +12,6 @@ import {
 class RavenClient {
   private static instance: RavenClient | null = null
   private options: RavenClientOptions | undefined
-  private nudgeRouteName: string = 'Nudge'
-  public batchSize: number = 10
-  public batchTimeInterval: number = 1000
   public platform: string = 'ios'
   public config?: RavenClientConfig
 
@@ -37,10 +34,9 @@ class RavenClient {
   init(options: RavenClientOptions) {
     this.options = options
 
-    // Set platform and route name (optional values)
+    // Set platform
     this.platform = options.config.platform
     this.config = options.config
-    this.nudgeRouteName = options.config.nudgeRouteName || 'Nudge'
     getCtaFromStorageToMemory()
   }
 
@@ -55,18 +51,6 @@ class RavenClient {
   // Call app event with event name and props
   onAppEvent(eventName: string, props?: unknown): void {
     this.getOptions().listeners.appEvent(eventName, props)
-  }
-
-  // Fetch CTA data from API using the registered callback
-  fetchCtaApiData<TVariables, TData>(
-    url: string,
-    method: string,
-    variables?: TVariables,
-  ): Promise<TData> {
-    return this.getOptions().listeners.fetchCtaApi(url, method, variables)
-  }
-  getNudgeRouteName(): string {
-    return this.nudgeRouteName
   }
 
   // Getter methods for API configuration

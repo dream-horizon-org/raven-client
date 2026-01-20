@@ -2,6 +2,7 @@ import {CTA} from '../Cta'
 import {StateMachine} from '../StateMachine'
 import type {CTAEvent, CtaPopupAction, CtaUIAction} from '../cta.interface'
 import {showNudgeFromPrefetchedTemplate} from '../ctaUtils'
+import {setActionDone} from '../ctaHandler'
 
 export function performCTANudgeAction(
   stateMachine: StateMachine,
@@ -12,7 +13,7 @@ export function performCTANudgeAction(
   cta: CTA,
 ) {
   if (stateMachine.hasValidateContextParams(cta)) {
-    appEvent.actionDone = true
+    setActionDone()
     const eventObj = {
       appEventName: appEvent.eventName,
       ctaId: cta.id,

@@ -15,6 +15,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context'
 import {GestureHandlerRootView} from 'react-native-gesture-handler'
 import {
   Nudge,
+  RAVEN_ROUTE_NAME,
   setNavigationRef,
   useNavigationTracker,
   type RavenClientOptions,
@@ -41,7 +42,7 @@ function App() {
 
             {/* Required: Add Nudge screen for bottom sheets */}
             <Stack.Screen
-              name="Nudge"
+              name={RAVEN_ROUTE_NAME}
               component={Nudge}
               options={{
                 headerShown: false,
@@ -79,10 +80,6 @@ function App() {
           // Handle analytics events
           console.log('Analytics event:', eventName, props)
         },
-        fetchCtaApi: async (url, method, variables) => {
-          // This callback is typically not used
-          throw new Error('Use makeCtaApiCall directly')
-        },
         getAccessToken: () => ({
           token: 'your-access-token',
           tokenType: 'Bearer',
@@ -93,7 +90,6 @@ function App() {
         userId: 'user-123',
         appVersion: '1.0.0',
         platform: Platform.OS, // 'ios' or 'android'
-        nudgeRouteName: 'Nudge',
         packageName: 'com.yourcompany.yourapp',
       },
     } as RavenClientOptions)
@@ -116,9 +112,6 @@ import {trackAppEvent} from '@dreamhorizonorg/raven-client'
 // When a user logs in
 trackAppEvent({
   eventName: 'USER_LOGIN',
-  routeName: 'Home',
-  is_from_rn: true,
-  actionDone: false,
   userId: '123',
 })
 ```
@@ -152,6 +145,7 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler'
 import {Platform} from 'react-native'
 import {
   Nudge,
+  RAVEN_ROUTE_NAME,
   setNavigationRef,
   ravenClient,
   useNavigationTracker,
@@ -167,9 +161,6 @@ function HomeScreen() {
     // Process event to trigger CTAs
     trackAppEvent({
       eventName: 'USER_LOGIN',
-      routeName: 'Home',
-      is_from_rn: true,
-      actionDone: false,
     })
   }
 
@@ -190,9 +181,6 @@ export default function App() {
         appEvent: (eventName, props) => {
           console.log('Analytics:', eventName, props)
         },
-        fetchCtaApi: async () => {
-          throw new Error('Not used')
-        },
         getAccessToken: () => ({
           token: 'your-token',
           tokenType: 'Bearer',
@@ -203,7 +191,6 @@ export default function App() {
         userId: 'user-123',
         appVersion: '1.0.0',
         platform: Platform.OS,
-        nudgeRouteName: 'Nudge',
         packageName: 'com.example.app',
       },
     } as RavenClientOptions)
@@ -222,7 +209,7 @@ export default function App() {
           <Stack.Navigator>
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen
-              name="Nudge"
+              name={RAVEN_ROUTE_NAME}
               component={Nudge}
               options={{
                 headerShown: false,

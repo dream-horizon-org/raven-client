@@ -42,16 +42,6 @@ export default function App() {
       listeners: {
         appEvent: (eventName, props) =>
           console.log('📊 Analytics:', eventName, props),
-        fetchCtaApi: async (url, method, variables) => {
-          console.log('🔄 FetchCtaApi callback called:', {
-            url,
-            method,
-            variables,
-          })
-          throw new Error(
-            'Use makeCtaApiCall directly - this callback is not used',
-          )
-        },
         getAccessToken: () => ({
           token: 'dummy',
           tokenType: 'Bearer',
@@ -65,7 +55,6 @@ export default function App() {
         userId: 'mock_user_id',
         appVersion: '1.0.0-mock',
         platform: Platform.OS,
-        nudgeRouteName: 'Nudge',
         packageName: 'raven-client-example',
         tenantId: 'mock_tenant_id',
       },

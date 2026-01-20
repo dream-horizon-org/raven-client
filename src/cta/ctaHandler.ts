@@ -28,6 +28,20 @@ import {
   updateCtaInRequestMap,
   updateCtasToLocalStorage,
 } from './ctaUtils'
+
+// Global flag to track if an action has been done in the current event processing
+// This prevents duplicate actions from being triggered in the same event cycle
+export let actionDone = false
+
+// Reset actionDone flag (called at the start of each event processing)
+export const resetActionDone = () => {
+  actionDone = false
+}
+
+// Set actionDone flag (called by action handlers)
+export const setActionDone = () => {
+  actionDone = true
+}
 import {makeCtaApiPostRequest} from './makeCtaApi'
 import {addRequestToQueue} from './requestQueue'
 import {NudgeStorage} from '../storage/Storage'
@@ -118,6 +132,9 @@ const fetchAndStoreAnalyticsEventGlobalProps = () => {
 
 export const trackAppEvent = (ctaEvent: CTAEvent) => {
   try {
+    // Reset actionDone flag at the start of each event processing
+    resetActionDone()
+
     if (!isGlobalPropsInit) {
       fetchAndStoreAnalyticsEventGlobalProps()
     }
@@ -246,7 +263,7 @@ export function processTransition(
       const areFiltersSatisfied = processFilters(transition?.filters, appEvent)
       if (areFiltersSatisfied) {
         const nextState = transition.transitionTo
-        if (appEvent.actionDone && cta.stateToAction[nextState]) {
+        if (actionDone && cta.stateToAction[nextState]) {
           continue
         }
         hasTransitionHappened = true

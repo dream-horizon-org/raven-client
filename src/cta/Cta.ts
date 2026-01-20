@@ -6,6 +6,7 @@ import {performCTAEventAction} from './cta-actions/ctaEventAction'
 import {performCTANudgeAction} from './cta-actions/ctaNudgeAction'
 import {CTA_FAILURE_REASON} from './cta.constants'
 import {ActionType} from './cta.interface'
+import {actionDone} from './ctaHandler'
 import type {
   ActiveStateMachines,
   Cta,
@@ -302,7 +303,7 @@ export class CTA {
         currentState: stateMachine.currentState,
         prevState,
         actionType: currentAction.type,
-        nudgeShown: appEvent.actionDone,
+        nudgeShown: actionDone,
       },
     )
     switch (currentAction.type) {

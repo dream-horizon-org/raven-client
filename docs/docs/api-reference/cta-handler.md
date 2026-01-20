@@ -11,9 +11,6 @@ import {trackAppEvent} from '@dreamhorizonorg/raven-client'
 
 trackAppEvent({
   eventName: 'USER_LOGIN',
-  routeName: 'Home',
-  is_from_rn: true,
-  actionDone: false,
   userId: '123',
 })
 ```
@@ -25,14 +22,10 @@ trackAppEvent({
 ### CTAEvent
 
 ```typescript
-interface CTAEvent {
+type CTAEvent = {
   eventName: string // Required: Event name
-  routeName: string // Required: Current route
-  is_from_rn: boolean // Required: Always true
-  actionDone: boolean // Required: Action completed?
-  ActiveScreenName?: string // Optional: Active screen
-  [key: string]: boolean | string | number // Additional properties
-}
+  // Users can add custom properties via the index signature below
+} & {[key: string]: boolean | string | number}
 ```
 
 ## `sendNudgeAppEvent(eventName: string, props?: Record<string, unknown>)`
@@ -123,9 +116,6 @@ function LoginScreen() {
       // Process login event
       trackAppEvent({
         eventName: 'USER_LOGIN',
-        routeName: 'Home',
-        is_from_rn: true,
-        actionDone: true,
         userId: user.id,
         loginMethod: 'email',
       })
@@ -154,9 +144,6 @@ function useScreenTracking() {
 
       trackAppEvent({
         eventName: 'SCREEN_VIEW',
-        routeName: routeName,
-        is_from_rn: true,
-        actionDone: false,
         screenName: routeName,
       })
     })
