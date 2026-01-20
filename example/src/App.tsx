@@ -14,6 +14,7 @@ import ExampleDescriptionScreen from './Screens/ExampleDescriptionScreen'
 import AddToCartFlowDemo from './Screens/AddToCartFlowDemo'
 import {
   Nudge,
+  RAVEN_ROUTE_NAME,
   setNavigationRef,
   ravenClient,
   useNavigationTracker,
@@ -107,7 +108,7 @@ export default function App() {
               options={{title: 'Add to Cart Journey'}}
             />
             <Stack.Screen
-              name="Nudge"
+              name={RAVEN_ROUTE_NAME}
               component={NudgeScreen}
               options={{
                 headerShown: false,
