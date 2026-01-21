@@ -50,8 +50,6 @@ export const setActionDone = (value: boolean) => {
   actionDone = value
 }
 
-export const getActionDone = () => actionDone
-
 export let eventGlobalProps: Record<string, string | boolean | number> = {}
 let isGlobalPropsInit = false
 nativeEventEmitter.addListener(ANALYTICS_EVENT_GLOBAL_PROPS, (_: unknown) => {
@@ -131,6 +129,8 @@ const fetchAndStoreAnalyticsEventGlobalProps = () => {
 
 export const trackAppEvent = (ctaEvent: CTAEvent) => {
   try {
+    // Reset actionDone at the start of each event processing
+    resetActionDone()
     if (!isGlobalPropsInit) {
       fetchAndStoreAnalyticsEventGlobalProps()
     }
