@@ -39,6 +39,19 @@ export let eventToCTAMap: Record<string, CTA[]> | null = null
 export let activeCtas: Array<CTA> | null = null
 export let accessedCtasId: Array<string> = []
 
+// Global actionDone state
+let actionDone = false
+
+export const resetActionDone = () => {
+  actionDone = false
+}
+
+export const setActionDone = (value: boolean) => {
+  actionDone = value
+}
+
+export const getActionDone = () => actionDone
+
 export let eventGlobalProps: Record<string, string | boolean | number> = {}
 let isGlobalPropsInit = false
 nativeEventEmitter.addListener(ANALYTICS_EVENT_GLOBAL_PROPS, (_: unknown) => {
@@ -246,7 +259,7 @@ export function processTransition(
       const areFiltersSatisfied = processFilters(transition?.filters, appEvent)
       if (areFiltersSatisfied) {
         const nextState = transition.transitionTo
-        if (appEvent.actionDone && cta.stateToAction[nextState]) {
+        if (actionDone && cta.stateToAction[nextState]) {
           continue
         }
         hasTransitionHappened = true

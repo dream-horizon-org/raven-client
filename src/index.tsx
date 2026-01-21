@@ -7,3 +7,4 @@ export type {RavenParams} from './render-nudge/screens/NudgeScreen/raven.interfa
 export {fetchCTA} from './cta/ctaHandler'
 export {setNavigationRef} from './utils/NavigationContainerRef'
 export {useNavigationTracker} from './Tooltip/NavigationTracker'
+export {RAVEN_ROUTE_NAME} from './cta/ctaUtils'

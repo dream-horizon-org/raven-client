@@ -6,6 +6,7 @@ import {sendRavenAppEvent} from '../ctaEvent'
 import {timerMap} from '../ctaUtils'
 import {NudgeAnalyticsEvents} from '../eventsFile'
 import {StateMachine} from '../StateMachine'
+import {setActionDone} from '../ctaHandler'
 
 export function performCTAEventAction(
   appEvent: CTAEvent,
@@ -15,7 +16,7 @@ export function performCTAEventAction(
   prevState: string,
   ctaId: string,
 ) {
-  appEvent.actionDone = true
+  setActionDone(true)
   const resolveParam = resolveDynamicEventProperties(
     currentAction.template?.eventParams ?? [],
     stateMachine.context,
