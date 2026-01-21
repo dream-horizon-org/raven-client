@@ -11,7 +11,7 @@ PODS:
   - MMKV (1.3.16):
     - MMKVCore (~> 1.3.16)
   - MMKVCore (1.3.16)
-  - Raven (0.0.3):
+  - Raven (0.0.5):
     - boost
     - DoubleConversion
     - fast_float
@@ -2863,7 +2863,7 @@ SPEC CHECKSUMS:
   hermes-engine: 4f8246b1f6d79f625e0d99472d1f3a71da4d28ca
   MMKV: 43cd10be0f925bf3fd5c2bd8bea501a328037b64
   MMKVCore: 13be45a0394861b74836875ac9ec7ee939e86b78
-  Raven: 4a0b7ee1055e584aaa19f72905959b205895cb0a
+  Raven: b615e51ea019cdd0a577514a7e5202f5c7aea7fc
   RCT-Folly: 846fda9475e61ec7bcbf8a3fe81edfcaeb090669
   RCTDeprecation: c4b9e2fd0ab200e3af72b013ed6113187c607077
   RCTRequired: e97dd5dafc1db8094e63bc5031e0371f092ae92a
@@ -2934,6 +2934,6 @@ SPEC CHECKSUMS:
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: f95f7e60346fa6828def95fbe5017346ccc8940e
 
-PODFILE CHECKSUM: c68e69a25e3d42ea87b08dcb31620f4f9818819d
+PODFILE CHECKSUM: cf14c8911ab349e81f368d948d42f1a96ee43bbe
 
 COCOAPODS: 1.15.2
