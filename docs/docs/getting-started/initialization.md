@@ -23,10 +23,6 @@ function App() {
           // Handle analytics events
           console.log('Analytics event:', eventName, props)
         },
-        fetchCtaApi: async (url, method, variables) => {
-          // This callback is typically not used
-          throw new Error('Use makeCtaApiCall directly')
-        },
         getAccessToken: () => ({
           token: 'your-access-token',
           tokenType: 'Bearer',
@@ -37,7 +33,6 @@ function App() {
         userId: 'user-123',
         appVersion: '1.0.0',
         platform: Platform.OS,
-        nudgeRouteName: 'Nudge',
         packageName: 'com.yourcompany.yourapp',
         tenantId: 'your-tenant-id', // Optional: Multi-tenant identifier
       },
@@ -62,7 +57,6 @@ interface RavenClientConfig {
   appVersion: string // App version
   codepushVersion?: string // CodePush version (optional)
   platform: string // 'ios' or 'android'
-  nudgeRouteName: string // Route name for Nudge screen
   packageName: string // App package/bundle ID
   tenantId?: string // Tenant ID for multi-tenant apps (optional)
 }
@@ -73,11 +67,6 @@ interface RavenClientConfig {
 ```typescript
 interface RavenClientListeners {
   appEvent: (eventName: string, props?: unknown) => void
-  fetchCtaApi: <TVariables, TData>(
-    url: string,
-    method: string,
-    variables?: TVariables,
-  ) => Promise<TData>
   getAccessToken: () => AccessToken
 }
 ```
@@ -120,17 +109,6 @@ listeners: {
 }
 ```
 
-### fetchCtaApi Listener
-
-This callback is typically not used. The SDK handles API calls internally. You can throw an error if called:
-
-```tsx
-listeners: {
-  fetchCtaApi: async (url, method, variables) => {
-    throw new Error('Use makeCtaApiCall directly - this callback is not used');
-  },
-}
-```
 
 ## Fetching CTAs
 

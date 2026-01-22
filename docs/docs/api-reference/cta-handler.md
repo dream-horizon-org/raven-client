@@ -11,9 +11,6 @@ import {trackAppEvent} from '@dreamhorizonorg/raven-client'
 
 trackAppEvent({
   eventName: 'USER_LOGIN',
-  routeName: 'Home',
-  is_from_rn: true,
-  actionDone: false,
   userId: '123',
 })
 ```
@@ -25,15 +22,16 @@ trackAppEvent({
 ### CTAEvent
 
 ```typescript
-interface CTAEvent {
-  eventName: string // Required: Event name
-  routeName: string // Required: Current route
-  is_from_rn: boolean // Required: Always true
-  actionDone: boolean // Required: Action completed?
-  ActiveScreenName?: string // Optional: Active screen
-  [key: string]: boolean | string | number // Additional properties
-}
+type CTAEvent = {
+  eventName: string
+} & {[key: string]: boolean | string | number}
 ```
+
+**Properties:**
+- `eventName: string` - **Required**: The name of the event
+- Any additional properties of type `boolean | string | number` can be added as needed
+
+**Note:** The type allows any properties beyond `eventName`. You can add any context properties needed for filtering, analytics, or state machine transitions. All properties must be of type `boolean | string | number`.
 
 ## `sendNudgeAppEvent(eventName: string, props?: Record<string, unknown>)`
 
@@ -123,9 +121,6 @@ function LoginScreen() {
       // Process login event
       trackAppEvent({
         eventName: 'USER_LOGIN',
-        routeName: 'Home',
-        is_from_rn: true,
-        actionDone: true,
         userId: user.id,
         loginMethod: 'email',
       })
@@ -154,9 +149,6 @@ function useScreenTracking() {
 
       trackAppEvent({
         eventName: 'SCREEN_VIEW',
-        routeName: routeName,
-        is_from_rn: true,
-        actionDone: false,
         screenName: routeName,
       })
     })

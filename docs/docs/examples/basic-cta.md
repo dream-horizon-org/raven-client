@@ -75,6 +75,7 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler'
 import {Platform} from 'react-native'
 import {
   Nudge,
+  RAVEN_ROUTE_NAME,
   setNavigationRef,
   ravenClient,
   useNavigationTracker,
@@ -105,9 +106,6 @@ export default function App() {
         appEvent: (eventName, props) => {
           console.log('Analytics:', eventName, props)
         },
-        fetchCtaApi: async () => {
-          throw new Error('Not used')
-        },
         getAccessToken: () => ({
           token: 'your-token',
           tokenType: 'Bearer',
@@ -118,7 +116,6 @@ export default function App() {
         userId: 'user-123',
         appVersion: '1.0.0',
         platform: Platform.OS,
-        nudgeRouteName: 'Nudge',
         packageName: 'com.example.app',
       },
     } as RavenClientOptions)
@@ -129,9 +126,6 @@ export default function App() {
     // Process app launch event
     trackAppEvent({
       eventName: 'APP_LAUNCH',
-      routeName: 'Home',
-      is_from_rn: true,
-      actionDone: false,
     })
   }, [])
 
@@ -146,7 +140,7 @@ export default function App() {
           <Stack.Navigator>
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen
-              name="Nudge"
+              name={RAVEN_ROUTE_NAME}
               component={Nudge}
               options={{
                 headerShown: false,

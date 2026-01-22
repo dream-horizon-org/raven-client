@@ -22,8 +22,8 @@ interface RavenClientConfig {
   appVersion: string
   codepushVersion?: string
   platform: string
-  nudgeRouteName: string
   packageName: string
+  tenantId?: string
 }
 ```
 
@@ -32,11 +32,6 @@ interface RavenClientConfig {
 ```typescript
 interface RavenClientListeners {
   appEvent: (eventName: string, props?: unknown) => void
-  fetchCtaApi: <TVariables, TData>(
-    url: string,
-    method: string,
-    variables?: TVariables,
-  ) => Promise<TData>
   getAccessToken: () => AccessToken
 }
 ```
@@ -55,15 +50,16 @@ interface AccessToken {
 ### `CTAEvent`
 
 ```typescript
-interface CTAEvent {
+type CTAEvent = {
   eventName: string
-  actionDone: boolean
-  ActiveScreenName?: string
-  routeName: string
-  is_from_rn: boolean
-  [key: string]: boolean | string | number
-}
+} & {[key: string]: boolean | string | number}
 ```
+
+**Properties:**
+- `eventName: string` - **Required**: The name of the event
+- Any additional properties of type `boolean | string | number` can be added as needed
+
+**Note:** The type allows any properties beyond `eventName`. You can add any context properties needed for filtering, analytics, or state machine transitions. All properties must be of type `boolean | string | number`.
 
 ## CTA Types
 

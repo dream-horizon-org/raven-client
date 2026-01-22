@@ -16,9 +16,6 @@ ravenClient.init({
     appEvent: (eventName, props) => {
       // Handle analytics events
     },
-    fetchCtaApi: async (url, method, variables) => {
-      throw new Error('Not used')
-    },
     getAccessToken: () => ({
       token: 'your-token',
       tokenType: 'Bearer',
@@ -29,7 +26,6 @@ ravenClient.init({
     userId: 'user-123',
     appVersion: '1.0.0',
     platform: 'ios',
-    nudgeRouteName: 'Nudge',
     packageName: 'com.example.app',
     tenantId: 'your-tenant-id', // Optional
   },
@@ -126,7 +122,6 @@ interface RavenClientConfig {
   appVersion: string // App version
   codepushVersion?: string // CodePush version (optional)
   platform: string // 'ios' or 'android'
-  nudgeRouteName: string // Route name for Nudge screen
   packageName: string // App package/bundle ID
   tenantId?: string // Tenant ID for multi-tenant apps
 }
@@ -137,11 +132,6 @@ interface RavenClientConfig {
 ```typescript
 interface RavenClientListeners {
   appEvent: (eventName: string, props?: unknown) => void
-  fetchCtaApi: <TVariables, TData>(
-    url: string,
-    method: string,
-    variables?: TVariables,
-  ) => Promise<TData>
   getAccessToken: () => AccessToken
 }
 ```
@@ -170,9 +160,6 @@ function App() {
           console.log('Analytics:', eventName, props)
           // Send to your analytics service
         },
-        fetchCtaApi: async () => {
-          throw new Error('Not used')
-        },
         getAccessToken: () => {
           // Get from your auth system
           return {
@@ -186,7 +173,6 @@ function App() {
         userId: 'user-123',
         appVersion: '1.0.0',
         platform: Platform.OS,
-        nudgeRouteName: 'Nudge',
         packageName: 'com.example.app',
         tenantId: 'your-tenant-id', // Optional
       },

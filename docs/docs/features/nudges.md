@@ -165,13 +165,13 @@ Dismiss the nudge:
 
 ### Add Nudge Screen
 
-You must add the `Nudge` screen to your navigation stack:
+You must add the `Nudge` screen to your navigation stack. Use the `RAVEN_ROUTE_NAME` constant:
 
 ```tsx
-import {Nudge} from '@dreamhorizonorg/raven-client'
+import {Nudge, RAVEN_ROUTE_NAME} from '@dreamhorizonorg/raven-client'
 
 ;<Stack.Screen
-  name="Nudge"
+  name={RAVEN_ROUTE_NAME}
   component={Nudge}
   options={{
     headerShown: false,
@@ -181,18 +181,6 @@ import {Nudge} from '@dreamhorizonorg/raven-client'
 />
 ```
 
-### Configure Route Name
-
-Set `nudgeRouteName` in SDK configuration:
-
-```tsx
-ravenClient.init({
-  config: {
-    nudgeRouteName: 'Nudge', // Must match route name
-    // ... other config
-  },
-})
-```
 
 ## Triggering Nudges
 
@@ -260,7 +248,6 @@ Add delay before showing nudge:
 ### Nudge not showing
 
 - Verify `Nudge` screen is added to navigation stack
-- Check `nudgeRouteName` matches route name
 - Ensure `fetchCTA()` is called after initialization
 - Verify CTA validation passes (frequency, expiration)
 
