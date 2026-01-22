@@ -46,8 +46,6 @@ Event processing errors are handled internally. The SDK logs errors but doesn't 
 trackAppEvent({
   eventName: 'USER_LOGIN',
   routeName: 'Home',
-  is_from_rn: true,
-  actionDone: false,
 })
 ```
 

@@ -16,9 +16,6 @@ import {trackAppEvent} from '@dreamhorizonorg/raven-client'
 // Process an event
 trackAppEvent({
   eventName: 'USER_LOGIN',
-  routeName: 'Home',
-  is_from_rn: true,
-  actionDone: false,
   userId: '123',
   timestamp: Date.now(),
 })
@@ -29,37 +26,27 @@ trackAppEvent({
 ### CTAEvent
 
 ```typescript
-interface CTAEvent {
-  eventName: string // Required: Event name
-  routeName: string // Required: Current route name
-  is_from_rn: boolean // Required: Always true for React Native
-  actionDone: boolean // Required: Whether action was completed
-  ActiveScreenName?: string // Optional: Active screen name
-  [key: string]: boolean | string | number // Additional event properties
-}
+type CTAEvent = {
+  eventName: string
+} & {[key: string]: boolean | string | number}
 ```
 
-### Required Fields
+**Properties:**
+- `eventName: string` - **Required**: The name of the event (must match events in your Engagement configuration)
+- Any additional properties of type `boolean | string | number` can be added as needed
 
-- `eventName`: The name of the event (must match events in your Engagement configuration)
-- `routeName`: Current navigation route name
-- `is_from_rn`: Always set to `true` for React Native
-- `actionDone`: Whether the action associated with this event was completed
+**Note:** The type allows any properties beyond `eventName`. You can add any context properties needed for filtering, analytics, or state machine transitions. All properties must be of type `boolean | string | number`.
 
-### Optional Fields
-
-You can add any additional properties that might be used in filters:
+### Example
 
 ```tsx
 trackAppEvent({
   eventName: 'BUTTON_CLICKED',
-  routeName: 'Home',
-  is_from_rn: true,
-  actionDone: false,
   buttonId: 'signup-button',
   userId: '123',
   userType: 'premium',
   timestamp: Date.now(),
+  // Any other properties of type boolean | string | number
 })
 ```
 
@@ -71,28 +58,22 @@ trackAppEvent({
 // User login
 trackAppEvent({
   eventName: 'USER_LOGIN',
-  routeName: 'Home',
-  is_from_rn: true,
-  actionDone: false,
   userId: currentUser.id,
+  routeName: 'Home',
 })
 
 // Button click
 trackAppEvent({
   eventName: 'BUTTON_CLICKED',
-  routeName: 'Home',
-  is_from_rn: true,
-  actionDone: false,
   buttonId: 'signup-button',
+  routeName: 'Home',
 })
 
 // Screen view
 trackAppEvent({
   eventName: 'SCREEN_VIEW',
-  routeName: 'Profile',
-  is_from_rn: true,
-  actionDone: false,
   screenName: 'Profile',
+  routeName: 'Profile',
 })
 ```
 
@@ -102,18 +83,13 @@ trackAppEvent({
 // App state change
 trackAppEvent({
   eventName: 'APP_STATE_CHANGE',
-  routeName: 'Home',
-  is_from_rn: true,
-  actionDone: false,
   state: 'active',
+  routeName: 'Home',
 })
 
 // User property change
 trackAppEvent({
   eventName: 'USER_PROPERTY_CHANGED',
-  routeName: 'Settings',
-  is_from_rn: true,
-  actionDone: false,
   property: 'subscription',
   value: 'premium',
 })
@@ -147,10 +123,8 @@ function LoginScreen() {
       // Process login event
       trackAppEvent({
         eventName: 'USER_LOGIN',
-        routeName: 'Home',
-        is_from_rn: true,
-        actionDone: true,
         userId: user.id,
+        routeName: 'Home',
       })
     } catch (error) {
       // Handle error
@@ -177,10 +151,8 @@ function useScreenTracking() {
 
       trackAppEvent({
         eventName: 'SCREEN_VIEW',
-        routeName: routeName,
-        is_from_rn: true,
-        actionDone: false,
         screenName: routeName,
+        routeName: routeName,
       })
     })
 
@@ -201,10 +173,8 @@ const ravenMiddleware = (store) => (next) => (action) => {
   if (action.type === 'USER_LOGIN') {
     trackAppEvent({
       eventName: 'USER_LOGIN',
-      routeName: store.getState().navigation.currentRoute,
-      is_from_rn: true,
-      actionDone: true,
       userId: action.payload.userId,
+      routeName: store.getState().navigation.currentRoute,
     })
   }
 

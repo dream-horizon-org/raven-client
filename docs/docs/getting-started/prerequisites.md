@@ -31,7 +31,7 @@ These are not required but may be useful:
 ### iOS
 
 - iOS 12.0 or higher
-- Xcode 14.0 or higher (for development)
+- Xcode 16.0 or higher (for development)
 - CocoaPods installed
 
 ### Android
