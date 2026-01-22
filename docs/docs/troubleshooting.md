@@ -322,7 +322,7 @@ If you're still experiencing issues:
 
 1. **Check Documentation:**
    - [Installation](/getting-started/installation)
-   - [API Reference](/api-reference/nudge-client)
+   - [API Reference](/api-reference/raven-client)
    - [State Machine DSL](/state-machine-dsl/overview)
 
 2. **Review Examples:**

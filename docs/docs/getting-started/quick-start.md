@@ -113,7 +113,6 @@ import {trackAppEvent} from '@dreamhorizonorg/raven-client'
 trackAppEvent({
   eventName: 'USER_LOGIN',
   userId: '123',
-  routeName: 'Home',
 })
 ```
 
@@ -162,7 +161,7 @@ function HomeScreen() {
     // Process event to trigger CTAs
     trackAppEvent({
       eventName: 'USER_LOGIN',
-      routeName: 'Home',
+      platform: 'ios',
     })
   }
 
@@ -232,4 +231,4 @@ export default function App() {
 - Learn about [State Machine DSL](/state-machine-dsl/overview)
 - Explore [Engagement System](/core-concepts/cta-system)
 - Check out [Tooltip System](/features/tooltips)
-- Read the [API Reference](/api-reference/nudge-client)
+- Read the [API Reference](/api-reference/raven-client)

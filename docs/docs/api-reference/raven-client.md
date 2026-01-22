@@ -1,4 +1,4 @@
-# Nudge Client API
+# Raven Client API
 
 The `ravenClient` is the main entry point for initializing and configuring Raven Client.
 
