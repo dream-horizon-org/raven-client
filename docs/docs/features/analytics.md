@@ -151,4 +151,4 @@ The SDK batches events for efficient sending:
 ## Next Steps
 
 - [Quick Start](/getting-started/quick-start) - Set up analytics
-- [API Reference](/api-reference/nudge-client) - See API details
+- [API Reference](/api-reference/raven-client) - See API details

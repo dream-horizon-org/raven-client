@@ -59,21 +59,18 @@ trackAppEvent({
 trackAppEvent({
   eventName: 'USER_LOGIN',
   userId: currentUser.id,
-  routeName: 'Home',
 })
 
 // Button click
 trackAppEvent({
   eventName: 'BUTTON_CLICKED',
   buttonId: 'signup-button',
-  routeName: 'Home',
 })
 
 // Screen view
 trackAppEvent({
   eventName: 'SCREEN_VIEW',
   screenName: 'Profile',
-  routeName: 'Profile',
 })
 ```
 
@@ -84,7 +81,6 @@ trackAppEvent({
 trackAppEvent({
   eventName: 'APP_STATE_CHANGE',
   state: 'active',
-  routeName: 'Home',
 })
 
 // User property change
@@ -124,7 +120,6 @@ function LoginScreen() {
       trackAppEvent({
         eventName: 'USER_LOGIN',
         userId: user.id,
-        routeName: 'Home',
       })
     } catch (error) {
       // Handle error
@@ -152,7 +147,6 @@ function useScreenTracking() {
       trackAppEvent({
         eventName: 'SCREEN_VIEW',
         screenName: routeName,
-        routeName: routeName,
       })
     })
 
@@ -174,7 +168,7 @@ const ravenMiddleware = (store) => (next) => (action) => {
     trackAppEvent({
       eventName: 'USER_LOGIN',
       userId: action.payload.userId,
-      routeName: store.getState().navigation.currentRoute,
+      screenName: store.getState().navigation.currentRoute,
     })
   }
 

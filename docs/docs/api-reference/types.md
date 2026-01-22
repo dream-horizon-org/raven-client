@@ -259,5 +259,5 @@ import type {
 
 ## Next Steps
 
-- [API Reference](/api-reference/nudge-client) - See API documentation
+- [API Reference](/api-reference/raven-client) - See API documentation
 - [Quick Start](/getting-started/quick-start) - Use types in your app

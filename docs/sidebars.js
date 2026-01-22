@@ -61,7 +61,7 @@ module.exports = {
       label: 'API Reference',
       collapsed: true,
       items: [
-        'api-reference/nudge-client',
+        'api-reference/raven-client',
         'api-reference/cta-handler',
         'api-reference/tooltip-system',
         'api-reference/types',

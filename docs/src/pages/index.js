@@ -106,7 +106,7 @@ function QuickLinks() {
             <h3>State Machine DSL</h3>
             <p>Create complex user flows</p>
           </Link>
-          <Link to="/api-reference/nudge-client" className={styles.linkCard}>
+          <Link to="/api-reference/raven-client" className={styles.linkCard}>
             <div className={styles.linkIcon}>📚</div>
             <h3>API Reference</h3>
             <p>Complete API documentation</p>
