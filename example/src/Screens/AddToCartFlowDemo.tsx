@@ -33,9 +33,6 @@ export default function AddToCartFlowDemo() {
       })
       sendCtaEvent({
         eventName: 'addtocartbuttonclick',
-        actionDone: false,
-        routeName: 'AddToCartFlowDemo',
-        is_from_rn: true,
         selection: 'Manager Mode',
       })
     },
@@ -70,9 +67,6 @@ export default function AddToCartFlowDemo() {
   const handleBackToProductHome = useCallback(() => {
     sendCtaEvent({
       eventName: 'backToProductHome',
-      actionDone: false,
-      routeName: 'AddToCartFlowDemo',
-      is_from_rn: true,
       selection: 'Manager Mode',
       totalCartCount: totalCartCount,
     })
@@ -84,9 +78,6 @@ export default function AddToCartFlowDemo() {
     // Trigger popup CTA on buy
     sendCtaEvent({
       eventName: 'BuyProducts',
-      actionDone: false,
-      routeName: 'AddToCartFlowDemo',
-      is_from_rn: true,
       totalCartCount: totalCartCount,
     })
     // Reset flow after showing popup via CTA system

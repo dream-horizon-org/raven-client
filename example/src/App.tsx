@@ -18,6 +18,7 @@ import {
   ravenClient,
   useNavigationTracker,
   fetchCTA,
+  RAVEN_ROUTE_NAME,
   type RavenClientOptions,
   type RavenParams,
 } from '@dreamhorizonorg/raven-client'
@@ -42,16 +43,6 @@ export default function App() {
       listeners: {
         appEvent: (eventName, props) =>
           console.log('📊 Analytics:', eventName, props),
-        fetchCtaApi: async (url, method, variables) => {
-          console.log('🔄 FetchCtaApi callback called:', {
-            url,
-            method,
-            variables,
-          })
-          throw new Error(
-            'Use makeCtaApiCall directly - this callback is not used',
-          )
-        },
         getAccessToken: () => ({
           token: 'dummy',
           tokenType: 'Bearer',
@@ -65,7 +56,6 @@ export default function App() {
         userId: 'mock_user_id',
         appVersion: '1.0.0-mock',
         platform: Platform.OS,
-        nudgeRouteName: 'Nudge',
         packageName: 'raven-client-example',
         tenantId: 'mock_tenant_id',
       },
@@ -118,7 +108,7 @@ export default function App() {
               options={{title: 'Add to Cart Journey'}}
             />
             <Stack.Screen
-              name="Nudge"
+              name={RAVEN_ROUTE_NAME}
               component={NudgeScreen}
               options={{
                 headerShown: false,

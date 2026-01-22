@@ -20,9 +20,8 @@ import type {
 import {sendRavenAppEvent} from './ctaEvent'
 import {addRequestToQueue} from './requestQueue'
 import {navigate} from '../utils/NavigationContainerRef'
-import {ravenClient} from './ravenclient'
 import {NudgeAnalyticsEvents} from './eventsFile'
-export const NUDGE_ROUTE_NAME = 'Nudge'
+export const RAVEN_ROUTE_NAME = 'Nudge'
 
 export function fetchCTA() {
   setTimeout(fetchCTAInternal, 1000)
@@ -275,7 +274,7 @@ export const emitNudgeRoute = (
   eventObj: Record<string, unknown>,
   actionType: ActionType,
 ) => {
-  navigate(ravenClient.getNudgeRouteName(), {
+  navigate(RAVEN_ROUTE_NAME, {
     data: JSON.stringify(nudgeTemplateData),
     context: JSON.stringify({
       ...context,
