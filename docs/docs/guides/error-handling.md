@@ -45,7 +45,7 @@ Event processing errors are handled internally. The SDK logs errors but doesn't 
 // Safe to call - won't throw
 trackAppEvent({
   eventName: 'USER_LOGIN',
-  routeName: 'Home',
+  platform: 'ios',
 })
 ```
 
