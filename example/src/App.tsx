@@ -41,9 +41,9 @@ export default function App() {
     ravenClient.init({
       listeners: {
         appEvent: (eventName, props) =>
-          console.log('📊 Analytics:', eventName, props),
+          console.log('Analytics:', eventName, props),
         fetchCtaApi: async (url, method, variables) => {
-          console.log('🔄 FetchCtaApi callback called:', {
+          console.log('FetchCtaApi callback called:', {
             url,
             method,
             variables,
