@@ -1,3 +1,4 @@
+import {useState} from 'react'
 import {
   View,
   Text,
@@ -7,6 +8,7 @@ import {
 } from 'react-native'
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack'
 import type {RootStackParamList} from './HomeScreen'
+import {multiply, add} from '@dreamhorizonorg/raven-client'
 
 // Tab screens nested in Home can navigate to parent stack screens
 // Using 'Home' as the screen name since tabs are nested inside Home screen
@@ -20,6 +22,8 @@ interface ComponentsTabProps {
 }
 
 export default function ComponentsTab({navigation}: ComponentsTabProps) {
+  const [turboResult, setTurboResult] = useState<string | null>(null)
+
   const components = [
     {
       id: 'BOTTOMSHEET',
@@ -45,6 +49,54 @@ export default function ComponentsTab({navigation}: ComponentsTabProps) {
         Explore different component variants and features
       </Text>
 
+      <View style={styles.sectionContainer}>
+        <Text style={styles.sectionTitle}>RavenTurbo Native Module</Text>
+        <Text style={styles.sectionSubtitle}>
+          Test multiply and add via native bridge
+        </Text>
+        <TouchableOpacity
+          style={styles.card}
+          onPress={() => {
+            multiply(2, 3).then((result) =>
+              setTurboResult(`2 × 3 = ${result}`),
+            )
+          }}
+          activeOpacity={0.7}>
+          <View style={styles.cardHeader}>
+            <Text style={styles.cardTitle}>Multiply</Text>
+          </View>
+          <View style={styles.cardContent}>
+            <Text style={styles.cardDescription}>2 × 3</Text>
+            <View style={styles.arrowContainer}>
+              <Text style={styles.arrow}>→</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.card}
+          onPress={() => {
+            add(1, 2).then((result) => setTurboResult(`1 + 2 = ${result}`))
+          }}
+          activeOpacity={0.7}>
+          <View style={styles.cardHeader}>
+            <Text style={styles.cardTitle}>Add</Text>
+          </View>
+          <View style={styles.cardContent}>
+            <Text style={styles.cardDescription}>1 + 2</Text>
+            <View style={styles.arrowContainer}>
+              <Text style={styles.arrow}>→</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        {turboResult !== null && (
+          <View style={styles.resultBox}>
+            <Text style={styles.resultLabel}>Result</Text>
+            <Text style={styles.resultValue}>{turboResult}</Text>
+          </View>
+        )}
+      </View>
+
+      <Text style={styles.sectionTitle}>Components</Text>
       {components.map((component) => (
         <TouchableOpacity
           key={component.id}
@@ -92,6 +144,40 @@ const styles = StyleSheet.create({
     color: '#666',
     marginBottom: 24,
     paddingHorizontal: 16,
+  },
+  sectionContainer: {
+    marginBottom: 24,
+  },
+  sectionTitle: {
+    fontSize: 22,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 6,
+  },
+  sectionSubtitle: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 16,
+  },
+  resultBox: {
+    marginTop: 12,
+    padding: 16,
+    backgroundColor: '#e8f4fd',
+    borderRadius: 8,
+    borderLeftWidth: 4,
+    borderLeftColor: '#007AFF',
+  },
+  resultLabel: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#007AFF',
+    marginBottom: 4,
+    textTransform: 'uppercase',
+  },
+  resultValue: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#333',
   },
   card: {
     marginHorizontal: 16,

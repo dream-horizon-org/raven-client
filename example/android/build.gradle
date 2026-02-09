@@ -2,8 +2,8 @@ buildscript {
     ext {
         buildToolsVersion = "35.0.0"
         minSdkVersion = 24
-        compileSdkVersion = 35
-        targetSdkVersion = 35
+        compileSdkVersion = 36
+        targetSdkVersion = 36
         ndkVersion = "26.1.10909125"
         kotlinVersion = "2.0.21"
     }
@@ -34,6 +34,18 @@ buildscript {
 
 // Force Kotlin 2.0.21 across all projects (to prevent version conflicts)
 allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        // Must match raven-client/android/build.gradle (dream11 = org that publishes com.dscomms:android-sdk)
+        maven {
+            url = uri(project.findProperty("GITHUB_PACKAGES_REPO_URL") ?: "https://maven.pkg.github.com/dream11/ds-comms-android-sdk")
+            credentials {
+                username = project.findProperty("GITHUB_USERNAME") ?: System.getenv("GITHUB_USERNAME") ?: ""
+                password = project.findProperty("GITHUB_TOKEN") ?: System.getenv("GITHUB_TOKEN") ?: ""
+            }
+        }
+    }
     configurations.all {
         resolutionStrategy {
             force "org.jetbrains.kotlin:kotlin-stdlib:2.0.21"

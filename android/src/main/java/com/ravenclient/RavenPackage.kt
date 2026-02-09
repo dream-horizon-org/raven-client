@@ -18,6 +18,7 @@ class RavenPackage : BaseReactPackage() {
       TooltipModule.NAME -> TooltipModule(reactContext)
       ScreenInspectorModule.NAME -> ScreenInspectorModule(reactContext)
       StorageModule.NAME -> StorageModule(reactContext)
+      RavenTurboModuleImpl.NAME -> RavenTurboModule(reactContext)
       else -> null
     }
   }
@@ -34,12 +35,20 @@ class RavenPackage : BaseReactPackage() {
         moduleInfos[moduleName] = ReactModuleInfo(
           moduleName,
           moduleName,
-          false,  // canOverrideExistingModule
-          false,  // needsEagerInit
-          false,  // isCxxModule
-          false   // isTurboModule
+          false,
+          false,
+          false,
+          false
         )
       }
+      moduleInfos[RavenTurboModuleImpl.NAME] = ReactModuleInfo(
+        RavenTurboModuleImpl.NAME,
+        RavenTurboModuleImpl.NAME,
+        false,
+        false,
+        false,
+        BuildConfig.IS_NEW_ARCHITECTURE_ENABLED
+      )
       moduleInfos
     }
   }

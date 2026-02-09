@@ -1,6 +1,7 @@
 apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
+apply from: "patch-react-native.gradle"
 
 /**
  * This is the configuration block to customize your React Native Android app.
@@ -16,7 +17,7 @@ react {
     // codegenDir = file("../../node_modules/@react-native/codegen")
     //   The cli.js file which is the React Native CLI entrypoint. Default is ../../node_modules/react-native/cli.js
     // cliFile = file("../../node_modules/react-native/cli.js")
-    
+
     /* Node executable */
 
     /* Variants */
@@ -109,7 +110,7 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
-    
+
     packagingOptions {
         resources {
             excludes += ["META-INF/DEPENDENCIES", "META-INF/LICENSE", "META-INF/LICENSE.txt", "META-INF/license.txt", "META-INF/NOTICE", "META-INF/NOTICE.txt", "META-INF/notice.txt", "META-INF/ASL2.0"]
@@ -126,6 +127,6 @@ dependencies {
     } else {
         implementation jscFlavor
     }
-    
+
 }
 

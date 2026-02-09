@@ -1,0 +1,55 @@
+// Patch React Native's std::format usage which is incompatible with Android NDK 26
+gradle.projectsEvaluated {
+    tasks.matching { it.name.startsWith('configureCMake') }.all { task ->
+        task.doFirst {
+            // Find and patch all graphicsConversions.h files in Gradle cache
+            def cachePaths = [
+                gradle.gradleUserHomeDir,
+                new File("/private/var/folders").listFiles()?.collect { tempDir ->
+                    tempDir.listFiles()?.collect { subDir ->
+                        new File(subDir, "T/cursor-sandbox-cache")
+                    }
+                }?.flatten()?.findAll { it?.exists() }?.collect { cacheDir ->
+                    cacheDir.listFiles()?.collect { hashDir ->
+                        new File(hashDir, "gradle")
+                    }
+                }?.flatten()
+            ].flatten().findAll { it?.exists() }
+            
+            def patched = []
+            cachePaths.each { cacheDir ->
+                if (cacheDir?.exists()) {
+                    def transforms = new File(cacheDir, "caches/${gradle.gradleVersion}/transforms")
+                    
+                    if (transforms.exists()) {
+                        transforms.eachFileRecurse { file ->
+                            if (file.name == "graphicsConversions.h" && 
+                                file.path.contains("react-android") && 
+                                file.path.contains("prefab") &&
+                                file.canRead() && file.canWrite()) {
+                                
+                                def content = file.text
+                                if (content.contains('std::format("{}%"') && !content.contains('std::snprintf(buffer.data()')) {
+                                    content = content.replaceAll(
+                                        /case YGUnitPercent:\s+return std::format\("\{\}%", dimension\.value\);/,
+                                        '''case YGUnitPercent: {
+      std::array<char, 32> buffer{};
+      std::snprintf(buffer.data(), buffer.size(), "%g%%", dimension.value);
+      return std::string(buffer.data());
+    }'''
+                                    )
+                                    file.text = content
+                                    patched << file.path
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            if (patched.size() > 0) {
+                println "Patched ${patched.size()} React Native header file(s)"
+            }
+        }
+    }
+}

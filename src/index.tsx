@@ -1,4 +1,5 @@
 export {ravenClient} from './cta/ravenclient'
+export {multiply, add} from './RavenTurbo'
 export type {RavenClientOptions} from './cta/ravenclient.interface'
 export {trackAppEvent, getCtaFromStorageToMemory} from './cta/ctaHandler'
 export {sendRavenAppEvent} from './cta/ctaEvent'
