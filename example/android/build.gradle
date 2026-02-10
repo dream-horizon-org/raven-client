@@ -1,3 +1,4 @@
+
 buildscript {
     ext {
         buildToolsVersion = "35.0.0"
@@ -15,8 +16,9 @@ buildscript {
         classpath("com.android.tools.build:gradle:8.3.0")
         classpath("com.facebook.react:react-native-gradle-plugin")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.21")
+        classpath("com.google.gms:google-services:4.4.4")
     }
-    
+
     // Force Kotlin 2.0.21 in buildscript classpath
     configurations.classpath {
         resolutionStrategy {
@@ -32,6 +34,11 @@ buildscript {
     }
 }
 
+def printSample(){
+  System.out.println("userName +" + System.getenv("GITHUB_USERNAME"))
+  System.out.println("token +" + System.getenv("GITHUB_TOKEN"))
+}
+
 // Force Kotlin 2.0.21 across all projects (to prevent version conflicts)
 allprojects {
     repositories {
@@ -44,8 +51,12 @@ allprojects {
                 username = project.findProperty("GITHUB_USERNAME") ?: System.getenv("GITHUB_USERNAME") ?: ""
                 password = project.findProperty("GITHUB_TOKEN") ?: System.getenv("GITHUB_TOKEN") ?: ""
             }
+            printSample()
         }
+
+
     }
+
     configurations.all {
         resolutionStrategy {
             force "org.jetbrains.kotlin:kotlin-stdlib:2.0.21"
@@ -68,7 +79,7 @@ allprojects {
             }
         }
     }
-    
+
     // Force C++17 for all native modules (required for React Native 0.81.1)
     // This overrides C++14 settings in native modules' CMakeLists.txt
     afterEvaluate { project ->
@@ -80,7 +91,7 @@ allprojects {
                         def newArgs = arguments.findAll { !it.toString().startsWith("-DCMAKE_CXX_STANDARD") }
                         newArgs.add("-DCMAKE_CXX_STANDARD=17")
                         arguments = newArgs
-                        
+
                         // Force C++17 compiler flag
                         def newCppFlags = cppFlags.findAll { !it.toString().matches("-std=(c|gnu)\\+\\+.*") }
                         newCppFlags.add("-std=c++17")
@@ -91,5 +102,6 @@ allprojects {
         }
     }
 }
+
 
 apply plugin: "com.facebook.react.rootproject"

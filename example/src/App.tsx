@@ -18,10 +18,12 @@ import {
   ravenClient,
   useNavigationTracker,
   fetchCTA,
+  initializeOutApp,
   RAVEN_ROUTE_NAME,
   type RavenClientOptions,
   type RavenParams,
 } from '@dreamhorizonorg/raven-client'
+import { outappConfig } from './config/outapp.config'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
@@ -63,6 +65,13 @@ export default function App() {
     fetchCTA().catch((error) => {
       console.log('Error auto-fetching CTAs after init:', error)
     })
+
+
+    initializeOutApp(outappConfig)
+      .then(() => console.log('Out-of-app initialized'))
+      .catch((error) =>
+        console.warn('Out-of-app init failed (expected if not on native):', error),
+      )
   }, [])
   return (
     <GestureHandlerRootView style={{flex: 1}}>

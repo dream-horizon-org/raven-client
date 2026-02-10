@@ -45,6 +45,8 @@ local.properties
 android.iml
 *.keystore
 !release.keystore
+example/android/app/google-services.json
+example/src/config/outapp.config.ts
 
 # Cocoapods
 #

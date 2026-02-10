@@ -8,7 +8,8 @@ import {
 } from 'react-native'
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack'
 import type {RootStackParamList} from './HomeScreen'
-import {multiply, add} from '@dreamhorizonorg/raven-client'
+import {updateUserProfile} from '@dreamhorizonorg/raven-client'
+import {userProfileSample} from '../config/outapp.config'
 
 // Tab screens nested in Home can navigate to parent stack screens
 // Using 'Home' as the screen name since tabs are nested inside Home screen
@@ -52,37 +53,24 @@ export default function ComponentsTab({navigation}: ComponentsTabProps) {
       <View style={styles.sectionContainer}>
         <Text style={styles.sectionTitle}>RavenTurbo Native Module</Text>
         <Text style={styles.sectionSubtitle}>
-          Test multiply and add via native bridge
+          Update user profile via native bridge
         </Text>
         <TouchableOpacity
           style={styles.card}
           onPress={() => {
-            multiply(2, 3).then((result) =>
-              setTurboResult(`2 × 3 = ${result}`),
-            )
+            setTurboResult(null)
+            updateUserProfile(userProfileSample)
+              .then(() => setTurboResult('User profile updated'))
+              .catch((e) => setTurboResult(`Error: ${(e as Error).message}`))
           }}
           activeOpacity={0.7}>
           <View style={styles.cardHeader}>
-            <Text style={styles.cardTitle}>Multiply</Text>
+            <Text style={styles.cardTitle}>Update user profile</Text>
           </View>
           <View style={styles.cardContent}>
-            <Text style={styles.cardDescription}>2 × 3</Text>
-            <View style={styles.arrowContainer}>
-              <Text style={styles.arrow}>→</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.card}
-          onPress={() => {
-            add(1, 2).then((result) => setTurboResult(`1 + 2 = ${result}`))
-          }}
-          activeOpacity={0.7}>
-          <View style={styles.cardHeader}>
-            <Text style={styles.cardTitle}>Add</Text>
-          </View>
-          <View style={styles.cardContent}>
-            <Text style={styles.cardDescription}>1 + 2</Text>
+            <Text style={styles.cardDescription}>
+              Send user profile (userId, firstName, lastName) to backend
+            </Text>
             <View style={styles.arrowContainer}>
               <Text style={styles.arrow}>→</Text>
             </View>

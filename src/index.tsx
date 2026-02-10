@@ -1,6 +1,13 @@
 export {ravenClient} from './cta/ravenclient'
-export {multiply, add} from './RavenTurbo'
+export {initializeOutApp, updateUserProfile} from './RavenTurbo'
 export type {RavenClientOptions} from './cta/ravenclient.interface'
+export type {
+  OutAppConfig,
+  OutAppGlobalProps,
+  KnownOutAppGlobalPropsKey,
+  UpdateUserProfileParams,
+} from './RavenTurbo';
+export { OutAppGlobalPropsKeys } from './RavenTurbo';
 export {trackAppEvent, getCtaFromStorageToMemory} from './cta/ctaHandler'
 export {sendRavenAppEvent} from './cta/ctaEvent'
 export {Nudge} from './render-nudge/screens/NudgeScreen/Nudge'

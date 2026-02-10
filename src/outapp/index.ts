@@ -1,9 +1,8 @@
+export { initializeOutApp, updateUserProfile } from './outapp';
 export {
-  initializeOutApp,
-  updateUserProfile,
   OutAppGlobalPropsKeys,
   type OutAppConfig,
   type OutAppGlobalProps,
   type KnownOutAppGlobalPropsKey,
   type UpdateUserProfileParams,
-} from './outapp';
+} from './OutAppConfig';
