@@ -10,24 +10,22 @@ Pod::Spec.new do |s|
   s.license      = package["license"]
   s.authors      = package["author"]
 
-  # Use explicit iOS version for Expo compatibility
-  # Expo requires a specific minimum version rather than the dynamic min_ios_version_supported
   s.platforms    = { :ios => "13.4" }
   s.source       = { :git => "https://github.com/dream-horizon-org/raven-client.git", :tag => "#{s.version}" }
-
-  # Include all iOS native files (including RavenStorage)
   s.source_files = "ios/**/*.{h,m,mm,swift}"
-  s.private_header_files = "ios/RavenStorage/StorageUtils.h"
+  s.public_header_files = "ios/RavenTurbo.h"
+  s.private_header_files = "ios/**/*.h"
 
-  # Swift support
   s.swift_version = "5.0"
+  s.pod_target_xcconfig = {
+    'SWIFT_VERSION' => '5.0',
+    'DEFINES_MODULE' => 'YES',
+    'HEADER_SEARCH_PATHS' => '$(inherited) "${PODS_ROOT}/Headers/Public/ReactCodegen"'
+  }
 
-  # MMKV dependency for RavenStorage
   s.dependency 'MMKV', '~> 1.3.0'
+  s.dependency 'raven-ios-sdk'
 
-  # React Native dependencies
   install_modules_dependencies(s)
-  
-  # Ensure React Native is available (required for Expo)
   s.dependency "React-Core"
 end

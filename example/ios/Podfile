@@ -28,6 +28,7 @@ target 'RavenExample' do
   pod 'RNScreens', :path => '../node_modules/react-native-screens'
   pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
   pod 'Raven', :path => '../../'
+  pod 'raven-ios-sdk', :path => '../../../raven-ios-sdk'
 
   use_react_native!(
     :path => "../node_modules/react-native",
