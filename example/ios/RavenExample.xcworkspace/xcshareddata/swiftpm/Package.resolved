@@ -112,7 +112,7 @@
     {
       "identity" : "raven-ios-sdk",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/dream11/raven-ios-sdk.git",
+      "location" : "https://github.com/dream11/raven-ios-sdk",
       "state" : {
         "revision" : "911f84d82b1de682bdb7805db39083b2a2b58c7b",
         "version" : "0.1.7"

@@ -28,8 +28,8 @@ target 'RavenExample' do
   pod 'RNScreens', :path => '../node_modules/react-native-screens'
   pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
   pod 'Raven', :path => '../../'
-  # Resolve Raven's dependency on raven-ios-sdk from local repo when developing (monorepo: raven/raven-ios-sdk)
-  pod 'raven-ios-sdk', :path => '../../../raven-ios-sdk'
+  # raven-ios-sdk is required by Raven's native code (imported in OutAppInitializer.swift)
+  pod 'raven-ios-sdk', :git => 'git@github.com:dream11/raven-ios-sdk.git'
 
   use_react_native!(
     :path => "../node_modules/react-native",
