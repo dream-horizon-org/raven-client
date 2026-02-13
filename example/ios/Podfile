@@ -5,6 +5,8 @@ require Pod::Executable.execute_command('node', ['-p',
     {paths: [process.argv[1]]},
   )', __dir__]).strip
 
+plugin 'cocoapods-spm'
+
 platform :ios, min_ios_version_supported
 project 'RavenExample.xcodeproj'
 
@@ -28,9 +30,7 @@ target 'RavenExample' do
   pod 'RNScreens', :path => '../node_modules/react-native-screens'
   pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
   pod 'Raven', :path => '../../'
-  # Resolve Raven's dependency on raven-ios-sdk from local repo when developing (monorepo: raven/raven-ios-sdk)
-  pod 'raven-ios-sdk', :path => '../../../raven-ios-sdk'
-
+  spm_pkg 'raven-ios-sdk', :url => 'https://github.com/dream11/raven-ios-sdk.git', :version => '0.1.4', :products => ['RavenIOSSDK']
   use_react_native!(
     :path => "../node_modules/react-native",
     :hermes_enabled => true,

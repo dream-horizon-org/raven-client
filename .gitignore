@@ -52,6 +52,8 @@ example/src/config/outapp.config.ts
 # Cocoapods
 #
 example/ios/Pods
+# cocoapods-spm: SPM package checkouts and build cache
+example/ios/.spm.pods
 
 # Ruby
 example/vendor/

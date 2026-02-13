@@ -11,6 +11,7 @@
 		2223F7E6525E9CE585900F30 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		892041ED2F3F38B7004F1850 /* RavenIOSSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 892041E12F3F28D1004F1850 /* RavenIOSSDK */; };
 		95FBE8635741F22BDFDDE753 /* Pods_RavenExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F43A491DD9D87D82367FD4F /* Pods_RavenExample.framework */; };
 		A1B1C1D11E68108700A75B9A /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B1C1D22E68108700A75B9A /* NotificationService.swift */; };
 		A1B1C1D32E68108700A75B9A /* NotificationServiceExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A1B1C1D42E68108700A75B9A /* NotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -72,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				892041ED2F3F38B7004F1850 /* RavenIOSSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

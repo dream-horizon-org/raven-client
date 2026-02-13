@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.license      = package["license"]
   s.authors      = package["author"]
 
-  s.platforms    = { :ios => "13.4" }
+  s.platforms    = { :ios => "14.0" }
   s.source       = { :git => "https://github.com/dream-horizon-org/raven-client.git", :tag => "#{s.version}" }
   s.source_files = "ios/**/*.{h,m,mm,swift}"
   s.public_header_files = "ios/RavenTurbo.h"
@@ -20,11 +20,10 @@ Pod::Spec.new do |s|
   s.pod_target_xcconfig = {
     'SWIFT_VERSION' => '5.0',
     'DEFINES_MODULE' => 'YES',
-    'HEADER_SEARCH_PATHS' => '$(inherited) "${PODS_ROOT}/Headers/Public/ReactCodegen"'
   }
 
   s.dependency 'MMKV', '~> 1.3.0'
-  s.dependency 'raven-ios-sdk'
+  s.spm_dependency 'raven-ios-sdk/RavenIOSSDK'
 
   install_modules_dependencies(s)
   s.dependency "React-Core"
