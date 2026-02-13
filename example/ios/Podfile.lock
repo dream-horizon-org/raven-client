@@ -3,72 +3,14 @@ PODS:
   - DoubleConversion (1.1.6)
   - fast_float (8.0.0)
   - FBLazyVector (0.81.1)
-  - Firebase/CoreOnly (12.7.0):
-    - FirebaseCore (~> 12.7.0)
-  - Firebase/Messaging (12.7.0):
-    - Firebase/CoreOnly
-    - FirebaseMessaging (~> 12.7.0)
-  - FirebaseCore (12.7.0):
-    - FirebaseCoreInternal (~> 12.7.0)
-    - GoogleUtilities/Environment (~> 8.1)
-    - GoogleUtilities/Logger (~> 8.1)
-  - FirebaseCoreInternal (12.7.0):
-    - "GoogleUtilities/NSData+zlib (~> 8.1)"
-  - FirebaseInstallations (12.7.0):
-    - FirebaseCore (~> 12.7.0)
-    - GoogleUtilities/Environment (~> 8.1)
-    - GoogleUtilities/UserDefaults (~> 8.1)
-    - PromisesObjC (~> 2.4)
-  - FirebaseMessaging (12.7.0):
-    - FirebaseCore (~> 12.7.0)
-    - FirebaseInstallations (~> 12.7.0)
-    - GoogleDataTransport (~> 10.1)
-    - GoogleUtilities/AppDelegateSwizzler (~> 8.1)
-    - GoogleUtilities/Environment (~> 8.1)
-    - GoogleUtilities/Reachability (~> 8.1)
-    - GoogleUtilities/UserDefaults (~> 8.1)
-    - nanopb (~> 3.30910.0)
   - fmt (11.0.2)
   - glog (0.3.5)
-  - GoogleDataTransport (10.1.0):
-    - nanopb (~> 3.30910.0)
-    - PromisesObjC (~> 2.4)
-  - GoogleUtilities/AppDelegateSwizzler (8.1.0):
-    - GoogleUtilities/Environment
-    - GoogleUtilities/Logger
-    - GoogleUtilities/Network
-    - GoogleUtilities/Privacy
-  - GoogleUtilities/Environment (8.1.0):
-    - GoogleUtilities/Privacy
-  - GoogleUtilities/Logger (8.1.0):
-    - GoogleUtilities/Environment
-    - GoogleUtilities/Privacy
-  - GoogleUtilities/Network (8.1.0):
-    - GoogleUtilities/Logger
-    - "GoogleUtilities/NSData+zlib"
-    - GoogleUtilities/Privacy
-    - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (8.1.0)":
-    - GoogleUtilities/Privacy
-  - GoogleUtilities/Privacy (8.1.0)
-  - GoogleUtilities/Reachability (8.1.0):
-    - GoogleUtilities/Logger
-    - GoogleUtilities/Privacy
-  - GoogleUtilities/UserDefaults (8.1.0):
-    - GoogleUtilities/Logger
-    - GoogleUtilities/Privacy
   - hermes-engine (0.81.1):
     - hermes-engine/Pre-built (= 0.81.1)
   - hermes-engine/Pre-built (0.81.1)
   - MMKV (1.3.16):
     - MMKVCore (~> 1.3.16)
   - MMKVCore (1.3.16)
-  - nanopb (3.30910.0):
-    - nanopb/decode (= 3.30910.0)
-    - nanopb/encode (= 3.30910.0)
-  - nanopb/decode (3.30910.0)
-  - nanopb/encode (3.30910.0)
-  - PromisesObjC (2.4.0)
   - Raven (0.0.5):
     - boost
     - DoubleConversion
@@ -77,7 +19,6 @@ PODS:
     - glog
     - hermes-engine
     - MMKV (~> 1.3.0)
-    - raven-ios-sdk
     - RCT-Folly
     - RCT-Folly/Fabric
     - RCTRequired
@@ -99,8 +40,6 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - raven-ios-sdk (0.1.4):
-    - Firebase/Messaging
   - RCT-Folly (2024.11.18.00):
     - boost
     - DoubleConversion
@@ -2682,7 +2621,6 @@ DEPENDENCIES:
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
   - Raven (from `../../`)
-  - raven-ios-sdk (from `../../../raven-ios-sdk`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTDeprecation (from `../node_modules/react-native/ReactApple/Libraries/RCTFoundation/RCTDeprecation`)
   - RCTRequired (from `../node_modules/react-native/Libraries/Required`)
@@ -2756,17 +2694,8 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - Firebase
-    - FirebaseCore
-    - FirebaseCoreInternal
-    - FirebaseInstallations
-    - FirebaseMessaging
-    - GoogleDataTransport
-    - GoogleUtilities
     - MMKV
     - MMKVCore
-    - nanopb
-    - PromisesObjC
     - SocketRocket
 
 EXTERNAL SOURCES:
@@ -2787,8 +2716,6 @@ EXTERNAL SOURCES:
     :tag: hermes-2025-07-07-RNv0.81.0-e0fc67142ec0763c6b6153ca2bf96df815539782
   Raven:
     :path: "../../"
-  raven-ios-sdk:
-    :path: "../../../raven-ios-sdk"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTDeprecation:
@@ -2931,22 +2858,12 @@ SPEC CHECKSUMS:
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
   fast_float: b32c788ed9c6a8c584d114d0047beda9664e7cc6
   FBLazyVector: b8f1312d48447cca7b4abc21ed155db14742bd03
-  Firebase: 2d19a10c9a2e48ac532a4303115d3fc9b2798396
-  FirebaseCore: c7b57863ce0859281a66d16ca36d665c45d332b5
-  FirebaseCoreInternal: 571a2dd8c975410966199623351db3a3265c874d
-  FirebaseInstallations: 6d05424a046b68ca146b4de4376f05b4e9262fc3
-  FirebaseMessaging: b5f7bdc62b91b6102015991fb7bc6fa75f643908
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
-  GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
-  GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
   hermes-engine: 4f8246b1f6d79f625e0d99472d1f3a71da4d28ca
   MMKV: 43cd10be0f925bf3fd5c2bd8bea501a328037b64
   MMKVCore: 13be45a0394861b74836875ac9ec7ee939e86b78
-  nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
-  PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
-  Raven: e990616d87b7411b531d7e15ff1572d6fc1926e8
-  raven-ios-sdk: bd423172c9c5701590f3130a97d9e3fc5d7c01d7
+  Raven: 6157d6d481a30f3e12b1469eadfa7ec812497ba3
   RCT-Folly: 846fda9475e61ec7bcbf8a3fe81edfcaeb090669
   RCTDeprecation: c4b9e2fd0ab200e3af72b013ed6113187c607077
   RCTRequired: e97dd5dafc1db8094e63bc5031e0371f092ae92a
@@ -3017,6 +2934,6 @@ SPEC CHECKSUMS:
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: f95f7e60346fa6828def95fbe5017346ccc8940e
 
-PODFILE CHECKSUM: 9258908a715eaa2f194a9a134bcc11d65a637ddf
+PODFILE CHECKSUM: c7b9d40b337c46e38e3691c6bf70fc53f2e30209
 
 COCOAPODS: 1.15.2
