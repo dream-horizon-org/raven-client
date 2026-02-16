@@ -25,14 +25,14 @@ export interface OutAppGlobalProps {
   [OutAppGlobalPropsKeys.DEVICE_ID]: string;
   [OutAppGlobalPropsKeys.APP_VERSION]: string;
   [OutAppGlobalPropsKeys.APP_PACKAGE_NAME]: string;
-  [OutAppGlobalPropsKeys.USER_ID]?: string;
+  [OutAppGlobalPropsKeys.USER_ID]: string;
   [OutAppGlobalPropsKeys.OS_VERSION]?: string;
   [key: string]: string | number | boolean | object | undefined;
 }
 
 export interface OutAppConfig {
   fcmBaseUrl: string;
-  eventBaseUrl: string;
+  eventBaseUrl?: string;
   apiKey: string;
   notificationBaseUrl?: string;
   userAttributesBaseUrl?: string;

@@ -12,32 +12,29 @@ enum OutAppInitializer {
       reject("OUT_APP_INIT_ERROR", "fcmBaseUrl is required", nil)
       return
     }
-    guard let eventBaseUrl = config["eventBaseUrl"] as? String, !eventBaseUrl.isEmpty else {
-      reject("OUT_APP_INIT_ERROR", "eventBaseUrl is required", nil)
-      return
-    }
+    let eventBaseUrl = (config["eventBaseUrl"] as? String).flatMap { $0.isEmpty ? nil : $0 } ?? fcmBaseUrl
     guard let apiKey = config["apiKey"] as? String, !apiKey.isEmpty else {
-      reject("OUT_APP_INIT_ERROR", "apiKey is required and must be non-empty", nil)
+      reject("OUT_APP_INIT_ERROR", "apiKey is required", nil)
       return
     }
     guard let globalPropsDict = config["globalProps"] as? NSDictionary else {
       reject("OUT_APP_INIT_ERROR", "globalProps is required", nil)
       return
     }
-    guard globalPropsDict["deviceId"] as? String != nil else {
+    guard let deviceId = globalPropsDict["deviceId"] as? String, !deviceId.isEmpty else {
       reject("OUT_APP_INIT_ERROR", "globalProps.deviceId is required", nil)
       return
     }
-    guard globalPropsDict["appVersion"] as? String != nil else {
+    guard let appVersion = globalPropsDict["appVersion"] as? String, !appVersion.isEmpty else {
       reject("OUT_APP_INIT_ERROR", "globalProps.appVersion is required", nil)
       return
     }
-    guard globalPropsDict["appPackageName"] as? String != nil else {
+    guard let appPackageName = globalPropsDict["appPackageName"] as? String, !appPackageName.isEmpty else {
       reject("OUT_APP_INIT_ERROR", "globalProps.appPackageName is required", nil)
       return
     }
     guard let userId = globalPropsDict["userId"] as? String, !userId.isEmpty else {
-      reject("OUT_APP_INIT_ERROR", "globalProps.userId is required for iOS", nil)
+      reject("OUT_APP_INIT_ERROR", "globalProps.userId is required", nil)
       return
     }
     let enableLogging = (config["enableLogging"] as? Bool) ?? true
@@ -73,7 +70,40 @@ enum OutAppInitializer {
       reject("UPDATE_USER_PROFILE_ERROR", "userId is required", nil)
       return
     }
-    resolve(nil)
+    guard Raven.isInitialized() else {
+      reject("UPDATE_USER_PROFILE_ERROR", "Raven SDK not initialized. Call initializeOutApp first.", nil)
+      return
+    }
+    let request = parseUserLoginRequest(params: params, userId: userId)
+    Task {
+      do {
+        _ = try await Raven.loginUser(request)
+        await MainActor.run { resolve(nil) }
+      } catch {
+        await MainActor.run {
+          reject("UPDATE_USER_PROFILE_ERROR", error.localizedDescription, error as NSError)
+        }
+      }
+    }
+  }
+
+  private static func parseUserLoginRequest(params: NSDictionary, userId: String) -> UserLoginRequest {
+    let custom = params["custom"] as? [String: Any]
+    return UserLoginRequest(
+      userId: userId,
+      firstName: params["firstName"] as? String,
+      lastName: params["lastName"] as? String,
+      email: params["email"] as? String,
+      phone: params["phone"] as? String,
+      birthdate: params["birthdate"] as? String,
+      gender: params["gender"] as? String,
+      city: params["city"] as? String,
+      locality: params["locality"] as? String,
+      postalCode: params["postalCode"] as? String,
+      country: params["country"] as? String,
+      language: params["language"] as? String,
+      custom: custom
+    )
   }
 
   private static func parseRetryConfig(_ map: NSDictionary?) -> RetryConfig? {

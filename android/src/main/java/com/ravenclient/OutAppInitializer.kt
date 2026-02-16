@@ -13,6 +13,10 @@ object OutAppInitializer {
 
     fun updateUserProfile(params: ReadableMap, context: ReactApplicationContext, promise: Promise) {
         try {
+            if (!DsComms.isInitialized()) {
+                promise.reject("UPDATE_USER_PROFILE_ERROR", "Raven SDK not initialized. Call initializeOutApp first.")
+                return
+            }
             val userId = params.getString("userId")?.takeIf { it.isNotEmpty() }
                 ?: run {
                     promise.reject("UPDATE_USER_PROFILE_ERROR", "userId is required")
@@ -66,6 +70,7 @@ object OutAppInitializer {
 
     fun initializeOutApp(config: ReadableMap, context: ReactApplicationContext, promise: Promise) {
         try {
+            validateMandatoryConfig(config)
             val dsCommsConfig = parseConfig(config)
             context.runOnUiQueueThread {
                 try {
@@ -80,12 +85,28 @@ object OutAppInitializer {
         }
     }
 
-    private fun parseConfig(config: ReadableMap): DsCommsConfig {
-        val fcmBaseUrl = config.getString("fcmBaseUrl")
+    private fun validateMandatoryConfig(config: ReadableMap) {
+        config.getString("fcmBaseUrl")?.takeIf { it.isNotEmpty() }
             ?: throw IllegalArgumentException("fcmBaseUrl is required")
-        val eventBaseUrl = config.getString("eventBaseUrl")
-            ?: throw IllegalArgumentException("eventBaseUrl is required")
-        val apiKey = config.getString("apiKey")
+        config.getString("apiKey")?.takeIf { it.isNotEmpty() }
+            ?: throw IllegalArgumentException("apiKey is required")
+        val globalPropsMap = config.getMap("globalProps")
+            ?: throw IllegalArgumentException("globalProps is required")
+        globalPropsMap.getString("deviceId")?.takeIf { it.isNotEmpty() }
+            ?: throw IllegalArgumentException("globalProps.deviceId is required")
+        globalPropsMap.getString("appVersion")?.takeIf { it.isNotEmpty() }
+            ?: throw IllegalArgumentException("globalProps.appVersion is required")
+        globalPropsMap.getString("appPackageName")?.takeIf { it.isNotEmpty() }
+            ?: throw IllegalArgumentException("globalProps.appPackageName is required")
+        globalPropsMap.getString("userId")?.takeIf { it.isNotEmpty() }
+            ?: throw IllegalArgumentException("globalProps.userId is required")
+    }
+
+    private fun parseConfig(config: ReadableMap): DsCommsConfig {
+        val fcmBaseUrl = config.getString("fcmBaseUrl")?.takeIf { it.isNotEmpty() }
+            ?: throw IllegalArgumentException("fcmBaseUrl is required")
+        val eventBaseUrl = config.getString("eventBaseUrl")?.takeIf { it.isNotEmpty() } ?: fcmBaseUrl
+        val apiKey = config.getString("apiKey")?.takeIf { it.isNotEmpty() }
             ?: throw IllegalArgumentException("apiKey is required")
         val enableLogging = if (config.hasKey("enableLogging")) config.getBoolean("enableLogging") else true
         val enableEventService = if (config.hasKey("enableEventService")) config.getBoolean("enableEventService") else true
