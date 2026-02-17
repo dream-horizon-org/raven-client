@@ -21,4 +21,12 @@ export const ScreenInspectorModule = {
   setCurrentScreen(routeName: string) {
     ScreenInspector.setCurrentScreen(routeName)
   },
+
+  /**
+   * Sets whether the inspector FAB should be enabled.
+   * Called when enableInspector flag is received from state-machine API.
+   */
+  setInspectorEnabled(enabled: boolean) {
+    ScreenInspector.setInspectorEnabled(enabled)
+  },
 }

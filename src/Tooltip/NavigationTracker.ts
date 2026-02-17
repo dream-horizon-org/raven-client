@@ -50,6 +50,9 @@ export const useNavigationTracker = (
                   if (TooltipModule?.setCurrentScreen) {
                     TooltipModule.setCurrentScreen(route)
                   }
+                  if (ScreenInspectorModule?.setCurrentScreen) {
+                    ScreenInspectorModule.setCurrentScreen(route)
+                  }
                   ScreenInspectorModule?.setCurrentScreen?.(route)
                 } catch (error) {
                   // Error notifying TooltipModule

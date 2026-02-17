@@ -39,15 +39,16 @@ export default function ComponentsTab({navigation}: ComponentsTabProps) {
   ]
 
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.header}>SDK Components</Text>
-      <Text style={styles.subtitle}>
+    <ScrollView style={styles.container} testID="scroll-components">
+      <Text testID="txt-header" style={styles.header}>SDK Components</Text>
+      <Text testID="txt-subtitle" style={styles.subtitle}>
         Explore different component variants and features
       </Text>
 
       {components.map((component) => (
         <TouchableOpacity
           key={component.id}
+          testID={`btn-${component.id.toLowerCase()}`}
           style={styles.card}
           onPress={() =>
             navigation.navigate('VariantsPreview', {
@@ -59,10 +60,18 @@ export default function ComponentsTab({navigation}: ComponentsTabProps) {
           }
           activeOpacity={0.7}>
           <View style={styles.cardHeader}>
-            <Text style={styles.cardTitle}>{component.name}</Text>
+            <Text 
+              testID={`txt-${component.id.toLowerCase()}-title`}
+              style={styles.cardTitle}>
+              {component.name}
+            </Text>
           </View>
           <View style={styles.cardContent}>
-            <Text style={styles.cardDescription}>{component.description}</Text>
+            <Text 
+              testID={`txt-${component.id.toLowerCase()}-description`}
+              style={styles.cardDescription}>
+              {component.description}
+            </Text>
             <View style={styles.arrowContainer}>
               <Text style={styles.arrow}>→</Text>
             </View>

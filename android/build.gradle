@@ -88,4 +88,15 @@ dependencies {
   implementation "com.facebook.react:react-android"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
   implementation 'com.tencent:mmkv:1.3.0'
+  
+  // Test dependencies
+  testImplementation 'junit:junit:4.13.2'
+  testImplementation 'org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version'
+  testImplementation 'androidx.test:core:1.5.0'
+  testImplementation 'androidx.test.ext:junit:1.1.5'
+  
+  // Android instrumentation test dependencies
+  androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+  androidTestImplementation 'androidx.test:runner:1.5.2'
+  androidTestImplementation 'androidx.test:rules:1.5.0'
 }

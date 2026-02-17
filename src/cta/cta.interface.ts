@@ -183,6 +183,7 @@ export type CtaRecord = {
 export type NudgeModel = {
   ctas: Cta[]
   behaviourTags?: BehaviourTagInfo[]
+  enableInspector?: boolean
 }
 
 export type Cta = {

@@ -18,6 +18,7 @@ import {
   nudgeClient,
   useNavigationTracker,
   fetchCTA,
+  ScreenInspectorModule,
   type NudgeClientOptions,
   type NudgeParams,
 } from '@dreamhorizonorg/raven-client'
@@ -38,6 +39,9 @@ export default function App() {
   useNavigationTracker(navigationRef)
 
   useEffect(() => {
+    // Hardcode FAB to show for now (until API call is fixed)
+    ScreenInspectorModule.setInspectorEnabled(true)
+
     nudgeClient.init({
       listeners: {
         appEvent: (eventName, props) =>

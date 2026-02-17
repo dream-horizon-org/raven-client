@@ -1,32 +1,82 @@
 package com.ravenclient.screeninspector
 
-import android.graphics.*
-import android.os.Handler
-import android.os.Looper
-import android.view.View
-import android.view.ViewGroup
-import com.facebook.react.bridge.*
-import java.io.ByteArrayOutputStream
+import com.facebook.react.bridge.Arguments
+import com.facebook.react.bridge.Promise
+import com.facebook.react.bridge.ReactApplicationContext
+import com.facebook.react.bridge.ReactContextBaseJavaModule
+import com.facebook.react.bridge.ReactMethod
+import com.ravenclient.screeninspector.output.JsonOutputBuilder
+import com.ravenclient.screeninspector.route.RouteProviderFactory
 
-object CurrentScreenTracker {
-    var currentRouteName: String = "Unknown"
-}
-
+/**
+ * React Native bridge module for UI Inspector functionality.
+ * 
+ * Provides methods to:
+ * - Set current screen/route name from JS
+ * - Capture screen inspection (elements, viewport, metadata)
+ * - Get target nodes only (without full inspection)
+ * - Enable/disable inspector FAB overlay
+ *
+ * This module automatically manages the FAB overlay based on the `enableInspector`
+ * flag from the state-machine API. No manual setup required in MainActivity.
+ */
 class ScreenInspectorModule(reactContext: ReactApplicationContext) :
     ReactContextBaseJavaModule(reactContext) {
+
+    // Explicitly use React Native route provider
+    private val inspectorManager = UiInspectorManager(
+        routeProvider = RouteProviderFactory.createReactNativeProvider()
+    )
+
+    private var lifecycleCallbacks: com.ravenclient.screeninspector.ui.InspectorFabManager.LifecycleCallbacks? = null
+
+    init {
+        // Ensure FAB is disabled by default until API explicitly enables it
+        com.ravenclient.screeninspector.ui.InspectorFabManager.setEnabled(false)
+
+        // Automatically register activity lifecycle callbacks
+        // This allows the FAB manager to track activities without requiring MainActivity changes
+        try {
+            val application = reactContext.applicationContext as? android.app.Application
+            application?.let { app ->
+                val callbacks = com.ravenclient.screeninspector.ui.InspectorFabManager.LifecycleCallbacks()
+                app.registerActivityLifecycleCallbacks(callbacks)
+                lifecycleCallbacks = callbacks
+            }
+        } catch (e: Exception) {
+            // If registration fails, we'll rely on manual activity registration
+            android.util.Log.w("ScreenInspector", "Failed to register activity lifecycle callbacks", e)
+        }
+    }
 
     override fun getName() = NAME
 
     /**
-     * Called from JS whenever route changes
+     * Called from JS whenever route changes.
+     * Updates the current route name for inspection results.
      */
     @ReactMethod
     fun setCurrentScreen(routeName: String) {
-        CurrentScreenTracker.currentRouteName = routeName
+        CurrentScreenTracker.updateRouteName(routeName)
     }
 
     /**
-     * Capture full view hierarchy + screenshot
+     * Captures full screen inspection: screen name, elements, viewport, and metadata.
+     * This is the main method for getting complete inspection data.
+     *
+     * Returns JSON structure:
+     * {
+     *   "screenName": "HomeScreen",
+     *   "capturedAt": "2025-10-29T07:33:14Z",
+     *   "viewport": { "width": 1080, "height": 1920 },
+     *   "elements": [
+     *     {
+     *       "elementId": "btnPlayNow",
+     *       "bounds": { "x": 120, "y": 1800, "width": 240, "height": 56 }
+     *     }
+     *   ],
+     *   "meta": { "platform": "android", "buildType": "debug" }
+     * }
      */
     @ReactMethod
     fun captureScreen(promise: Promise) {
@@ -36,89 +86,103 @@ class ScreenInspectorModule(reactContext: ReactApplicationContext) :
             return
         }
 
-        try {
-            val rootView = activity.window.decorView.rootView
-            val flatList = Arguments.createArray()
-            val tempList = mutableListOf<WritableMap>()
-            traverseFlatHierarchy(rootView, null, tempList)
-            tempList.forEach { flatList.pushMap(it) }
-
-            takeScreenshot(rootView) { screenshotBase64 ->
-                val result = Arguments.createMap()
-                result.putString("routeName", CurrentScreenTracker.currentRouteName)
-                result.putArray("hierarchy", flatList)
-                result.putString("screenshot", screenshotBase64 ?: "")
-                promise.resolve(result)
-            }
-
-        } catch (e: Exception) {
-            promise.reject("CAPTURE_ERROR", e)
-        }
-    }
-
-    private fun traverseFlatHierarchy(view: View, parentId: String?, list: MutableList<WritableMap>) {
-        val id = System.identityHashCode(view).toString()
-        val rect = Rect()
-        view.getGlobalVisibleRect(rect)
-
-        val node = Arguments.createMap()
-        node.putString("id", id)
-        node.putString("parentId", parentId)
-        node.putString("className", view.javaClass.simpleName)
-
-        val testId = try {
-            view.getTag(view.id)?.toString()
-                ?: view.contentDescription?.toString()
-                ?: ""
-        } catch (e: Exception) {
-            ""
-        }
-        node.putString("targetId", testId)
-
-        node.putBoolean("visible", view.isShown)
-        node.putMap("bounds", rectToMap(rect))
-        node.putDouble("zIndex", view.z.toDouble())
-
-        list.add(node)
-
-        if (view is ViewGroup) {
-            for (i in 0 until view.childCount) {
-                traverseFlatHierarchy(view.getChildAt(i), id, list)
-            }
-        }
-    }
-
-    private fun rectToMap(rect: Rect): WritableMap {
-        val map = Arguments.createMap()
-        map.putInt("x", rect.left)
-        map.putInt("y", rect.top)
-        map.putInt("width", rect.width())
-        map.putInt("height", rect.height())
-        return map
-    }
-
-    private fun takeScreenshot(view: View, callback: (String?) -> Unit) {
-        Handler(Looper.getMainLooper()).post {
-            try {
-                if (view.width == 0 || view.height == 0) {
-                    callback(null)
-                    return@post
+        inspectorManager.inspectScreen(activity) { result ->
+            if (result != null) {
+                try {
+                    val writableMap = JsonOutputBuilder.toWritableMap(result)
+                    promise.resolve(writableMap)
+                } catch (e: Exception) {
+                    promise.reject("SERIALIZATION_ERROR", "Failed to serialize result", e)
                 }
-
-                val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
-                val canvas = Canvas(bitmap)
-                view.draw(canvas)
-
-                val outputStream = ByteArrayOutputStream()
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 70, outputStream)
-                val base64 = android.util.Base64.encodeToString(outputStream.toByteArray(), android.util.Base64.DEFAULT)
-
-                callback(base64)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                callback(null)
+            } else {
+                promise.reject("INSPECTION_ERROR", "Failed to inspect screen")
             }
         }
+    }
+
+    /**
+     * Gets only the target nodes (without screenshot) - faster operation.
+     * Useful for quick checks or when screenshot is not needed.
+     */
+    @ReactMethod
+    fun getTargetNodes(promise: Promise) {
+        val activity = reactApplicationContext.currentActivity
+        if (activity == null) {
+            promise.reject("NO_ACTIVITY", "No active activity found")
+            return
+        }
+
+        inspectorManager.getTargetNodes(activity) { targetNodes ->
+            try {
+                val array = Arguments.createArray()
+                targetNodes.forEach { target ->
+                    val element = target.toElement()
+                    val elementMap = Arguments.createMap()
+                    elementMap.putString("elementId", element.elementId)
+
+                    val boundsMap = Arguments.createMap()
+                    boundsMap.putInt("x", element.bounds.x)
+                    boundsMap.putInt("y", element.bounds.y)
+                    boundsMap.putInt("width", element.bounds.width)
+                    boundsMap.putInt("height", element.bounds.height)
+
+                    elementMap.putMap("bounds", boundsMap)
+                    array.pushMap(elementMap)
+                }
+                promise.resolve(array)
+            } catch (e: Exception) {
+                promise.reject("SERIALIZATION_ERROR", "Failed to serialize target nodes", e)
+            }
+        }
+    }
+
+    /**
+     * Gets the current route name
+     */
+    @ReactMethod
+    fun getCurrentRouteName(promise: Promise) {
+        val activity = reactApplicationContext.currentActivity
+        val routeName = inspectorManager.getCurrentRouteName(activity)
+        promise.resolve(routeName)
+    }
+
+    /**
+     * Sets whether the inspector FAB should be enabled.
+     * Called from React Native when enableInspector flag is received from state-machine API.
+     *
+     * @param enabled true to show FAB, false to hide it
+     */
+    @ReactMethod
+    fun setInspectorEnabled(enabled: Boolean) {
+        // Ensure we're on the main thread for UI operations
+        val activity = reactApplicationContext.currentActivity
+        val handler = android.os.Handler(android.os.Looper.getMainLooper())
+        
+        handler.post {
+            // Register current activity if available
+            activity?.let {
+                com.ravenclient.screeninspector.ui.InspectorFabManager.registerActivity(it)
+            }
+
+            // Set enabled state (will show/hide FAB based on current activity)
+            com.ravenclient.screeninspector.ui.InspectorFabManager.setEnabled(enabled)
+        }
+    }
+
+    override fun onCatalystInstanceDestroy() {
+        super.onCatalystInstanceDestroy()
+        inspectorManager.shutdown()
+
+        // Unregister lifecycle callbacks
+        lifecycleCallbacks?.let { callbacks ->
+            try {
+                val application = reactApplicationContext.applicationContext as? android.app.Application
+                application?.unregisterActivityLifecycleCallbacks(callbacks)
+            } catch (e: Exception) {
+                // Ignore
+            }
+        }
+        lifecycleCallbacks = null
     }
     companion object {
         const val NAME = "ScreenInspector"

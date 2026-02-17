@@ -7,3 +7,4 @@ export type {NudgeParams} from './render-nudge/screens/NudgeScreen/Nudge.interfa
 export {fetchCTA} from './cta/ctaHandler'
 export {setNavigationRef} from './utils/NavigationContainerRef'
 export {useNavigationTracker} from './Tooltip/NavigationTracker'
+export {ScreenInspectorModule} from './Tooltip/ScreenInspector'

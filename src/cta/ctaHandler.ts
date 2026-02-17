@@ -55,6 +55,13 @@ export const fetchCTA = async (): Promise<void> => {
     DeltaSnapShot,
     {data: NudgeModel}
   >('cta/active/state-machines/', requestMapFromLocal ?? {ctas: []})
+
+  // Handle enableInspector flag - show/hide FAB based on API response
+  // Always call this to ensure FAB visibility matches API state
+  const {ScreenInspectorModule} = require('../Tooltip/ScreenInspector')
+  const enableInspector = nudgeModel?.data?.enableInspector ?? false
+  ScreenInspectorModule.setInspectorEnabled(enableInspector)
+
   if (nudgeModel && nudgeModel.data && nudgeModel.data.ctas?.length) {
     removeRequestMapFromLocal()
     const resData = nudgeModel.data
