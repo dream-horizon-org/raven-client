@@ -1,4 +1,4 @@
-export { initializeOutApp, updateUserProfile } from './outapp';
+export {initializeOutApp, updateUserProfile} from './outapp'
 export {
   OutAppGlobalPropsKeys,
   type OutAppConfig,
@@ -7,4 +7,4 @@ export {
   type OutAppEventBatchConfig,
   type KnownOutAppGlobalPropsKey,
   type UpdateUserProfileParams,
-} from './OutAppConfig';
+} from './OutAppConfig'

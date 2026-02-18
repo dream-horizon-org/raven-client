@@ -6,8 +6,8 @@ export type {
   OutAppGlobalProps,
   KnownOutAppGlobalPropsKey,
   UpdateUserProfileParams,
-} from './RavenTurbo';
-export { OutAppGlobalPropsKeys } from './RavenTurbo';
+} from './RavenTurbo'
+export {OutAppGlobalPropsKeys} from './RavenTurbo'
 export {trackAppEvent, getCtaFromStorageToMemory} from './cta/ctaHandler'
 export {sendRavenAppEvent} from './cta/ctaEvent'
 export {Nudge} from './render-nudge/screens/NudgeScreen/Nudge'

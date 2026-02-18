@@ -6,4 +6,4 @@ export {
   type OutAppGlobalProps,
   type KnownOutAppGlobalPropsKey,
   type UpdateUserProfileParams,
-} from './outapp';
+} from './outapp'
