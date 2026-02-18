@@ -30,6 +30,25 @@ export interface OutAppGlobalProps {
   [key: string]: string | number | boolean | object | undefined;
 }
 
+export interface OutAppRetryConfig {
+  enabled?: boolean;
+  maxRetries?: number;
+  initialDelayMs?: number;
+  maxDelayMs?: number;
+  backoffMultiplier?: number;
+}
+
+export interface OutAppEventBatchConfig {
+  batchSize?: number;
+  maxRetries?: number;
+  flushIntervalMs?: number;
+  batchWindowMs?: number;
+  enableBatching?: boolean;
+  processOnBackground?: boolean;
+  maxQueueSize?: number;
+  oldEventThresholdMs?: number;
+}
+
 export interface OutAppConfig {
   fcmBaseUrl: string;
   eventBaseUrl?: string;
@@ -40,6 +59,11 @@ export interface OutAppConfig {
   enableEventService?: boolean;
   enableNotificationTracking?: boolean;
   enableUserAttributesService?: boolean;
+  fcmRetryConfig?: OutAppRetryConfig;
+  eventRetryConfig?: OutAppRetryConfig;
+  notificationRetryConfig?: OutAppRetryConfig;
+  userAttributesRetryConfig?: OutAppRetryConfig;
+  eventBatchConfig?: OutAppEventBatchConfig;
   globalProps: OutAppGlobalProps;
 }
 
