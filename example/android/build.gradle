@@ -1,36 +1,22 @@
 
 buildscript {
     ext {
-        buildToolsVersion = "35.0.0"
+        buildToolsVersion = "36.0.0"
         minSdkVersion = 24
         compileSdkVersion = 36
         targetSdkVersion = 36
-        ndkVersion = "26.1.10909125"
-        kotlinVersion = "2.0.21"
+        ndkVersion = "27.1.12297006"
+        kotlinVersion = "2.1.20"
     }
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:8.3.0")
+        classpath("com.android.tools.build:gradle")
         classpath("com.facebook.react:react-native-gradle-plugin")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.21")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
         classpath("com.google.gms:google-services:4.4.4")
-    }
-
-    // Force Kotlin 2.0.21 in buildscript classpath
-    configurations.classpath {
-        resolutionStrategy {
-            force "org.jetbrains.kotlin:kotlin-stdlib:2.0.21"
-            force "org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.0.21"
-            force "org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.0.21"
-            force "org.jetbrains.kotlin:kotlin-reflect:2.0.21"
-            force "org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.21"
-            force "org.jetbrains.kotlin:kotlin-compiler-embeddable:2.0.21"
-            force "org.jetbrains.kotlin:kotlin-compiler:2.0.21"
-            force "org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:2.0.21"
-        }
     }
 }
 
@@ -39,12 +25,10 @@ def printSample(){
   System.out.println("token +" + System.getenv("GITHUB_TOKEN"))
 }
 
-// Force Kotlin 2.0.21 across all projects (to prevent version conflicts)
 allprojects {
     repositories {
         google()
         mavenCentral()
-        // Must match raven-client/android/build.gradle (dream11 = org that publishes com.dscomms:android-sdk)
         maven {
             url = uri(project.findProperty("GITHUB_PACKAGES_REPO_URL") ?: "https://maven.pkg.github.com/dream11/ds-comms-android-sdk")
             credentials {
@@ -52,53 +36,6 @@ allprojects {
                 password = project.findProperty("GITHUB_TOKEN") ?: System.getenv("GITHUB_TOKEN") ?: ""
             }
             printSample()
-        }
-
-
-    }
-
-    configurations.all {
-        resolutionStrategy {
-            force "org.jetbrains.kotlin:kotlin-stdlib:2.0.21"
-            force "org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.0.21"
-            force "org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.0.21"
-            force "org.jetbrains.kotlin:kotlin-reflect:2.0.21"
-            force "org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.21"
-            force "org.jetbrains.kotlin:kotlin-compiler-embeddable:2.0.21"
-            force "org.jetbrains.kotlin:kotlin-compiler:2.0.21"
-            force "org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:2.0.21"
-        }
-    }
-    // Force Kotlin in buildscript classpath for subprojects
-    buildscript {
-        configurations.classpath {
-            resolutionStrategy {
-                force "org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.21"
-                // Force KSP to match Kotlin 2.0.21
-                force "com.google.devtools.ksp:symbol-processing-gradle-plugin:2.0.21-1.0.28"
-            }
-        }
-    }
-
-    // Force C++17 for all native modules (required for React Native 0.81.1)
-    // This overrides C++14 settings in native modules' CMakeLists.txt
-    afterEvaluate { project ->
-        if (project.hasProperty("android")) {
-            project.android.defaultConfig.with {
-                if (hasProperty("externalNativeBuild")) {
-                    externalNativeBuild.cmake.with {
-                        // Force override CMAKE_CXX_STANDARD to 17
-                        def newArgs = arguments.findAll { !it.toString().startsWith("-DCMAKE_CXX_STANDARD") }
-                        newArgs.add("-DCMAKE_CXX_STANDARD=17")
-                        arguments = newArgs
-
-                        // Force C++17 compiler flag
-                        def newCppFlags = cppFlags.findAll { !it.toString().matches("-std=(c|gnu)\\+\\+.*") }
-                        newCppFlags.add("-std=c++17")
-                        cppFlags = newCppFlags
-                    }
-                }
-            }
         }
     }
 }

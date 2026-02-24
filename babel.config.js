@@ -7,7 +7,7 @@ module.exports = {
     {
       include: /\/node_modules\//,
       presets: ['module:@react-native/babel-preset'],
-      plugins: ['react-native-reanimated/plugin'],
+      plugins: ['react-native-worklets/plugin'],
     },
   ],
 };
