@@ -23,7 +23,7 @@ import {
   type RavenClientOptions,
   type RavenParams,
 } from '@dreamhorizonorg/raven-client'
-import { outappConfig } from './config/outapp.config'
+import { outappConfig } from './config/outapp.config.example'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
