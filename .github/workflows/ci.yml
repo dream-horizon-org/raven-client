@@ -188,19 +188,17 @@ jobs:
         with:
           xcode-version: ${{ env.XCODE_VERSION }}
 
-      # Allow CocoaPods (and other tools) to clone private GitHub repos via HTTPS
-      - name: Configure Git for private dependencies
-        if: env.turbo_cache_hit != 1
-        env:
-          GH_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        run: |
-          if [ -n "$GH_TOKEN" ]; then
-            git config --global url."https://x-access-token:${GH_TOKEN}@github.com/".insteadOf "git@github.com/"
-          fi
-
       - name: Install cocoapods
         if: env.turbo_cache_hit != 1 && steps.cocoapods-cache.outputs.cache-hit != 'true'
+        env:
+          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}
         run: |
+          # Required for CocoaPods to clone private raven-ios-sdk (git@github.com)
+          if [ -z "$GITHUB_ACCESS_TOKEN" ]; then
+            echo "::error::Secret GITHUB_ACCESS_TOKEN is not set. Add it in repo Settings → Secrets and variables → Actions (token needs read access to dream11/raven-ios-sdk)."
+            exit 1
+          fi
+          git config --global url."https://x-access-token:${GITHUB_ACCESS_TOKEN}@github.com/".insteadOf "git@github.com/"
           cd example
           bundle install
           bundle exec pod repo update --verbose
