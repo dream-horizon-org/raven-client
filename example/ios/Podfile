@@ -27,6 +27,7 @@ target 'RavenExample' do
   pod 'react-native-safe-area-context', :path => '../node_modules/react-native-safe-area-context'
   pod 'RNScreens', :path => '../node_modules/react-native-screens'
   pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
+  pod 'RNWorklets', :path => '../node_modules/react-native-worklets'
   pod 'Raven', :path => '../../'
   # raven-ios-sdk is required by Raven's native code (imported in OutAppInitializer.swift)
   pod 'raven-ios-sdk', :git => 'git@github.com:dream11/raven-ios-sdk.git'
