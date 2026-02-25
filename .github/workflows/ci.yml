@@ -198,7 +198,7 @@ jobs:
             echo "::error::Secret ACCESS_TOKEN is not set. Add it in repo Settings → Secrets and variables → Actions (token needs read access to dream11/raven-ios-sdk)."
             exit 1
           fi
-          git config --global url."https://x-access-token:${GITHUB_ACCESS_TOKEN}@github.com/".insteadOf "git@github.com/"
+          git config --global url."https://x-access-token:${GITHUB_ACCESS_TOKEN}@github.com/".insteadOf "git@github.com:"
           cd example
           bundle install
           bundle exec pod repo update --verbose
