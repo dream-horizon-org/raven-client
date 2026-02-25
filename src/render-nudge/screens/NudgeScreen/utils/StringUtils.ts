@@ -19,7 +19,7 @@ export const convertTemplateToString = (
         }
       })
       .join('')
-  } catch (e) {}
+  } catch {}
   return null
 }
 

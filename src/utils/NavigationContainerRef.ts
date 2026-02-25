@@ -50,7 +50,7 @@ export function navigate(name: string, params?: Record<string, unknown>): void {
 
   try {
     navigationRef.navigate(name, params)
-  } catch (error) {
+  } catch {
     // Navigation error - silently fail
   }
 }

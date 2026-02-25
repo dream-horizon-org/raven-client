@@ -90,7 +90,7 @@ export const NativeTooltip = {
       }
 
       return TooltipModule.show(payload)
-    } catch (error) {
+    } catch {
       return Promise.reject()
     }
   },
@@ -106,7 +106,7 @@ export const NativeTooltip = {
           else resolve()
         })
       })
-    } catch (error) {
+    } catch {
       return Promise.reject()
     }
   },
@@ -117,7 +117,7 @@ export const NativeTooltip = {
 
     try {
       return TooltipModule.hideAll()
-    } catch (error) {
+    } catch {
       return Promise.reject()
     }
   },
