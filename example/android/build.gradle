@@ -20,11 +20,6 @@ buildscript {
     }
 }
 
-def printSample(){
-  System.out.println("userName +" + System.getenv("GITHUB_USERNAME"))
-  System.out.println("token +" + System.getenv("GITHUB_TOKEN"))
-}
-
 allprojects {
     repositories {
         google()
@@ -35,7 +30,6 @@ allprojects {
                 username = project.findProperty("GITHUB_USERNAME") ?: System.getenv("GITHUB_USERNAME") ?: ""
                 password = project.findProperty("GITHUB_TOKEN") ?: System.getenv("GITHUB_TOKEN") ?: ""
             }
-            printSample()
         }
     }
 }
