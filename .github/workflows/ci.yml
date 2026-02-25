@@ -142,6 +142,8 @@ jobs:
         env:
           JAVA_OPTS: "-XX:MaxHeapSize=6g"
           DREAM11_NPM_AUTH_TOKEN: ${{ secrets.DREAM11_NPM_AUTH_TOKEN }}
+          GITHUB_USERNAME: x-access-token
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         run: |
           yarn turbo run build:android --cache-dir="${{ env.TURBO_CACHE_DIR }}"
 
@@ -188,6 +190,25 @@ jobs:
         with:
           xcode-version: ${{ env.XCODE_VERSION }}
 
+      - name: Cache Ruby gems (Bundler)
+        if: env.turbo_cache_hit != 1
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        with:
+          path: example/vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('example/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+
+      - name: Cache CocoaPods
+        if: env.turbo_cache_hit != 1
+        id: cocoapods-cache
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        with:
+          path: example/ios/Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('example/ios/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+
       - name: Install cocoapods
         if: env.turbo_cache_hit != 1 && steps.cocoapods-cache.outputs.cache-hit != 'true'
         env:
@@ -200,8 +221,7 @@ jobs:
           fi
           git config --global url."https://x-access-token:${GITHUB_ACCESS_TOKEN}@github.com/".insteadOf "git@github.com:"
           cd example
-          bundle install
-          bundle exec pod repo update --verbose
+          bundle install --path vendor/bundle
           bundle exec pod install --project-directory=ios
 
       - name: Build example for iOS
