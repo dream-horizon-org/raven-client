@@ -233,7 +233,8 @@ jobs:
           fi
           git config --global url."https://x-access-token:${GITHUB_ACCESS_TOKEN}@github.com/".insteadOf "git@github.com:"
           cd example
-          bundle install --path vendor/bundle
+          bundle config set --local path vendor/bundle
+          bundle install
           bundle exec pod install --project-directory=ios
 
       - name: Build example for iOS
