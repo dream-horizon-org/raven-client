@@ -188,6 +188,16 @@ jobs:
         with:
           xcode-version: ${{ env.XCODE_VERSION }}
 
+      # Allow CocoaPods (and other tools) to clone private GitHub repos via HTTPS
+      - name: Configure Git for private dependencies
+        if: env.turbo_cache_hit != 1
+        env:
+          GH_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        run: |
+          if [ -n "$GH_TOKEN" ]; then
+            git config --global url."https://x-access-token:${GH_TOKEN}@github.com/".insteadOf "git@github.com/"
+          fi
+
       - name: Install cocoapods
         if: env.turbo_cache_hit != 1 && steps.cocoapods-cache.outputs.cache-hit != 'true'
         run: |
