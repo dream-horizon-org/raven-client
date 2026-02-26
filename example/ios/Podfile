@@ -46,8 +46,8 @@ target 'RavenExample' do
     react_native_post_install(
       installer,
       "../node_modules/react-native",
-      :mac_catalyst_enabled => false
-      # :ccache_enabled => true
+      :mac_catalyst_enabled => false,
+      :ccache_enabled => true
     )
   end
 end
