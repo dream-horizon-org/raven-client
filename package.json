@@ -40,7 +40,7 @@
     "!**/.*"
   ],
   "scripts": {
-    "example": "yarn workspace example",
+    "example": "yarn workspace raven-client-example",
     "test": "jest",
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",

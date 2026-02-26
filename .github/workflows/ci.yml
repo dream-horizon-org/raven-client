@@ -157,7 +157,7 @@ jobs:
           GITHUB_USERNAME: x-access-token
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         run: |
-          yarn turbo run build:android --filter=example --cache-dir="${{ env.TURBO_CACHE_DIR }}"
+          yarn turbo run build:android --filter=raven-client-example --cache-dir="${{ env.TURBO_CACHE_DIR }}"
 
   build-ios:
     runs-on: macos-14
@@ -254,4 +254,4 @@ jobs:
         env:
           DREAM11_NPM_AUTH_TOKEN: ${{ secrets.DREAM11_NPM_AUTH_TOKEN }}
         run: |
-          yarn turbo run build:ios --filter=example --cache-dir="${{ env.TURBO_CACHE_DIR }}"
+          yarn turbo run build:ios --filter=raven-client-example --cache-dir="${{ env.TURBO_CACHE_DIR }}"
