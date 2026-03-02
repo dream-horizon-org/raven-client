@@ -37,7 +37,6 @@ export default function App() {
   // Create navigation ref for tooltip tracking
   const navigationRef = useRef<NavigationContainerRef<RootStackParamList>>(null)
 
-  // Connect navigation tracker for tooltip system
   useNavigationTracker(navigationRef)
 
   useEffect(() => {
