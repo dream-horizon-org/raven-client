@@ -136,7 +136,7 @@ export const trackAppEvent = (ctaEvent: CTAEvent) => {
     }
     const globalProps = {
       platform: (ravenClient.platform as string) ?? '',
-      app_version: ravenClient.config?.appVersion ?? '',
+      app_version: ravenClient.getAppVersion() ?? '',
     }
 
     const appEvent: CTAEvent = {

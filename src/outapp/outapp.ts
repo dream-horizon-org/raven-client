@@ -1,4 +1,5 @@
-import type {OutAppConfig, UpdateUserProfileParams} from './OutAppConfig'
+import type {OutAppConfig} from './OutAppConfig'
+import type {UpdateUserProfileParams} from '../cta/ravenclient.interface'
 import NativeRavenTurbo from '../NativeRavenTurbo'
 
 export function initializeOutApp(config: OutAppConfig): Promise<void> {
