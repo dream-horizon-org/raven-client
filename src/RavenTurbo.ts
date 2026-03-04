@@ -1,9 +1,2 @@
-export {
-  initializeOutApp,
-  updateUserProfile,
-  OutAppGlobalPropsKeys,
-  type OutAppConfig,
-  type OutAppGlobalProps,
-  type KnownOutAppGlobalPropsKey,
-  type UpdateUserProfileParams,
-} from './outapp'
+export {updateUserProfile} from './outapp'
+export type {OutAppConfig} from './outapp'

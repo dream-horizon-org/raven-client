@@ -9,7 +9,13 @@ import {
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack'
 import type {RootStackParamList} from './HomeScreen'
 import {updateUserProfile} from '@dreamhorizonorg/raven-client'
-import {userProfileSample} from '../config/outapp.config.example'
+import type {UpdateUserProfileParams} from '@dreamhorizonorg/raven-client'
+
+const userProfileSample: UpdateUserProfileParams = {
+  userId: 'mock_user_id',
+  firstName: 'First',
+  lastName: 'Last',
+}
 
 // Tab screens nested in Home can navigate to parent stack screens
 // Using 'Home' as the screen name since tabs are nested inside Home screen

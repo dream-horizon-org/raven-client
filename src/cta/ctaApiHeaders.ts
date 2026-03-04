@@ -2,7 +2,7 @@ import {RAVEN_API_VERSION} from '../utils/AppUtils.constant'
 import {ravenClient} from './ravenclient'
 
 export function getCtaApiHeaders(): Record<string, string | number> {
-  const accessToken = ravenClient.getAccessToken()
+  const apiKey = ravenClient.getApiKey()
   const appVersion = ravenClient.getAppVersion()
   const codepushVersion = ravenClient.getCodepushVersion()
   const userId = ravenClient.getUserId()
@@ -14,8 +14,8 @@ export function getCtaApiHeaders(): Record<string, string | number> {
     app_version: appVersion,
     package_name: packageName,
     api_version: RAVEN_API_VERSION,
-    Authorization: `${accessToken.tokenType} ${accessToken.token}`,
-    'auth-userid': userId.toString(),
+    'x-api-key': apiKey,
+    'auth-userid': userId,
   }
   if (codepushVersion) {
     headers.codepush_version = codepushVersion

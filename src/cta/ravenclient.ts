@@ -1,25 +1,25 @@
+import {Platform} from 'react-native'
 import {NudgeStorage} from '../storage/Storage'
 import {
+  fetchCTA,
   getCtaFromStorageToMemory,
   resetCtaHandlerGlobalState,
 } from './ctaHandler'
 import {
-  AccessToken,
-  RavenClientOptions,
-  RavenClientConfig,
+  GlobalPropsKeys,
+  type RavenConfig,
+  type GlobalProps,
 } from './ravenclient.interface'
+import type {OutAppConfig} from '../outapp/OutAppConfig'
+import {initializeOutApp} from '../outapp/outapp'
 
 class RavenClient {
   private static instance: RavenClient | null = null
-  private options: RavenClientOptions | undefined
+  private ravenConfig: RavenConfig | undefined
   public platform: string = 'ios'
-  public config?: RavenClientConfig
 
-  // Private constructor to prevent direct instantiation
-  private constructor() {
-    // Initialize any properties here
-  }
-  // Static method to get the singleton instance
+  private constructor() {}
+
   public static getInstance(): RavenClient {
     if (RavenClient.instance === null) {
       RavenClient.instance = new RavenClient()
@@ -27,64 +27,122 @@ class RavenClient {
     return RavenClient.instance
   }
 
-  /**
-   * Initialize the RavenClient with options object
-   * @param options - RavenClientOptions containing all configuration
-   */
-  init(options: RavenClientOptions) {
-    this.options = options
-
-    // Set platform
-    this.platform = options.config.platform
-    this.config = options.config
+  init(config: RavenConfig) {
+    this.validateConfig(config)
+    this.applyDefaults(config)
+    this.ravenConfig = config
+    this.platform =
+      config.globalProps[GlobalPropsKeys.PLATFORM] ?? Platform.OS
     getCtaFromStorageToMemory()
+    fetchCTA().catch(() => {})
+    this.initOutApp(config)
   }
 
-  getOptions(): RavenClientOptions {
-    if (!this.options) {
+  private validateConfig(config: RavenConfig) {
+    if (!config.baseUrl) {
+      throw new Error('baseUrl is required')
+    }
+    if (!config.apiKey) {
+      throw new Error('apiKey is required')
+    }
+    const gp = config.globalProps
+    if (!gp) {
+      throw new Error('globalProps is required')
+    }
+    if (!gp[GlobalPropsKeys.USER_ID]) {
+      throw new Error('globalProps.userId is required')
+    }
+    if (!gp[GlobalPropsKeys.APP_VERSION]) {
+      throw new Error('globalProps.appVersion is required')
+    }
+    if (!gp[GlobalPropsKeys.APP_PACKAGE_NAME]) {
+      throw new Error('globalProps.appPackageName is required')
+    }
+    if (!gp[GlobalPropsKeys.DEVICE_ID]) {
+      throw new Error('globalProps.deviceId is required')
+    }
+  }
+
+  private applyDefaults(config: RavenConfig) {
+    if (!config.globalProps[GlobalPropsKeys.PLATFORM]) {
+      config.globalProps[GlobalPropsKeys.PLATFORM] = Platform.OS
+    }
+  }
+
+  private initOutApp(config: RavenConfig) {
+    const outAppConfig: OutAppConfig = {
+      fcmBaseUrl: config.baseUrl,
+      apiKey: config.apiKey,
+      globalProps: config.globalProps,
+      eventBaseUrl: config.eventBaseUrl,
+      notificationBaseUrl: config.notificationBaseUrl,
+      userAttributesBaseUrl: config.userAttributesBaseUrl,
+      enableLogging: config.enableLogging,
+      enableEventService: config.enableEventService,
+      enableNotificationTracking: config.enableNotificationTracking,
+      enableUserAttributesService: config.enableUserAttributesService,
+      fcmRetryConfig: config.fcmRetryConfig,
+      eventRetryConfig: config.eventRetryConfig,
+      notificationRetryConfig: config.notificationRetryConfig,
+      userAttributesRetryConfig: config.userAttributesRetryConfig,
+      eventBatchConfig: config.eventBatchConfig,
+    }
+    initializeOutApp(outAppConfig).catch(() => {})
+  }
+
+  getConfig(): RavenConfig {
+    if (!this.ravenConfig) {
       throw new Error(
         'RavenClient not initialized. Call ravenClient.init() first.',
       )
     }
-    return this.options
+    return this.ravenConfig
   }
-  // Call app event with event name and props
+
+  getGlobalProps(): GlobalProps {
+    return this.getConfig().globalProps
+  }
+
   onAppEvent(eventName: string, props?: unknown): void {
-    this.getOptions().listeners.appEvent(eventName, props)
+    this.getConfig().listeners?.appEvent?.(eventName, props)
   }
 
-  // Getter methods for API configuration
   getBaseUrl(): string {
-    return this.getOptions().config.baseUrl
+    return this.getConfig().baseUrl
   }
 
-  getUserId(): string | number {
-    return this.getOptions().config.userId
+  getApiKey(): string {
+    return this.getConfig().apiKey
   }
 
-  getAccessToken(): AccessToken {
-    return this.getOptions().listeners.getAccessToken()
+  getUserId(): string {
+    return this.getGlobalProps()[GlobalPropsKeys.USER_ID]
   }
 
   getAppVersion(): string {
-    return this.getOptions().config.appVersion
+    return this.getGlobalProps()[GlobalPropsKeys.APP_VERSION]
   }
 
   getCodepushVersion(): string | undefined {
-    return this.getOptions().config.codepushVersion
+    return this.getGlobalProps()[GlobalPropsKeys.CODEPUSH_VERSION] as
+      | string
+      | undefined
   }
 
   getPackageNameValue(): string {
-    return this.getOptions().config.packageName
+    return this.getGlobalProps()[GlobalPropsKeys.APP_PACKAGE_NAME]
   }
 
   getTenantId(): string | undefined {
-    return this.getOptions().config.tenantId
+    return this.getGlobalProps()[GlobalPropsKeys.TENANT_ID] as
+      | string
+      | undefined
   }
 
   public static resetInstance(): void {
     RavenClient.instance = null
   }
+
   logout() {
     NudgeStorage.removeAll()
     resetCtaHandlerGlobalState()

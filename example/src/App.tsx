@@ -6,7 +6,6 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import {SafeAreaProvider} from 'react-native-safe-area-context'
 import {GestureHandlerRootView} from 'react-native-gesture-handler'
 import {useEffect, useRef} from 'react'
-import {Platform} from 'react-native'
 import type {RouteProp} from '@react-navigation/native'
 import HomeScreen, {type RootStackParamList} from './Screens/HomeScreen'
 import VariantsPreviewScreen from './Screens/VariantsPreviewScreen'
@@ -17,13 +16,10 @@ import {
   setNavigationRef,
   ravenClient,
   useNavigationTracker,
-  fetchCTA,
-  initializeOutApp,
   RAVEN_ROUTE_NAME,
-  type RavenClientOptions,
   type RavenParams,
 } from '@dreamhorizonorg/raven-client'
-import { outappConfig } from './config/outapp.config.example'
+import {ravenConfig} from './config/raven.config'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
@@ -34,44 +30,14 @@ function NudgeScreen({route}: {route: RouteProp<RootStackParamList, 'Nudge'>}) {
 }
 
 export default function App() {
-  // Create navigation ref for tooltip tracking
   const navigationRef = useRef<NavigationContainerRef<RootStackParamList>>(null)
 
   useNavigationTracker(navigationRef)
 
   useEffect(() => {
-    ravenClient.init({
-      listeners: {
-        appEvent: (eventName, props) =>
-          console.log('📊 Analytics:', eventName, props),
-        getAccessToken: () => ({
-          token: 'dummy',
-          tokenType: 'Bearer',
-        }),
-      },
-      config: {
-        baseUrl:
-          Platform.OS === 'ios'
-            ? 'http://localhost:4000'
-            : 'http://10.0.2.2:4000',
-        userId: 'mock_user_id',
-        appVersion: '1.0.0-mock',
-        platform: Platform.OS,
-        packageName: 'raven-client-example',
-        tenantId: 'mock_tenant_id',
-      },
-    } as RavenClientOptions)
-    fetchCTA().catch((error) => {
-      console.log('Error auto-fetching CTAs after init:', error)
-    })
-
-
-    initializeOutApp(outappConfig)
-      .then(() => console.log('Out-of-app initialized'))
-      .catch((error) =>
-        console.warn('Out-of-app init failed (expected if not on native):', error),
-      )
+    ravenClient.init(ravenConfig)
   }, [])
+
   return (
     <GestureHandlerRootView style={{flex: 1}}>
       <SafeAreaProvider>
@@ -95,7 +61,7 @@ export default function App() {
               name="Home"
               component={HomeScreen}
               options={{
-                headerShown: false, // Hide header since HomeScreen has bottom tabs with their own headers
+                headerShown: false,
               }}
             />
             <Stack.Screen
