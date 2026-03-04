@@ -35,7 +35,7 @@ export async function makeDeltaSnapShotApiCall() {
       requestMapFromQueue,
     )
     removeRequestMapFromLocal()
-  } catch (e) {
+  } catch {
     removeRequestMapFromLocal()
     addRequestToLocal(requestMapFromQueue)
   } finally {

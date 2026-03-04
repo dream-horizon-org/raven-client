@@ -25,6 +25,10 @@ def getExtOrIntegerDefault(name) {
   return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["RAVEN_" + name]).toInteger()
 }
 
+def isNewArchitectureEnabled() {
+  return rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true"
+}
+
 android {
   namespace "com.ravenclient"
 
@@ -33,6 +37,7 @@ android {
   defaultConfig {
     minSdkVersion getExtOrIntegerDefault("minSdkVersion")
     targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+    buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
     externalNativeBuild {
       cmake {
         arguments "-DNODE_MODULES=${rootDir}/../node_modules","-DANDROID_STL=c++_shared"
@@ -69,18 +74,31 @@ android {
 
   sourceSets {
     main {
-      java.srcDirs += [
-        "generated/java",
-        "generated/jni"
-      ]
+      if (isNewArchitectureEnabled()) {
+        java.srcDirs += [
+          "src/newarch",
+          "generated/java",
+          "generated/jni"
+        ]
+      } else {
+        java.srcDirs += ["src/oldarch"]
+      }
     }
   }
 }
 
-repositories {
-  mavenCentral()
-  google()
-}
+  repositories {
+    maven {
+      name = "GitHubPackages"
+      url = uri("https://maven.pkg.github.com/dream11/ds-comms-android-sdk")
+      credentials {
+        username = System.getenv("GITHUB_USERNAME") ?: ""
+        password = System.getenv("GITHUB_TOKEN") ?: ""
+      }
+    }
+    google()
+    mavenCentral()
+  }
 
 def kotlin_version = getExtOrDefault("kotlinVersion")
 
@@ -88,4 +106,11 @@ dependencies {
   implementation "com.facebook.react:react-android"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
   implementation 'com.tencent:mmkv:1.3.0'
+  implementation "com.dscomms:android-sdk:0.0.3"
+}
+
+react {
+  jsRootDir = file("../src/")
+  libraryName = "RavenClient"
+  codegenJavaPackageName = "com.ravenclient"
 }

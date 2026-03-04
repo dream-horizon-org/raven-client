@@ -51,13 +51,13 @@ export const useNavigationTracker = (
                     TooltipModule.setCurrentScreen(route)
                   }
                   ScreenInspectorModule?.setCurrentScreen?.(route)
-                } catch (error) {
+                } catch {
                   // Error notifying TooltipModule
                 }
               })
             })
           }
-        } catch (error) {
+        } catch {
           // Error in navigation state change
         }
       }

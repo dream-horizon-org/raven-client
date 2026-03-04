@@ -66,7 +66,7 @@ export const TooltipSystem = {
       return NativeTooltip.show({
         ...options,
       })
-    } catch (err) {
+    } catch {
       // Failed to show tooltip from CTA
     }
   },

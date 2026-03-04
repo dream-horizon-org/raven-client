@@ -15,7 +15,7 @@ export async function makeBatchedDeltaSnapShotApiCall(
       'cta/state-machines/snapshot/delta/',
       transitRequestMap,
     )
-  } catch (e) {
+  } catch {
     let batchRequestMapFromLocal = getBatchedRequestMapFromLocal()
 
     if (batchRequestMapFromLocal && transitRequestMap) {

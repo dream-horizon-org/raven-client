@@ -121,7 +121,7 @@ export function getOptmisedSource(
     return {
       uri: `${intelligentImageDomain}/${encodedUri}`,
     }
-  } catch (_error) {
+  } catch {
     return originalSource
   }
 }
@@ -130,7 +130,7 @@ function getProtocolAndHostName(url: string) {
   try {
     const result = new URL(url)
     return result
-  } catch (_error) {
+  } catch {
     return {
       origin: undefined,
       pathname: undefined,
@@ -145,7 +145,7 @@ export function isSourceUriValid(uri: string | undefined) {
   try {
     new URL(uri)
     return true
-  } catch (_e) {
+  } catch {
     return false
   }
 }

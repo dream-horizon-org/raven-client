@@ -1,3 +1,4 @@
+import {useState} from 'react'
 import {
   View,
   Text,
@@ -7,6 +8,14 @@ import {
 } from 'react-native'
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack'
 import type {RootStackParamList} from './HomeScreen'
+import {updateUserProfile} from '@dreamhorizonorg/raven-client'
+import type {UpdateUserProfileParams} from '@dreamhorizonorg/raven-client'
+
+const userProfileSample: UpdateUserProfileParams = {
+  userId: 'mock_user_id',
+  firstName: 'First',
+  lastName: 'Last',
+}
 
 // Tab screens nested in Home can navigate to parent stack screens
 // Using 'Home' as the screen name since tabs are nested inside Home screen
@@ -20,6 +29,8 @@ interface ComponentsTabProps {
 }
 
 export default function ComponentsTab({navigation}: ComponentsTabProps) {
+  const [turboResult, setTurboResult] = useState<string | null>(null)
+
   const components = [
     {
       id: 'BOTTOMSHEET',
@@ -45,6 +56,41 @@ export default function ComponentsTab({navigation}: ComponentsTabProps) {
         Explore different component variants and features
       </Text>
 
+      <View style={styles.sectionContainer}>
+        <Text style={styles.sectionTitle}>RavenTurbo Native Module</Text>
+        <Text style={styles.sectionSubtitle}>
+          Update user profile via native bridge
+        </Text>
+        <TouchableOpacity
+          style={styles.card}
+          onPress={() => {
+            setTurboResult(null)
+            updateUserProfile(userProfileSample)
+              .then(() => setTurboResult('User profile updated'))
+              .catch((e) => setTurboResult(`Error: ${(e as Error).message}`))
+          }}
+          activeOpacity={0.7}>
+          <View style={styles.cardHeader}>
+            <Text style={styles.cardTitle}>Update user profile</Text>
+          </View>
+          <View style={styles.cardContent}>
+            <Text style={styles.cardDescription}>
+              Send user profile (userId, firstName, lastName) to backend
+            </Text>
+            <View style={styles.arrowContainer}>
+              <Text style={styles.arrow}>→</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        {turboResult !== null && (
+          <View style={styles.resultBox}>
+            <Text style={styles.resultLabel}>Result</Text>
+            <Text style={styles.resultValue}>{turboResult}</Text>
+          </View>
+        )}
+      </View>
+
+      <Text style={styles.sectionTitle}>Components</Text>
       {components.map((component) => (
         <TouchableOpacity
           key={component.id}
@@ -92,6 +138,40 @@ const styles = StyleSheet.create({
     color: '#666',
     marginBottom: 24,
     paddingHorizontal: 16,
+  },
+  sectionContainer: {
+    marginBottom: 24,
+  },
+  sectionTitle: {
+    fontSize: 22,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 6,
+  },
+  sectionSubtitle: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 16,
+  },
+  resultBox: {
+    marginTop: 12,
+    padding: 16,
+    backgroundColor: '#e8f4fd',
+    borderRadius: 8,
+    borderLeftWidth: 4,
+    borderLeftColor: '#007AFF',
+  },
+  resultLabel: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#007AFF',
+    marginBottom: 4,
+    textTransform: 'uppercase',
+  },
+  resultValue: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#333',
   },
   card: {
     marginHorizontal: 16,

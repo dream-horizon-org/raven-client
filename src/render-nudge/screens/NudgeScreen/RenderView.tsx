@@ -63,7 +63,7 @@ export const RenderView = ({item, context}: RenderViewProps) => {
       default:
         return <View {...testProperties('base-view')} />
     }
-  } catch (e) {
+  } catch {
     return <View {...testProperties('base-view')} />
   }
 }
