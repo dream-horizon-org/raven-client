@@ -8,8 +8,9 @@ import {
 } from 'react-native'
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack'
 import type {RootStackParamList} from './HomeScreen'
-import {updateUserProfile, ravenClient} from '@dreamhorizonorg/raven-client'
+import {updateUserProfile, ravenClient, GlobalPropsKeys} from '@dreamhorizonorg/raven-client'
 import type {UpdateUserProfileParams} from '@dreamhorizonorg/raven-client'
+import {ravenConfig} from '../config/raven.config'
 
 const userProfileSample: UpdateUserProfileParams = {
   userId: 'mock_user_id',
@@ -31,6 +32,7 @@ interface ComponentsTabProps {
 export default function ComponentsTab({navigation}: ComponentsTabProps) {
   const [turboResult, setTurboResult] = useState<string | null>(null)
   const [logoutResult, setLogoutResult] = useState<string | null>(null)
+  const [loginResult, setLoginResult] = useState<string | null>(null)
 
   const components = [
     {
@@ -117,6 +119,44 @@ export default function ComponentsTab({navigation}: ComponentsTabProps) {
           <View style={styles.resultBox}>
             <Text style={styles.resultLabel}>Result</Text>
             <Text style={styles.resultValue}>{logoutResult}</Text>
+          </View>
+        )}
+        <TouchableOpacity
+          style={[styles.card, {marginTop: 12}]}
+          onPress={() => {
+            setLoginResult(null)
+            try {
+              const reLoginConfig = {
+                ...ravenConfig,
+                globalProps: {
+                  ...ravenConfig.globalProps,
+                  [GlobalPropsKeys.USER_ID]: '1234',
+                  [GlobalPropsKeys.FIRST_NAME]:'Atharvaaa'
+                },
+              }
+              ravenClient.init(reLoginConfig)
+              setLoginResult('Login successful — SDK re-initialized as user 1234')
+            } catch (e) {
+              setLoginResult(`Error: ${(e as Error).message}`)
+            }
+          }}
+          activeOpacity={0.7}>
+          <View style={[styles.cardHeader, {backgroundColor: '#34C759'}]}>
+            <Text style={styles.cardTitle}>Login</Text>
+          </View>
+          <View style={styles.cardContent}>
+            <Text style={styles.cardDescription}>
+              Re-initializes the SDK (in-app + out-app) with config
+            </Text>
+            <View style={styles.arrowContainer}>
+              <Text style={styles.arrow}>→</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        {loginResult !== null && (
+          <View style={styles.resultBox}>
+            <Text style={styles.resultLabel}>Result</Text>
+            <Text style={styles.resultValue}>{loginResult}</Text>
           </View>
         )}
       </View>

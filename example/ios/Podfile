@@ -29,7 +29,7 @@ target 'RavenExample' do
   pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
   pod 'RNWorklets', :path => '../node_modules/react-native-worklets'
   pod 'Raven', :path => '../../'
-  pod 'raven-ios-sdk', :git => 'git@github.com:dream11/raven-ios-sdk.git', :tag => 'v0.1.9'
+  pod 'raven-ios-sdk', :git => 'git@github.com:dream11/raven-ios-sdk.git', :tag => 'v0.1.12'
 
   use_react_native!(
     :path => "../node_modules/react-native",
