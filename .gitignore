@@ -48,7 +48,6 @@ android.iml
 example/android/app/google-services.json
 example/ios/RavenExample/GoogleService-Info.plist
 example/src/config/raven.config.ts
-
 # Cocoapods
 #
 example/ios/Pods
