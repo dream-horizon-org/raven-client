@@ -31,8 +31,7 @@ class RavenClient {
     this.validateConfig(config)
     this.applyDefaults(config)
     this.ravenConfig = config
-    this.platform =
-      config.globalProps[GlobalPropsKeys.PLATFORM] ?? Platform.OS
+    this.platform = config.globalProps[GlobalPropsKeys.PLATFORM] ?? Platform.OS
     getCtaFromStorageToMemory()
     fetchCTA().catch(() => {})
     this.initOutApp(config)
