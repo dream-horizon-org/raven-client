@@ -12,9 +12,9 @@
 		385352662F3F325500ABCA08 /* RavenIOSSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 892041E12F3F28D1004F1850 /* RavenIOSSDK */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		95FBE8635741F22BDFDDE753 /* Pods_RavenExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F43A491DD9D87D82367FD4F /* Pods_RavenExample.framework */; };
 		A1B1C1D11E68108700A75B9A /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B1C1D22E68108700A75B9A /* NotificationService.swift */; };
 		A1B1C1D32E68108700A75B9A /* NotificationServiceExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A1B1C1D42E68108700A75B9A /* NotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D1511CC8C0B08A308B267512 /* Pods_RavenExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C23BAA7CE157097C5166AA11 /* Pods_RavenExample.framework */; };
 		G5H6I7J82E68108700A75B9A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = G5H6I7J92E68108700A75B9A /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -47,15 +47,15 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = RavenExample/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = RavenExample/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = RavenExample/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		3B4392A12AC88292D35C810B /* Pods-RavenExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RavenExample.debug.xcconfig"; path = "Target Support Files/Pods-RavenExample/Pods-RavenExample.debug.xcconfig"; sourceTree = "<group>"; };
-		5709B34CF0A7D63546082F79 /* Pods-RavenExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RavenExample.release.xcconfig"; path = "Target Support Files/Pods-RavenExample/Pods-RavenExample.release.xcconfig"; sourceTree = "<group>"; };
-		6F43A491DD9D87D82367FD4F /* Pods_RavenExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RavenExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = RavenExample/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = RavenExample/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		892041DC2F3DF4BF004F1850 /* RavenExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = RavenExample.entitlements; path = RavenExample/RavenExample.entitlements; sourceTree = "<group>"; };
 		A1B1C1D22E68108700A75B9A /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		A1B1C1D42E68108700A75B9A /* NotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1B1C1DA2E68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A505DF1824509BC9438BD2B0 /* Pods-RavenExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RavenExample.debug.xcconfig"; path = "Target Support Files/Pods-RavenExample/Pods-RavenExample.debug.xcconfig"; sourceTree = "<group>"; };
+		C23BAA7CE157097C5166AA11 /* Pods_RavenExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RavenExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3FAC7A407208907EA04897C /* Pods-RavenExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RavenExample.release.xcconfig"; path = "Target Support Files/Pods-RavenExample/Pods-RavenExample.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		G5H6I7J92E68108700A75B9A /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "RavenExample/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -65,7 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				95FBE8635741F22BDFDDE753 /* Pods_RavenExample.framework in Frameworks */,
+				D1511CC8C0B08A308B267512 /* Pods_RavenExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,7 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				6F43A491DD9D87D82367FD4F /* Pods_RavenExample.framework */,
+				C23BAA7CE157097C5166AA11 /* Pods_RavenExample.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -146,8 +146,8 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3B4392A12AC88292D35C810B /* Pods-RavenExample.debug.xcconfig */,
-				5709B34CF0A7D63546082F79 /* Pods-RavenExample.release.xcconfig */,
+				A505DF1824509BC9438BD2B0 /* Pods-RavenExample.debug.xcconfig */,
+				C3FAC7A407208907EA04897C /* Pods-RavenExample.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -159,14 +159,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "RavenExample" */;
 			buildPhases = (
-				C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */,
+				F244673CB50CA201071A8E22 /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				A1B1C1D92E68108700A75B9A /* Embed Foundation Extensions */,
-				00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */,
-				E235C05ADACE081382539298 /* [CP] Copy Pods Resources */,
+				3F6F9AE0AC49EC732631DEA5 /* [CP] Embed Pods Frameworks */,
+				EF6ABAA3BC55D6685EF621B3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -274,7 +274,7 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */ = {
+		3F6F9AE0AC49EC732631DEA5 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -291,7 +291,24 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RavenExample/Pods-RavenExample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */ = {
+		EF6ABAA3BC55D6685EF621B3 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RavenExample/Pods-RavenExample-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RavenExample/Pods-RavenExample-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RavenExample/Pods-RavenExample-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F244673CB50CA201071A8E22 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -311,23 +328,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E235C05ADACE081382539298 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RavenExample/Pods-RavenExample-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RavenExample/Pods-RavenExample-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RavenExample/Pods-RavenExample-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -362,7 +362,7 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-RavenExample.debug.xcconfig */;
+			baseConfigurationReference = A505DF1824509BC9438BD2B0 /* Pods-RavenExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -398,7 +398,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-RavenExample.release.xcconfig */;
+			baseConfigurationReference = C3FAC7A407208907EA04897C /* Pods-RavenExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -690,7 +690,7 @@
 			repositoryURL = "https://github.com/dream11/raven-ios-sdk.git";
 			requirement = {
 				kind = exactVersion;
-				version = 0.1.7;
+				version = 0.1.8;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

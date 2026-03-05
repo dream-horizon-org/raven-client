@@ -87,6 +87,14 @@ enum OutAppInitializer {
     }
   }
 
+  static func logout(
+    resolve: @escaping RCTPromiseResolveBlock,
+    reject: @escaping RCTPromiseRejectBlock
+  ) {
+    Raven.logout()
+    resolve(nil)
+  }
+
   private static func parseUserLoginRequest(params: NSDictionary, userId: String) -> UserLoginRequest {
     let custom = params[OutAppBridgeConstants.UserProfile.custom] as? [String: Any]
     return UserLoginRequest(

@@ -11,7 +11,7 @@ import {
   type GlobalProps,
 } from './ravenclient.interface'
 import type {OutAppConfig} from '../outapp/OutAppConfig'
-import {initializeOutApp} from '../outapp/outapp'
+import {initializeOutApp, logoutOutApp} from '../outapp/outapp'
 
 class RavenClient {
   private static instance: RavenClient | null = null
@@ -146,6 +146,8 @@ class RavenClient {
   logout() {
     NudgeStorage.removeAll()
     resetCtaHandlerGlobalState()
+    this.ravenConfig = undefined
+    logoutOutApp().catch(() => {})
   }
 }
 

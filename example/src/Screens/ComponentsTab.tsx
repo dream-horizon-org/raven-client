@@ -8,7 +8,7 @@ import {
 } from 'react-native'
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack'
 import type {RootStackParamList} from './HomeScreen'
-import {updateUserProfile} from '@dreamhorizonorg/raven-client'
+import {updateUserProfile, ravenClient} from '@dreamhorizonorg/raven-client'
 import type {UpdateUserProfileParams} from '@dreamhorizonorg/raven-client'
 
 const userProfileSample: UpdateUserProfileParams = {
@@ -30,6 +30,7 @@ interface ComponentsTabProps {
 
 export default function ComponentsTab({navigation}: ComponentsTabProps) {
   const [turboResult, setTurboResult] = useState<string | null>(null)
+  const [logoutResult, setLogoutResult] = useState<string | null>(null)
 
   const components = [
     {
@@ -86,6 +87,36 @@ export default function ComponentsTab({navigation}: ComponentsTabProps) {
           <View style={styles.resultBox}>
             <Text style={styles.resultLabel}>Result</Text>
             <Text style={styles.resultValue}>{turboResult}</Text>
+          </View>
+        )}
+        <TouchableOpacity
+          style={[styles.card, {marginTop: 12}]}
+          onPress={() => {
+            setLogoutResult(null)
+            try {
+              ravenClient.logout()
+              setLogoutResult('Logout successful')
+            } catch (e) {
+              setLogoutResult(`Error: ${(e as Error).message}`)
+            }
+          }}
+          activeOpacity={0.7}>
+          <View style={[styles.cardHeader, {backgroundColor: '#FF3B30'}]}>
+            <Text style={styles.cardTitle}>Logout</Text>
+          </View>
+          <View style={styles.cardContent}>
+            <Text style={styles.cardDescription}>
+              Clears in-app state and native SDK (FCM token, user data)
+            </Text>
+            <View style={styles.arrowContainer}>
+              <Text style={styles.arrow}>→</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        {logoutResult !== null && (
+          <View style={styles.resultBox}>
+            <Text style={styles.resultLabel}>Result</Text>
+            <Text style={styles.resultValue}>{logoutResult}</Text>
           </View>
         )}
       </View>

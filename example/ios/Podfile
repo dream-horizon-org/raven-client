@@ -29,8 +29,7 @@ target 'RavenExample' do
   pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
   pod 'RNWorklets', :path => '../node_modules/react-native-worklets'
   pod 'Raven', :path => '../../'
-  # raven-ios-sdk is required by Raven's native code (imported in OutAppInitializer.swift)
-  pod 'raven-ios-sdk', :git => 'git@github.com:dream11/raven-ios-sdk.git'
+  pod 'raven-ios-sdk', :git => 'git@github.com:dream11/raven-ios-sdk.git', :tag => 'v0.1.9'
 
   use_react_native!(
     :path => "../node_modules/react-native",
