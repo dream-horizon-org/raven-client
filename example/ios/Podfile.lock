@@ -99,7 +99,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - raven-ios-sdk (0.1.12):
+  - raven-ios-sdk (0.1.13):
     - Firebase/Messaging
   - RCT-Folly (2024.11.18.00):
     - boost
@@ -2782,7 +2782,7 @@ DEPENDENCIES:
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
   - Raven (from `../../`)
-  - "raven-ios-sdk (from `git@github.com:dream11/raven-ios-sdk.git`, tag `v0.1.12`)"
+  - "raven-ios-sdk (from `git@github.com:dream11/raven-ios-sdk.git`, tag `v0.1.13`)"
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTDeprecation (from `../node_modules/react-native/ReactApple/Libraries/RCTFoundation/RCTDeprecation`)
   - RCTRequired (from `../node_modules/react-native/Libraries/Required`)
@@ -2892,7 +2892,7 @@ EXTERNAL SOURCES:
     :path: "../../"
   raven-ios-sdk:
     :git: "git@github.com:dream11/raven-ios-sdk.git"
-    :tag: v0.1.12
+    :tag: v0.1.13
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTDeprecation:
@@ -3039,7 +3039,7 @@ EXTERNAL SOURCES:
 CHECKOUT OPTIONS:
   raven-ios-sdk:
     :git: "git@github.com:dream11/raven-ios-sdk.git"
-    :tag: v0.1.12
+    :tag: v0.1.13
 
 SPEC CHECKSUMS:
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
@@ -3061,7 +3061,7 @@ SPEC CHECKSUMS:
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   Raven: e990616d87b7411b531d7e15ff1572d6fc1926e8
-  raven-ios-sdk: a681d1cdd6c837b93356110f0022f40e5900aff0
+  raven-ios-sdk: 01f398a5faa718db7a6274d5be819b7f9628a92a
   RCT-Folly: 846fda9475e61ec7bcbf8a3fe81edfcaeb090669
   RCTDeprecation: 22bf66112da540a7d40e536366ddd8557934fca1
   RCTRequired: a0ed4dc41b35f79fbb6d8ba320e06882a8c792cf
@@ -3135,6 +3135,6 @@ SPEC CHECKSUMS:
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: ce55ebb197c21e22b6700cd36e3f36b7ec26e6f8
 
-PODFILE CHECKSUM: 75dc961afabbde953077589ad2eb23be4ab13593
+PODFILE CHECKSUM: 7cf0772aa3956d3f1c3c3343bb2ec6fe4498ffd2
 
 COCOAPODS: 1.15.2
