@@ -51,7 +51,7 @@ enum OutAppInitializer {
       analyticsRetryConfig: analyticsRetryConfig,
       globalProps: globalProps
     )
-    DispatchQueue.main.async {
+    DispatchQueue.main.sync {
       do {
         try Raven.initialize(context: UIApplication.shared, config: ravConfig)
         resolve(nil)
