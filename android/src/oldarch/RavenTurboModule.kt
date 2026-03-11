@@ -22,4 +22,9 @@ class RavenTurboModule(reactContext: ReactApplicationContext) :
   fun updateUserProfile(params: ReadableMap, promise: Promise) {
     OutAppInitializer.updateUserProfile(params, reactApplicationContext, promise)
   }
+
+  @ReactMethod
+  fun logout(promise: Promise) {
+    OutAppInitializer.logout(promise)
+  }
 }

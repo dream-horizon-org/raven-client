@@ -210,6 +210,15 @@ object OutAppInitializer {
         return result
     }
 
+    fun logout(promise: Promise) {
+        try {
+            DsComms.logout()
+            promise.resolve(null)
+        } catch (e: Exception) {
+            promise.reject("RAVEN_LOGOUT_ERROR", e.message, e)
+        }
+    }
+
     private fun readableArrayToList(readableArray: com.facebook.react.bridge.ReadableArray): List<Any> {
         val result = mutableListOf<Any>()
         for (i in 0 until readableArray.size()) {

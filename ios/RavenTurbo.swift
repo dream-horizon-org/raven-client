@@ -28,6 +28,16 @@ class RavenTurbo: NSObject {
   }
 
   @objc
+  func logout(
+    _ resolve: @escaping RCTPromiseResolveBlock,
+    rejecter reject: @escaping RCTPromiseRejectBlock
+  ) {
+    queue.async {
+      OutAppInitializer.logout(resolve: resolve, reject: reject)
+    }
+  }
+
+  @objc
   static func requiresMainQueueSetup() -> Bool {
     false
   }

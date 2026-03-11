@@ -30,6 +30,9 @@ jobs:
         with:
           npm-auth-token: ${{ secrets.DREAM11_NPM_AUTH_TOKEN }}
 
+      - name: Create example config from template
+        run: cp example/src/config/raven.config.example.ts example/src/config/raven.config.ts
+
       - name: Lint files
         run: yarn lint
 

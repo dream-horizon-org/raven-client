@@ -18,4 +18,8 @@ class RavenTurboModule(reactContext: ReactApplicationContext) :
   override fun updateUserProfile(params: ReadableMap, promise: Promise) {
     OutAppInitializer.updateUserProfile(params, reactApplicationContext, promise)
   }
+
+  override fun logout(promise: Promise) {
+    OutAppInitializer.logout(promise)
+  }
 }

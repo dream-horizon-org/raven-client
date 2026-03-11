@@ -11,7 +11,7 @@ import {
   type GlobalProps,
 } from './ravenclient.interface'
 import type {OutAppConfig} from '../outapp/OutAppConfig'
-import {initializeOutApp} from '../outapp/outapp'
+import {initializeOutApp, logoutOutApp} from '../outapp/outapp'
 
 class RavenClient {
   private static instance: RavenClient | null = null
@@ -31,8 +31,7 @@ class RavenClient {
     this.validateConfig(config)
     this.applyDefaults(config)
     this.ravenConfig = config
-    this.platform =
-      config.globalProps[GlobalPropsKeys.PLATFORM] ?? Platform.OS
+    this.platform = config.globalProps[GlobalPropsKeys.PLATFORM] ?? Platform.OS
     getCtaFromStorageToMemory()
     fetchCTA().catch(() => {})
     this.initOutApp(config)
@@ -146,6 +145,8 @@ class RavenClient {
   logout() {
     NudgeStorage.removeAll()
     resetCtaHandlerGlobalState()
+    this.ravenConfig = undefined
+    logoutOutApp().catch(() => {})
   }
 }
 

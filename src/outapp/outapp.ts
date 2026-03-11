@@ -11,3 +11,7 @@ export function updateUserProfile(
 ): Promise<void> {
   return NativeRavenTurbo.updateUserProfile(params)
 }
+
+export function logoutOutApp(): Promise<void> {
+  return NativeRavenTurbo.logout()
+}

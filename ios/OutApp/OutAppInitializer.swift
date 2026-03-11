@@ -51,7 +51,7 @@ enum OutAppInitializer {
       analyticsRetryConfig: analyticsRetryConfig,
       globalProps: globalProps
     )
-    DispatchQueue.main.async {
+    DispatchQueue.main.sync {
       do {
         try Raven.initialize(context: UIApplication.shared, config: ravConfig)
         resolve(nil)
@@ -85,6 +85,14 @@ enum OutAppInitializer {
         }
       }
     }
+  }
+
+  static func logout(
+    resolve: @escaping RCTPromiseResolveBlock,
+    reject: @escaping RCTPromiseRejectBlock
+  ) {
+    Raven.logout()
+    resolve(nil)
   }
 
   private static func parseUserLoginRequest(params: NSDictionary, userId: String) -> UserLoginRequest {

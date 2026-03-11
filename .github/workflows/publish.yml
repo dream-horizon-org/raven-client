@@ -1,0 +1,92 @@
+name: Publish React Native SDK to npm
+
+on:
+  push:
+    tags:
+      - 'rn-v*.*.*'
+
+concurrency:
+  group: release-rn-${{ github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    name: Publish React Native SDK to npm
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          registry-url: 'https://registry.npmjs.org/'
+
+      - name: Extract version from Git tag (strip leading 'rn-v' if exists)
+        id: version
+        run: |
+          TAG="${GITHUB_REF#refs/tags/}"
+          VERSION="${TAG#rn-v}"
+          echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
+          echo "Release version: $VERSION"
+
+      - name: Validate version format
+        run: |
+          if [[ ! "$RELEASE_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Invalid version format: $RELEASE_VERSION"
+            exit 1
+          fi
+
+      - name: Validate code version is less than tag version
+        run: |
+          CODE_VERSION=$(jq -r .version package.json)
+          IFS='.' read -ra CODE <<< "$CODE_VERSION"
+          IFS='.' read -ra TAG <<< "$RELEASE_VERSION"
+          for i in 0 1 2; do
+            [[ ${CODE[$i]:-0} -lt ${TAG[$i]:-0} ]] && exit 0
+            [[ ${CODE[$i]:-0} -gt ${TAG[$i]:-0} ]] && { echo "Code version ($CODE_VERSION) must be < tag version ($RELEASE_VERSION)"; exit 1; }
+          done
+          echo "Code version ($CODE_VERSION) must be < tag version ($RELEASE_VERSION)"; exit 1
+
+      - name: Check if version already exists on npm
+        run: |
+          PACKAGE_NAME=$(jq -r .name package.json)
+          if npm view "$PACKAGE_NAME@$RELEASE_VERSION" version --registry https://registry.npmjs.org/ 2>/dev/null; then
+            echo "Version $RELEASE_VERSION already exists on npm."
+            exit 1
+          fi
+
+      - name: Set package.json version (without git tag)
+        run: npm version --no-git-tag-version "$RELEASE_VERSION"
+
+      - name: Create example config from template
+        run: cp example/src/config/raven.config.example.ts example/src/config/raven.config.ts
+
+      - name: Clean old lib (if exists)
+        run: |
+          if [ -d lib ]; then rm -rf lib; fi
+
+      - name: Install dependencies
+        env:
+          DREAM_HORIZON_NPM_TOKEN: ${{ secrets.DREAM_HORIZON_NPM_TOKEN }}
+        run: yarn install --immutable
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Typecheck
+        run: yarn typecheck
+
+      - name: Build with bob
+        run: yarn prepare
+
+      - name: Publish to npm
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.DREAM_HORIZON_NPM_TOKEN }}" > .npmrc
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.DREAM_HORIZON_NPM_TOKEN }}
