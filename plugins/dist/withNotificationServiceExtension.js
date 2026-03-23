@@ -37,14 +37,165 @@ const config_plugins_1 = require("@expo/config-plugins");
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
 const NSE_TARGET_NAME = 'NotificationServiceExtension';
-function generateNotificationServiceSwift(props) {
-    var _a, _b, _c, _d, _e, _f;
-    const mediaUrlKey = (_a = props.mediaUrlKey) !== null && _a !== void 0 ? _a : 'media_url';
-    const mediaTypeKey = (_b = props.mediaTypeKey) !== null && _b !== void 0 ? _b : 'media_type';
-    const baseUrl = (_c = props.baseUrl) !== null && _c !== void 0 ? _c : '';
-    const eventsBaseUrl = (_d = props.eventsBaseUrl) !== null && _d !== void 0 ? _d : '';
-    const apiKey = (_e = props.apiKey) !== null && _e !== void 0 ? _e : '';
-    const enableLogging = (_f = props.enableLogging) !== null && _f !== void 0 ? _f : false;
+/** dstSubfolderSpec 13 = PlugIns / embed app extensions */
+const EMBED_EXTENSIONS_DST = 13;
+/**
+ * `addTarget(..., 'app_extension')` creates a native target with `buildPhases: []`.
+ * Without a PBXSourcesBuildPhase on that target, `addSourceFile({target})` cannot
+ * resolve "Sources" and incorrectly adds the file to the first app target's Sources.
+ */
+function ensureAppExtensionHasSourcesAndFrameworksPhases(project, extensionTargetUuid) {
+    var _a;
+    const nativeTargets = project.hash.project.objects
+        .PBXNativeTarget;
+    const nt = nativeTargets[extensionTargetUuid];
+    if (!((_a = nt === null || nt === void 0 ? void 0 : nt.buildPhases) === null || _a === void 0 ? void 0 : _a.length)) {
+        project.addBuildPhase([], 'PBXSourcesBuildPhase', 'Sources', extensionTargetUuid);
+        project.addBuildPhase([], 'PBXFrameworksBuildPhase', 'Frameworks', extensionTargetUuid);
+        return;
+    }
+    const hasSources = nt.buildPhases.some((p) => p.comment === 'Sources');
+    const hasFrameworks = nt.buildPhases.some((p) => p.comment === 'Frameworks');
+    if (!hasSources) {
+        project.addBuildPhase([], 'PBXSourcesBuildPhase', 'Sources', extensionTargetUuid);
+    }
+    if (!hasFrameworks) {
+        project.addBuildPhase([], 'PBXFrameworksBuildPhase', 'Frameworks', extensionTargetUuid);
+    }
+}
+function trimPbxQuotes(s) {
+    return s.replace(/^"(.*)"$/, '$1');
+}
+/**
+ * Repair older prebuilds where NotificationService.swift was compiled in the host app
+ * instead of the NSE (see ensureAppExtensionHasSourcesAndFrameworksPhases).
+ */
+function moveNseSwiftFromHostAppToExtension(project, mainTargetUuid, nseTargetUuid) {
+    var _a, _b, _c;
+    const objects = project.hash.project.objects;
+    const fileRefs = objects.PBXFileReference;
+    const buildFiles = objects.PBXBuildFile;
+    const sourcesPhases = objects.PBXSourcesBuildPhase;
+    const nativeTargets = objects.PBXNativeTarget;
+    if (!fileRefs || !buildFiles || !sourcesPhases || !nativeTargets)
+        return;
+    let notificationServiceFileRef = null;
+    for (const key of Object.keys(fileRefs)) {
+        if (key.endsWith('_comment'))
+            continue;
+        const ref = fileRefs[key];
+        if (typeof ref === 'string' || !ref || typeof ref !== 'object')
+            continue;
+        const path = ref.path ? trimPbxQuotes(String(ref.path)) : '';
+        const name = ref.name ? trimPbxQuotes(String(ref.name)) : '';
+        if (path.endsWith('NotificationService.swift') ||
+            name === 'NotificationService.swift') {
+            notificationServiceFileRef = key;
+            break;
+        }
+    }
+    if (!notificationServiceFileRef)
+        return;
+    let swiftInSourcesBuildFileUuid = null;
+    for (const key of Object.keys(buildFiles)) {
+        if (key.endsWith('_comment'))
+            continue;
+        const bf = buildFiles[key];
+        if (typeof bf === 'string' || !bf || bf.isa !== 'PBXBuildFile')
+            continue;
+        if (bf.fileRef !== notificationServiceFileRef)
+            continue;
+        const c = buildFiles[`${key}_comment`];
+        if (typeof c === 'string' && c.includes('NotificationService.swift in Sources')) {
+            swiftInSourcesBuildFileUuid = key;
+            break;
+        }
+    }
+    if (!swiftInSourcesBuildFileUuid)
+        return;
+    const mainNt = nativeTargets[mainTargetUuid];
+    const nseNt = nativeTargets[nseTargetUuid];
+    if (!(mainNt === null || mainNt === void 0 ? void 0 : mainNt.buildPhases) || !(nseNt === null || nseNt === void 0 ? void 0 : nseNt.buildPhases))
+        return;
+    ensureAppExtensionHasSourcesAndFrameworksPhases(project, nseTargetUuid);
+    const mainSourcesUuid = (_a = mainNt.buildPhases.find((p) => p.comment === 'Sources')) === null || _a === void 0 ? void 0 : _a.value;
+    const nseSourcesUuid = (_c = (_b = nativeTargets[nseTargetUuid].buildPhases) === null || _b === void 0 ? void 0 : _b.find((p) => p.comment === 'Sources')) === null || _c === void 0 ? void 0 : _c.value;
+    if (!mainSourcesUuid || !nseSourcesUuid)
+        return;
+    const mainPhase = sourcesPhases[mainSourcesUuid];
+    const nsePhase = sourcesPhases[nseSourcesUuid];
+    if (!(mainPhase === null || mainPhase === void 0 ? void 0 : mainPhase.files) || !nsePhase)
+        return;
+    const inMain = mainPhase.files.some((f) => f.value === swiftInSourcesBuildFileUuid);
+    if (!inMain)
+        return;
+    mainPhase.files = mainPhase.files.filter((f) => f.value !== swiftInSourcesBuildFileUuid);
+    const comment = buildFiles[`${swiftInSourcesBuildFileUuid}_comment`] ||
+        'NotificationService.swift in Sources';
+    if (!nsePhase.files)
+        nsePhase.files = [];
+    if (!nsePhase.files.some((f) => f.value === swiftInSourcesBuildFileUuid)) {
+        nsePhase.files.push({
+            value: swiftInSourcesBuildFileUuid,
+            comment,
+        });
+    }
+}
+/**
+ * Xcode fails with "Unexpected duplicate tasks" if the main app embeds the same
+ * .appex twice (e.g. Expo adds "Copy Files" and we add "Embed Foundation Extensions").
+ */
+function dedupeNseEmbedCopyPhases(project, mainNativeTarget, nseProductRef) {
+    var _a, _b, _c, _d;
+    const objects = project.hash.project.objects;
+    const copySections = objects.PBXCopyFilesBuildPhase;
+    const buildFiles = objects.PBXBuildFile;
+    const phases = mainNativeTarget.buildPhases;
+    if (!copySections || !buildFiles || !(phases === null || phases === void 0 ? void 0 : phases.length))
+        return;
+    const matching = [];
+    for (const bp of phases) {
+        const uuid = bp.value;
+        const phase = copySections[uuid];
+        if (!phase || phase.isa !== 'PBXCopyFilesBuildPhase')
+            continue;
+        if (Number(phase.dstSubfolderSpec) !== EMBED_EXTENSIONS_DST)
+            continue;
+        const embedsNse = ((_a = phase.files) !== null && _a !== void 0 ? _a : []).some((f) => {
+            const bf = buildFiles[f.value];
+            return (bf === null || bf === void 0 ? void 0 : bf.fileRef) === nseProductRef;
+        });
+        if (!embedsNse)
+            continue;
+        const raw = (_b = phase.name) !== null && _b !== void 0 ? _b : '';
+        const displayName = typeof raw === 'string' ? raw.replace(/^"(.*)"$/, '$1') : String(raw);
+        matching.push({ uuid, displayName });
+    }
+    if (matching.length <= 1)
+        return;
+    const keep = (_c = matching.find((m) => m.displayName.includes('Embed Foundation Extensions'))) !== null && _c !== void 0 ? _c : matching[0];
+    for (const { uuid } of matching) {
+        if (uuid === keep.uuid)
+            continue;
+        const phase = copySections[uuid];
+        for (const f of (_d = phase.files) !== null && _d !== void 0 ? _d : []) {
+            const bfUuid = f.value;
+            delete buildFiles[bfUuid];
+            delete buildFiles[`${bfUuid}_comment`];
+        }
+        delete copySections[uuid];
+        delete copySections[`${uuid}_comment`];
+        const idx = phases.findIndex((p) => p.value === uuid);
+        if (idx !== -1)
+            phases.splice(idx, 1);
+    }
+}
+/**
+ * Minimal NSE subclass. RavenIOSSDK's `RavenNotificationServiceExtension` is
+ * configured by the SDK / host app — do not assign URLs or keys in `init()`.
+ * @see raven-client/example/ios/NotificationServiceExtension/NotificationService.swift
+ */
+function generateNotificationServiceSwift() {
     return `import UserNotifications
 import RavenIOSSDK
 
@@ -52,13 +203,6 @@ class NotificationServiceExtension: RavenNotificationServiceExtension {
 
     override init() {
         super.init()
-        self.mediaUrlKey = "${mediaUrlKey}"
-        self.mediaTypeKey = "${mediaTypeKey}"
-        self.baseUrl = "${baseUrl}"
-        self.eventsBaseUrl = "${eventsBaseUrl}"
-        self.apiKey = "${apiKey}"
-        self.retryConfig = RetryConfig.default
-        self.enableLogging = ${enableLogging}
     }
 
     override func didReceive(
@@ -101,15 +245,15 @@ function generateNSEInfoPlist() {
 /**
  * Write NotificationServiceExtension Swift and Info.plist files to disk.
  */
-const withNSEFiles = (config, props) => {
+const withNSEFiles = (config, _props) => {
     return (0, config_plugins_1.withDangerousMod)(config, [
         'ios',
-        (config) => {
-            const nsePath = path.join(config.modRequest.platformProjectRoot, NSE_TARGET_NAME);
+        (dangerousModConfig) => {
+            const nsePath = path.join(dangerousModConfig.modRequest.platformProjectRoot, NSE_TARGET_NAME);
             fs.mkdirSync(nsePath, { recursive: true });
-            fs.writeFileSync(path.join(nsePath, 'NotificationService.swift'), generateNotificationServiceSwift(props));
+            fs.writeFileSync(path.join(nsePath, 'NotificationService.swift'), generateNotificationServiceSwift());
             fs.writeFileSync(path.join(nsePath, 'Info.plist'), generateNSEInfoPlist());
-            return config;
+            return dangerousModConfig;
         },
     ]);
 };
@@ -118,21 +262,39 @@ const withNSEFiles = (config, props) => {
  * configure build settings, and add source files.
  */
 const withNSEXcodeTarget = (config, { bundleIdentifier }) => {
-    return (0, config_plugins_1.withXcodeProject)(config, (config) => {
-        var _a, _b, _c, _d, _e, _f, _g;
-        const project = config.modResults;
-        const mainBundleId = (_b = (_a = config.ios) === null || _a === void 0 ? void 0 : _a.bundleIdentifier) !== null && _b !== void 0 ? _b : '';
+    return (0, config_plugins_1.withXcodeProject)(config, (xcodeConfig) => {
+        var _a, _b, _c, _d, _e, _f, _g, _h;
+        const project = xcodeConfig.modResults;
+        const p = project;
+        const mainBundleId = (_b = (_a = xcodeConfig.ios) === null || _a === void 0 ? void 0 : _a.bundleIdentifier) !== null && _b !== void 0 ? _b : '';
         const nseBundleId = bundleIdentifier !== null && bundleIdentifier !== void 0 ? bundleIdentifier : `${mainBundleId}.${NSE_TARGET_NAME}`;
-        if (project.pbxTargetByName(NSE_TARGET_NAME)) {
-            return config;
+        const nativeTargetsEarly = project.pbxNativeTargetSection();
+        const mainNativeEarly = project.getFirstTarget()
+            .firstTarget;
+        const mainTargetUuidEarly = project.getFirstTarget().uuid;
+        const nseTargetUuidEarly = p.findTargetKey(NSE_TARGET_NAME);
+        if (nseTargetUuidEarly && mainTargetUuidEarly) {
+            moveNseSwiftFromHostAppToExtension(p, mainTargetUuidEarly, nseTargetUuidEarly);
+        }
+        const existingNse = project.pbxTargetByName(NSE_TARGET_NAME);
+        if (existingNse) {
+            const refEarly = nseTargetUuidEarly
+                ? (_c = nativeTargetsEarly[nseTargetUuidEarly]) === null || _c === void 0 ? void 0 : _c.productReference
+                : undefined;
+            if (refEarly) {
+                dedupeNseEmbedCopyPhases(project, mainNativeEarly, refEarly);
+            }
+            return xcodeConfig;
         }
         const target = project.addTarget(NSE_TARGET_NAME, 'app_extension', NSE_TARGET_NAME, nseBundleId);
+        ensureAppExtensionHasSourcesAndFrameworksPhases(p, target.uuid);
         // Create a PBX group and add files
         const groupKey = project.pbxCreateGroup(NSE_TARGET_NAME, NSE_TARGET_NAME);
         const mainGroupId = project.getFirstProject().firstProject.mainGroup;
         project.addToPbxGroup(groupKey, mainGroupId);
-        project.addSourceFile(`${NSE_TARGET_NAME}/NotificationService.swift`, { target: target.uuid }, groupKey);
-        project.addFile(`${NSE_TARGET_NAME}/Info.plist`, groupKey);
+        // Paths are relative to the group (path = NotificationServiceExtension), not the repo root.
+        project.addSourceFile('NotificationService.swift', { target: target.uuid }, groupKey);
+        project.addFile('Info.plist', groupKey);
         // Configure build settings for all build configurations of this target
         const configurations = project.pbxXCBuildConfigurationSection();
         for (const key in configurations) {
@@ -158,13 +320,11 @@ const withNSEXcodeTarget = (config, { bundleIdentifier }) => {
         const nativeTargets = project.pbxNativeTargetSection();
         // getFirstTarget() returns { uuid, firstTarget } where firstTarget
         // IS the PBXNativeTarget object directly.
-        const mainTargetUuid = mainTarget.uuid;
         const mainNativeTarget = mainTarget.firstTarget;
         // 1. PBXContainerItemProxy — links the extension to the project
         const proxyUuid = project.generateUuid();
-        objects['PBXContainerItemProxy'] =
-            (_c = objects['PBXContainerItemProxy']) !== null && _c !== void 0 ? _c : {};
-        objects['PBXContainerItemProxy'][proxyUuid] = {
+        objects.PBXContainerItemProxy = (_d = objects.PBXContainerItemProxy) !== null && _d !== void 0 ? _d : {};
+        objects.PBXContainerItemProxy[proxyUuid] = {
             isa: 'PBXContainerItemProxy',
             containerPortal: project.hash.project.rootObject,
             containerPortal_comment: project.hash.project.rootObject_comment,
@@ -172,43 +332,40 @@ const withNSEXcodeTarget = (config, { bundleIdentifier }) => {
             remoteGlobalIDString: target.uuid,
             remoteInfo: NSE_TARGET_NAME,
         };
-        objects['PBXContainerItemProxy'][`${proxyUuid}_comment`] =
+        objects.PBXContainerItemProxy[`${proxyUuid}_comment`] =
             'PBXContainerItemProxy';
         // 2. PBXTargetDependency — main app depends on the extension
         const depUuid = project.generateUuid();
-        objects['PBXTargetDependency'] =
-            (_d = objects['PBXTargetDependency']) !== null && _d !== void 0 ? _d : {};
-        objects['PBXTargetDependency'][depUuid] = {
+        objects.PBXTargetDependency = (_e = objects.PBXTargetDependency) !== null && _e !== void 0 ? _e : {};
+        objects.PBXTargetDependency[depUuid] = {
             isa: 'PBXTargetDependency',
             target: target.uuid,
             targetProxy: proxyUuid,
         };
-        objects['PBXTargetDependency'][`${depUuid}_comment`] =
-            'PBXTargetDependency';
-        mainNativeTarget.dependencies = (_e = mainNativeTarget.dependencies) !== null && _e !== void 0 ? _e : [];
+        objects.PBXTargetDependency[`${depUuid}_comment`] = 'PBXTargetDependency';
+        mainNativeTarget.dependencies = (_f = mainNativeTarget.dependencies) !== null && _f !== void 0 ? _f : [];
         mainNativeTarget.dependencies.push({
             value: depUuid,
             comment: 'PBXTargetDependency',
         });
         // 3. "Embed Foundation Extensions" build phase (PBXCopyFilesBuildPhase)
         //    dstSubfolderSpec 13 = PlugIns & Foundation Extensions
-        const nseProductRef = (_f = nativeTargets[target.uuid]) === null || _f === void 0 ? void 0 : _f.productReference;
+        const nseProductRef = (_g = nativeTargets[target.uuid]) === null || _g === void 0 ? void 0 : _g.productReference;
         const embedBuildFileUuid = project.generateUuid();
-        objects['PBXBuildFile'][embedBuildFileUuid] = {
+        objects.PBXBuildFile[embedBuildFileUuid] = {
             isa: 'PBXBuildFile',
             fileRef: nseProductRef,
             settings: { ATTRIBUTES: ['RemoveHeadersOnCopy'] },
         };
-        objects['PBXBuildFile'][`${embedBuildFileUuid}_comment`] =
+        objects.PBXBuildFile[`${embedBuildFileUuid}_comment`] =
             `${NSE_TARGET_NAME}.appex in Embed Foundation Extensions`;
         const copyPhaseUuid = project.generateUuid();
-        objects['PBXCopyFilesBuildPhase'] =
-            (_g = objects['PBXCopyFilesBuildPhase']) !== null && _g !== void 0 ? _g : {};
-        objects['PBXCopyFilesBuildPhase'][copyPhaseUuid] = {
+        objects.PBXCopyFilesBuildPhase = (_h = objects.PBXCopyFilesBuildPhase) !== null && _h !== void 0 ? _h : {};
+        objects.PBXCopyFilesBuildPhase[copyPhaseUuid] = {
             isa: 'PBXCopyFilesBuildPhase',
             buildActionMask: 2147483647,
             dstPath: '""',
-            dstSubfolderSpec: 13,
+            dstSubfolderSpec: EMBED_EXTENSIONS_DST,
             files: [
                 {
                     value: embedBuildFileUuid,
@@ -218,13 +375,16 @@ const withNSEXcodeTarget = (config, { bundleIdentifier }) => {
             name: '"Embed Foundation Extensions"',
             runOnlyForDeploymentPostprocessing: 0,
         };
-        objects['PBXCopyFilesBuildPhase'][`${copyPhaseUuid}_comment`] =
+        objects.PBXCopyFilesBuildPhase[`${copyPhaseUuid}_comment`] =
             'Embed Foundation Extensions';
         mainNativeTarget.buildPhases.push({
             value: copyPhaseUuid,
             comment: 'Embed Foundation Extensions',
         });
-        return config;
+        if (nseProductRef) {
+            dedupeNseEmbedCopyPhases(project, mainNativeTarget, nseProductRef);
+        }
+        return xcodeConfig;
     });
 };
 /**
